@@ -59,33 +59,20 @@ ggplot(sums)+
 
 # asymptote work ----------------------------------------------------------
 
-#test on SU grid
-#make sure you find a way to fill in transects that dont have a species as 0
-kloo <- sums[Grid == "KL"]
 
-asym <- function(resp){
+RandomNum <- function(resp){
   #set effort, increase by one transect until total sample reached
   effort <- c(1: length(unique(resp)))
   sample(effort, replace = FALSE)
 }
 
+sums[, Number := RandomNum(Loc), by = .(Grid, Species)]
 
-kloo[, Number := asym(Loc), by = Species]
-
-
-#randomly assign transects numbers
-transsample <- data.table(
-  Loc = unique(sums$Loc),
-  Numb = sample(effort, replace = FALSE)
-)
-
-#merge random assignments with original data
-asymdata <- merge(sums, transsample, by = "Loc")
-
+effort2 <- c(1: length(unique(sums$Number)))
 
 draw <- lapply(effort, function(n) {
-  sample <- asymdata[Numb < n+1, .(mean(Biomass), sd(Biomass)), Species]
-  names(sample) <- c("Species", "Mean", "SD")
+  sample <- sums[Number < n+1, .(mean(Biomass), sd(Biomass)), by = .(Grid, Species)]
+  names(sample) <- c("Grid", "Species", "Mean", "SD")
   sample[, Effort := n]
   return(sample)
   }) 
@@ -93,21 +80,27 @@ draw <- lapply(effort, function(n) {
 asymstats <- rbindlist(draw)
 
 
+
+
+
+
 #plot for Mean biomass over sample size
 ggplot(asymstats)+
   geom_line(aes(x = Effort, y = Mean, group = Species, color = Species))+
   labs(x = "Sample size (m)", y = "Mean Biomass (g/m2)")+
+  facet_wrap(~Grid)+
   theme_minimal()
 
 #plot for SD biomass over sample size
 ggplot(asymstats)+
   geom_line(aes(x = Effort, y = SD, group = Species, color = Species))+
   labs(x = "Sample size (m)", y = "Biomass (g/m2) standard deviation")+
+  facet_wrap(~Grid)+
   theme_minimal()
 
 ggplot(asymstats)+
-  geom_point(aes(x = Effort, y = Mean))+
-  geom_errorbar(aes(x = Effort, ymin = Mean - SD, ymax = Mean + SD))+
+  geom_point(aes(x = Effort, y = Mean, color = Grid))+
+  geom_errorbar(aes(x = Effort, ymin = Mean - SD, ymax = Mean + SD, color = Grid), alpha = 0.5)+
   facet_wrap(~Species, scales = "free")
 
 
