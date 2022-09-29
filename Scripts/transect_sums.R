@@ -104,19 +104,3 @@ ggplot(asymstats)+
   facet_wrap(~Species, scales = "free")
 
 
-# random sample (stan's idea) ---------------------------------------------
-
-effort2 <- c(9, 14, 19, 25)
-
-draw2 <- lapply(effort2, function(n) {
-  locs <- sample(sums$Loc, n, replace = FALSE )
-  sample <- sums[Loc %in% locs]
-  stats <- sample[Species == "spruce", .(round(mean(Biomass), 2), round(sd(Biomass), 2))]
-  names(stats) <- c("Mean", "SD")
-  stats[, Size := n]
-  return(stats)
-  
-}) 
-
-rbindlist(draw2)
-
