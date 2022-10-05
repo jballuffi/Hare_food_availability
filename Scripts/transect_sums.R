@@ -33,6 +33,11 @@ biomass[is.na(Mass_total), Mass_total := 0]
 sums <- biomass[, sum(Mass_total, na.rm = TRUE)/15, by = .(Species, Grid, Loc)]
 setnames(sums, "V1", "Biomass")
 
+
+
+# fill in cases where there was no biomass of a species in a transect --------
+
+
 #create empty sheet of transects and biomass for cases where there is zero biomass of a species
 emptyspruce <- biomass[, unique(Loc), by = Grid]
 setnames(emptyspruce, "V1", "Loc")
@@ -49,11 +54,7 @@ sums <- merge(empty, sums, by = c("Grid", "Loc", "Species"), all.x = TRUE)
 #convert NAs to zeros
 sums[is.na(Biomass), Biomass := 0]
 
-#basic plot showing different between species biomass per transect
-ggplot(sums)+
-  geom_boxplot(aes(x = Species, y = Biomass, fill = Grid))+
-  labs(y = "Dry biomass (g/m2)")+
-  theme_minimal()
 
 
+#save as RDS file
 saveRDS(sums, "Output/Data/transect_biomass.rds")
