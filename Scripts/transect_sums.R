@@ -30,8 +30,8 @@ biomass[is.na(Mass_high), Mass_high := 0]
 biomass[is.na(Mass_total), Mass_total := 0]
 
 #sum biomass per transect then divide by size of transect (15 m2)
-sums <- biomass[, sum(Mass_total, na.rm = TRUE)/15, by = .(Species, Grid, Loc)]
-setnames(sums, "V1", "Biomass")
+sums <- biomass[, .(sum(Mass_low, na.rm = TRUE)/15, sum(Mass_med, na.rm = TRUE)/15, sum(Mass_high, na.rm = TRUE)/15, sum(Mass_total, na.rm = TRUE)/15), by = .(Species, Grid, Loc)]
+names(sums) <- c("Species", "Grid", "Loc", "low", "med", "high", "total")
 
 
 
@@ -51,8 +51,9 @@ empty <- rbind(emptyspruce, emptywillow)
 
 #merge empty sheet with sums sheet and NAs now appear occassionally in the biomass col
 sums <- merge(empty, sums, by = c("Grid", "Loc", "Species"), all.x = TRUE)
-#convert NAs to zeros
-sums[is.na(Biomass), Biomass := 0]
+
+#convert NAs to zeros. Musst be more efficient way!!!!!!!!!!!!!!!!
+sums[is.na(low), low := 0][is.na(med), med := 0][is.na(high), high := 0][is.na(total), total := 0]
 
 
 
