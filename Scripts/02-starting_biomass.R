@@ -2,7 +2,7 @@ library(ggplot2)
 library(data.table)
 
 
-source("Scripts/branch_to_twig.R")
+source("Scripts/01-allometric_eqn.R")
 dat <- fread("Input/transects.csv")
 
 #number of transects done
