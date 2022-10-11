@@ -30,8 +30,9 @@ heights <- sums[,total := NULL]
 heights <- melt(heights, measure.vars = c("low", "med", "high"), variable.name = "height", value.name = "Biomass")
 
 
-ggplot(heights)+
+summary <- ggplot(heights)+
   geom_boxplot(aes(x = height, y = Biomass, fill = Grid))+
   facet_wrap(~Species, scales = "free")+
   theme_minimal()
 
+ggsave("Output/Figures/sum_starting_biomass.jpeg", summary, width = 6, height = 4, unit = "in")
