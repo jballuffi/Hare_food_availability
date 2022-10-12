@@ -32,6 +32,7 @@ heights <- melt(heights, measure.vars = c("low", "med", "high"), variable.name =
 
 summary <- ggplot(heights)+
   geom_boxplot(aes(x = height, y = Biomass, fill = Grid))+
+  labs(x = "Height class", y = "Available forage (dry g/m2)")+
   facet_wrap(~Species, scales = "free")+
   theme_minimal()
 
