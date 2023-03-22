@@ -7,33 +7,43 @@ library(lubridate)
 
 
 beh <- fread("Input/allHareDailyValues2015_2021.csv")
-snow <- fread("Input/snowdepthdataentry.csv")
+trapping <- fread("Input/Trapping_data_all_records.csv")
+
+
+#this function is from the R folder in the footload project
+getmode <- function(v) {
+  uniqv <- data.table(unique(v))
+  uniqv <- uniqv[!is.na(V1)]
+  uniqv <- uniqv$V1
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
 
 
 
 
-# snow data ---------------------------------------------------------------
 
-snow[, Date := dmy(depthDate)]
-setnames(snow, "snow depth", "Snowdepth")
+# Snow data ---------------------------------------------------------------
 
-snow <- snow[!Snowdepth < 0]
+#list snow files and read in
+snowfiles <- dir("Input/", "Snow_cam*", full.names = TRUE) 
+ls.snowfiles <- lapply(snowfiles, fread)
 
-snow[, y := year(Date)]
-snow[, m := month(Date)]
+#rbindlist with an origin column
+snows <- rbindlist(ls.snowfiles, fill = TRUE, use.names = TRUE, idcol = "origin")
+#now re-assign the origin column the file names
+snows[, origin := factor(origin, labels = basename(snowfiles))]
 
+#redo the grid names
+snows[grep("agnes", origin), snowgrid := "Agnes"]
+snows[grep("jo", origin), snowgrid := "Jo"]
+snows[grep("kloo", origin), snowgrid := "Kloo"]
 
-#create a winter column
-snow[m < 4, winter := paste0(y-1, "-", y)]
-snow[m > 8, winter := paste0(y, "-", y+1)]
+#fix up other data cols
+snows[, COMMENTS := NULL]
+snows[, Date := lubridate::dmy(DATE)]
+setnames(snows, "OPEN SD", "SD")
 
-snowmonth <- snow[, mean(Snowdepth), .(m, y)]
-names(snowmonth) <- c("m", "y", "Snowdepth")
-
-snowday <- snow[, mean(Snowdepth), .(Date, winter)]
-setnames(snowday, "V1", "Snowdepth")
-
-
+snow <- snows[, .(Date, snowgrid, SD)]
 
 
 
@@ -53,23 +63,55 @@ beh <- beh[m %in% wintermonths]
 beh[m < 4, winter := paste0(y-1, "-", y)]
 beh[m > 8, winter := paste0(y, "-", y+1)]
 
-#look at sample size by year and month
-beh[, .N, by = .(y, m)]
+#swap B's in the collar data for 2's
+beh[, id := gsub("B", "2", id)]
 
-#avg foraging by day
-forageday <- beh[, mean(Forage), .(Date, winter)]
-setnames(forageday, "V1", "Forage") 
+#pull out the grid of every individual using the trapping data
+trapping[, Eartag := as.character(Eartag)]
+grids <- trapping[, getmode(grid), Eartag]
+names(grids) <- c("id", "grid")
+
+#merge grids into behaviour data set
+beh <- merge(beh, grids, by = "id", all.x = TRUE)
+
+#now we need to match grid in behaviour data set to the snow data set.
+#more grids with collar data than grids with snow data
+
+#when grid with bunny is one of the snow grids, just copy to new col snowgrid
+beh[grid == "Agnes" | grid == "Kloo" | grid == "Jo", snowgrid := grid]
+
+#all other grids and their closest snow grid, but where is leroy?
+beh[grid == "Sulphur" | grid == "Rolo" | grid == "Chadbear" | grid == "Leroy", snowgrid := "Kloo"]
+beh[grid == "Chitty", snowgrid := "Agnes"]
 
 
+# merge snow data with behaviour data -------------------------------------------------------------------
 
-# merge -------------------------------------------------------------------
+full <- merge(beh, snow, by = c("Date", "snowgrid"), all.x = TRUE)
 
-full <- merge(beh, snowmonth, by = c("y", "m"), all.x = TRUE)
+#remove values without snow depth for now
 
-
-
+full <- full[!is.na(SD)]
 
 # figures -----------------------------------------------------------------
+
+
+ggplot(full)+
+  geom_point(aes(x = SD, y = Forage, color = as.factor(m)))
+
+ggplot(full)+
+  geom_point(aes(x = SD, y = Hopping))
+
+ggplot(full)+
+  geom_point(aes(x = SD, y = notmoving))
+
+ggplot(full)+
+  geom_point(aes(x = SD, y = Sprinting))
+
+
+summary(lm(Forage ~ SD, full))
+
+
 
 
 winter1617 <- 
