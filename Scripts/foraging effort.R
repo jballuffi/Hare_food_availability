@@ -25,7 +25,7 @@ getmode <- function(v) {
 # Snow data ---------------------------------------------------------------
 
 #list snow files and read in
-snowfiles <- dir("Input/", "Snow_cam*", full.names = TRUE) 
+snowfiles <- dir("Input/", "Snow_grid*", full.names = TRUE) 
 ls.snowfiles <- lapply(snowfiles, fread)
 
 #rbindlist with an origin column
