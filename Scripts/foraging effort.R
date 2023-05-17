@@ -4,6 +4,7 @@
 library(data.table)
 library(ggplot2)
 library(lubridate)
+library(ggpubr)
 
 
 beh <- fread("Input/allHareDailyValues2015_2021.csv")
@@ -93,23 +94,34 @@ full <- merge(beh, snow, by = c("Date", "snowgrid"), all.x = TRUE)
 
 full <- full[!is.na(SD)]
 
+full[, Moving := Forage + Hopping + Sprinting]
+
+full[, Moving + notmoving]
+
 # figures -----------------------------------------------------------------
 
 
-ggplot(full)+
-  geom_point(aes(x = SD, y = Forage, color = as.factor(m)))
+forg <- ggplot(full)+
+  geom_point(aes(x = SD, y = Forage), size = 1)+
+  labs(x = "Snow depth (cm)", y = "Foraging rate (s/day)", title = "Foraging")+
+  theme_minimal()
 
-ggplot(full)+
-  geom_point(aes(x = SD, y = Hopping))
+mov <- ggplot(full)+
+  geom_point(aes(x = SD, y = Moving), size = 1)+
+  labs(x = "Snow depth (cm)", y = "Movement rate (s/day)", title = "Foraging + Hopping + Sprinting")+
+  theme_minimal()
 
-ggplot(full)+
-  geom_point(aes(x = SD, y = notmoving))
+nonmov <- ggplot(full)+
+  geom_point(aes(x = SD, y = notmoving), size = 1)+
+  labs(x = "Snow depth (cm)", y = "Resting rate (s/day)", title = "Not moving")+
+  theme_minimal()
 
-ggplot(full)+
-  geom_point(aes(x = SD, y = Sprinting))
 
 
-summary(lm(Forage ~ SD, full))
+movbysnow <- ggarrange(forg, mov, nonmov, ncol = 1, nrow = 3)
+
+ggsave("Output/figures/behavandsnow.jpg", movbysnow, width = 5, height = 9, unit = "in")
+
 
 
 
@@ -132,5 +144,4 @@ winter1415 <-
 ggsave("Output/figures/winter1617.jpg", winter1617, width = 4.5, height = 3.5, unit = "in")
 
 ggsave("Output/figures/winter1415.jpg", winter1415, width = 4.5, height = 3.5, unit = "in")
-
 
