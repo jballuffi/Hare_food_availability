@@ -33,13 +33,12 @@ nuts <- nuts[!is.na(Species)]
 
 
 #create data table of mean nutritional values by species and height
-### EVENTUALLY ADD IN grid
 meannuts <- nuts[, .(mean(NDF_F, na.rm = TRUE), mean(ADF_F, na.rm = TRUE), 
-                     mean(ADL_F, na.rm = TRUE), mean(CP_F, na.rm = TRUE)), by = .(Species, Height)]
-names(meannuts) <- c("Species", "Height", "NDF", "ADF", "ADL", "CP")
+                     mean(ADL_F, na.rm = TRUE), mean(CP_F, na.rm = TRUE)), by = .(Species, Height, Grid)]
+names(meannuts) <- c("Species", "Height", "Grid", "NDF", "ADF", "ADL", "CP")
 
 #create a melted version of nutrient data, melted by nutrient
-justnuts <- nuts[, .(NDF_F, ADF_F, ADL_F, CP_F, Species, Height)]
+justnuts <- nuts[, .(NDF_F, ADF_F, ADL_F, CP_F, Species, Height, Grid)]
 justnuts <- melt(justnuts, measure.vars = c("NDF_F", "ADF_F", "ADL_F", "CP_F"), variable.name = "Nutrient", value.name = "Composition")
 
 #make height class a leveled factor
@@ -59,7 +58,7 @@ ggplot(justnuts)+
 # merge nutrients and starting biomass ------------------------------------
 
 #initial merge
-full <- merge(heights, meannuts, by = c("Species", "Height"), all.x = TRUE)
+full <- merge(heights, meannuts, by = c("Species", "Height", "Grid"), all.x = TRUE)
 
 #calculate biomass of protein
 full[, CPmass := Biomass*(CP/100)]
