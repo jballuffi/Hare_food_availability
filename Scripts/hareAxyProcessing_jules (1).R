@@ -21,11 +21,16 @@ library(lubridate)
 ####################################-
 #cleaning up the master deployment file as this provides the date on and off of the collar to clean axy data, also creates the FileName column so that all info from the deployment can be easily linked to axy data
 
-master -> read.csv("Input/GPS_XYZ_Data_StartingMay2018 _May22_2019.csv")
+master <- read.csv("Input/GPS_XYZ_Data_StartingMay2018 _May22_2019.csv")
+
 master = filter(master, Date.XYZ.Off!="")
+
 FOO = colsplit(master$Date.XYZ.Off, split = "-", names = c('day', 'month', "year"))
+
 master$DateFile = paste(FOO$month, str_pad(FOO$day, 2, "left", 0),"_20",FOO$year, sep="")
+
 master$FileName = paste(master$DateFile, master$XYZ, master$Bunny.ID,"1.csv", sep="_")
+
 write.csv(master, "y2019_master.csv")
 
 
@@ -107,7 +112,7 @@ convert2019a=function(axyfile){
 
 
 # bring in master deployment file. Adjust file path as needed.
-master=read.csv("/Users/emilystudd/Dropbox/phd/Data/2018 Data/y2019_master.csv")
+master=read.csv("y2019_master.csv")
 master<-master %>% mutate(Date.on.Bunny=as.Date(Date.on.Bunny, "%d-%b-%y"), Date.Off.Bunny=as.Date(Date.Off.Bunny, "%d-%b-%y"))
 
 # run the conversion on all files in the folder of hare data. # adjust file path as needed.   

@@ -1,46 +1,46 @@
 ﻿Bunny ID,GRID,XYZ,Date XYZ On,XYZ Schedule,Time XYZ On,GPS ,Date GPS On,Time GPS On,GPS Schedule,GPS Delay,Frequency,Date on Bunny,Time on Bunny,Date Off Bunny,Time off Bunny,Date GPS OFF,Time GPS Off,GPS Dump?,Date XYZ Off,SigA Start,SigA End,SigB Start,SigB End,Time XYZ Off,XYZ Dump,Last Record Date,Notes
-22109,Kloo,BZ,20-May-18,1,14:18:18,NA,NA,NA,NA,NA,149.290,20-May-18,~18:00,25-Nov-18,22:40,NA,NA,NA,27-Nov-18,NA,NA,NA,NA,already off,Y,28-Jun-18,
-23921,Kloo,HH,23-May-18,1,14:03:05,NA,NA,NA,NA,NA,149.100,23-May-18,~18:00,14-Nov-18,~22:30,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,07-Aug-18,
-24553,Kloo,MZ,23-May-18,1,14:03:13,NA,NA,NA,NA,NA,149.690,23-May-18,~18:00,12-Aug-18,~14:00,NA,NA,NA,05-Nov-18,NA,NA,NA,NA,already off,Y,12-Aug-18,Axy worked great
-24498,Kloo,JJ,23-May-18,1,14:03:22,NA,NA,NA,NA,NA,149.790,23-May-18,~18:00,21-Nov-18,~11:00,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,09-Oct-18,Axy worked great
-24521,Kloo,EA,23-May-18,1,14:03:25,NA,NA,NA,NA,NA,149.220,23-May-18,~18:00,02-Jul-18,~14:00,NA,NA,NA,05-Nov-18,NA,NA,NA,NA,already off,Y,28-Jul-18,Axy worked great
-22724,Kloo,HC Alb,24-May-18,1,13:51:53,NA,NA,NA,NA,NA,149.810,24-May-18,~18:00,28-Jul-18,~9:00,NA,NA,NA,05-Nov-18,NA,NA,NA,NA,already off,Y,11-Aug-18,Axy worked good
+22109,Kloo,BZ,20-May-18,1,14:18:18,NA,NA,NA,NA,NA,149.29,20-May-18,~18:00,25-Nov-18,22:40,NA,NA,NA,27-Nov-18,NA,NA,NA,NA,already off,Y,28-Jun-18,
+23921,Kloo,HH,23-May-18,1,14:03:05,NA,NA,NA,NA,NA,149.1,23-May-18,~18:00,14-Nov-18,~22:30,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,7-Aug-18,
+24553,Kloo,MZ,23-May-18,1,14:03:13,NA,NA,NA,NA,NA,149.69,23-May-18,~18:00,12-Aug-18,~14:00,NA,NA,NA,5-Nov-18,NA,NA,NA,NA,already off,Y,12-Aug-18,Axy worked great
+24498,Kloo,JJ,23-May-18,1,14:03:22,NA,NA,NA,NA,NA,149.79,23-May-18,~18:00,21-Nov-18,~11:00,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,9-Oct-18,Axy worked great
+24521,Kloo,EA,23-May-18,1,14:03:25,NA,NA,NA,NA,NA,149.22,23-May-18,~18:00,2-Jul-18,~14:00,NA,NA,NA,5-Nov-18,NA,NA,NA,NA,already off,Y,28-Jul-18,Axy worked great
+22724,Kloo,HC Alb,24-May-18,1,13:51:53,NA,NA,NA,NA,NA,149.81,24-May-18,~18:00,28-Jul-18,~9:00,NA,NA,NA,5-Nov-18,NA,NA,NA,NA,already off,Y,11-Aug-18,Axy worked good
 24335,Kloo,BU,24-May-18,1,13:52:03,NA,NA,NA,NA,NA,171.895,24-May-18,~18:00,21-Nov-18,11:15,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,Y,16-Jun-18,"Axy did not last long, only 2 weeks"
-24271,Kloo,HA,24-May-18,1,15:34:22,NA,NA,NA,NA,NA,171.635,24-May-18,~18:00,17-Nov-18,21:50,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,07-Aug-18,Axy worked well
-25021,Jo,HD,24-May-18,1,15:34:27,NA,NA,NA,NA,NA,171.135,24-May-18,~18:00,18-Jan-19,22:58,NA,NA,NA,18-Jan-19,NA,NA,NA,NA,already off,,06-Aug-18,Axy worked well
-24579,Jo,EF,25-May-18,1,16:41:26,NA,NA,NA,NA,NA,170.845,25-May-18,~18:00,12-Nov-18,~16:00,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,04-Aug-18,Axy worked well
-24653,Kloo,CF,27-May-18,1,15:46:48,NA,NA,NA,NA,NA,149.439,27-May-18,~18:00,13-Nov-18,22:01,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,04-Aug-18,
-24688,Kloo,CG,27-May-18,1,15:54:52,NA,NA,NA,NA,NA,149.490,27-May-18,~18:00,15-Nov-18,21:00,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,30-Jul-18,Axy worked well
-23717,Kloo,BX,28-May-18,1,13:55:38,NA,NA,NA,NA,NA,149.390,28-May-18,~18:00,20-Feb-19,5:00,NA,NA,NA,20-Feb-19,NA,NA,NA,NA,already off,,05-Jun-19,axy worked for only 8 days
+24271,Kloo,HA,24-May-18,1,15:34:22,NA,NA,NA,NA,NA,171.635,24-May-18,~18:00,17-Nov-18,21:50,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,7-Aug-18,Axy worked well
+25021,Jo,HD,24-May-18,1,15:34:27,NA,NA,NA,NA,NA,171.135,24-May-18,~18:00,18-Jan-19,22:58,NA,NA,NA,18-Jan-19,NA,NA,NA,NA,already off,,6-Aug-18,Axy worked well
+24579,Jo,EF,25-May-18,1,16:41:26,NA,NA,NA,NA,NA,170.845,25-May-18,~18:00,12-Nov-18,~16:00,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,4-Aug-18,Axy worked well
+24653,Kloo,CF,27-May-18,1,15:46:48,NA,NA,NA,NA,NA,149.439,27-May-18,~18:00,13-Nov-18,22:01,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,4-Aug-18,
+24688,Kloo,CG,27-May-18,1,15:54:52,NA,NA,NA,NA,NA,149.49,27-May-18,~18:00,15-Nov-18,21:00,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,30-Jul-18,Axy worked well
+23717,Kloo,BX,28-May-18,1,13:55:38,NA,NA,NA,NA,NA,149.39,28-May-18,~18:00,20-Feb-19,5:00,NA,NA,NA,20-Feb-19,NA,NA,NA,NA,already off,,5-Jun-19,axy worked for only 8 days
 23881,Jo,BE,28-May-18,1,14:09:19,NA,NA,NA,NA,NA,171.723,28-May-18,~18:00,,,,,,,,,,,,,,
 22847,Kloo,HF,30-May-18,1,13:31:12,NA,NA,NA,NA,,149.159,30-May-18,~18:00,21-Nov-18,12:05,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,13-Aug-18,Axy worked well
-24194,ChadBear,BH,01-Jun-18,1,14:32:30,NA,NA,NA,NA,NA,171.581,01-Jun-18,~18:00,05-Dec-18,22:15,NA,NA,NA,06-Dec-18,,,,,already off,,19-Aug-18,Axy worked well
-22837,Kloo,BL,01-Jun-18,1,14:32:34,NA,NA,NA,NA,NA,170.395,01-Jun-18,~18:00,13-Nov-18,~21:00,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,19-Aug-18,Axy worked well
+24194,ChadBear,BH,1-Jun-18,1,14:32:30,NA,NA,NA,NA,NA,171.581,1-Jun-18,~18:00,5-Dec-18,22:15,NA,NA,NA,6-Dec-18,,,,,already off,,19-Aug-18,Axy worked well
+22837,Kloo,BL,1-Jun-18,1,14:32:34,NA,NA,NA,NA,NA,170.395,1-Jun-18,~18:00,13-Nov-18,~21:00,NA,NA,NA,23-Nov-18,NA,NA,NA,NA,already off,,19-Aug-18,Axy worked well
 22837,Kloo,HC,20-Nov-18,1,19:52:52,AR,20-Nov-18,19:54:42,30,NA,149.665,21-Nov-18,11:30,17-Dec-18,~22:30,18-Dec-18,0:07,,17-Dec-18,,,,,23:43,,17-Dec-18,Axy worked well
-Not Deployed,,HE,20-Nov-18,1,19:49:10,MK,20-Nov-18,19:56:18,30,NA,149.020,,,,,,,,,,,,,,,,not deployed
+Not Deployed,,HE,20-Nov-18,1,19:49:10,MK,20-Nov-18,19:56:18,30,NA,149.02,,,,,,,,,,,,,,,,not deployed
 24335,Kloo,MZ,20-Nov-18,1,19:50:21,AF,20-Nov-18,19:57:37,30,NA,149.029,21-Nov-18,11:15,15-Dec-18,23:15,16-Dec-18,0:54,,16-Dec-18,,,,,0:47,,16-Dec-18,Axy worked well
-25224,ChadBear,EA,20-Nov-18,1,19:53:53,AI,20-Nov-18,19:59:25,30,NA,149.370,21-Nov-18,~12:15,23-Nov-18,14:45,25-Nov-18,already off,Y,29-Nov-18,NA,NA,NA,NA,10:21,,29-Nov-18,Axy worked well
-22847,Kloo,BO,20-Nov-18,1,19:53:34,MG,20-Nov-18,19:57:21,30,NA,149.924,21-Nov-18,12:05,04-Jan-19,22:30,04-Jan-19,already off,NA,04-Jan-19,,,,,already off,,31-Dec-18,Axy worked well
+25224,ChadBear,EA,20-Nov-18,1,19:53:53,AI,20-Nov-18,19:59:25,30,NA,149.37,21-Nov-18,~12:15,23-Nov-18,14:45,25-Nov-18,already off,Y,29-Nov-18,NA,NA,NA,NA,10:21,,29-Nov-18,Axy worked well
+22847,Kloo,BO,20-Nov-18,1,19:53:34,MG,20-Nov-18,19:57:21,30,NA,149.924,21-Nov-18,12:05,4-Jan-19,22:30,4-Jan-19,already off,NA,4-Jan-19,,,,,already off,,31-Dec-18,Axy worked well
 23921,Kloo,ET,20-Nov-18,1,19:53:22,AO,20-Nov-18,19:58:38,30,NA,149.547,21-Nov-18,~10:30,13-Dec-18,12:35,13-Dec-18,12:35,Y,14-Dec-18,,,,,10:31,,14-Dec-18,Axy worked well
-22109,Kloo,HB,20-Nov-18,1,19:52:13,HA,20-Nov-18,19:54:48,30,NA,149.340,25-Nov-18,22:40,17-Dec-18,22:55,18-Dec-18,0:17,,17-Dec-18,,,,,23:45,,17-Dec-18,"Axy worked well, but GPS didn't work"
-25050,Kloo,HI,20-Nov-18,1,19:48:40,MV,20-Nov-18,19:55:28,30,NA,149.320,21-Nov-18,11:46,17-Dec-18,22:08,,,,17-Dec-18,,,,,23:47,,17-Dec-18,"Axy worked well, but GPS didn't work"
+22109,Kloo,HB,20-Nov-18,1,19:52:13,HA,20-Nov-18,19:54:48,30,NA,149.34,25-Nov-18,22:40,17-Dec-18,22:55,18-Dec-18,0:17,,17-Dec-18,,,,,23:45,,17-Dec-18,"Axy worked well, but GPS didn't work"
+25050,Kloo,HI,20-Nov-18,1,19:48:40,MV,20-Nov-18,19:55:28,30,NA,149.32,21-Nov-18,11:46,17-Dec-18,22:08,,,,17-Dec-18,,,,,23:47,,17-Dec-18,"Axy worked well, but GPS didn't work"
 24653,Kloo,ZI,20-Nov-18,1,19:51:47,NB,20-Nov-18,19:55:59,30,NA,149.814,21-Nov-18,12:15,17-Dec-18,21:55,,,,17-Dec-18,,,,,23:51,,17-Dec-18,Axy worked well
-Not Deployed,,MP,20-Nov-18,1,19:52:36,AH,20-Nov-18,19:58:57,30,NA,149.770,,,,,,,,,,,,,,,,not deployed
+Not Deployed,,MP,20-Nov-18,1,19:52:36,AH,20-Nov-18,19:58:57,30,NA,149.77,,,,,,,,,,,,,,,,not deployed
 25028,Rolo,HJ,20-Nov-18,1,19:51:04,MT,20-Nov-18,19:58:22,30,NA,149.645,27-Nov-18,~21:45,15-Dec-18,22:30,16-Dec-18,0:59,,16-Dec-18,,,,,0:40,,16-Dec-18,"Kloo pit tag, axy worked well"
-Not Deployed,,EC,20-Nov-18,1,19:51:22,NG,20-Nov-18,19:57:04,30,NA,149.570,,,,,,,,,,,,,,,,
-24498,Kloo,BA,20-Nov-18,1,19:53:07,ZA,20-Nov-18,19:59:45,30,NA,149.700,21-Nov-18,~12:15,28-Jan-19,9:42,28-Jan-19,already off,,28-Jan-19,,,,,already off,,27-Jan-19,axy worked well
-Not Deployed,,XD,25-Nov-18,1,15:09:45,AI,25-Nov-18,15:07:28,30,NA,149.670,,,,,,,,,,,,,,,,not deployed
-25206,Jo,CE,25-Nov-18,1,15:10:04,MA,25-Nov-18,15:08:00,30,NA,149.560,27-Nov-18,21:28,06-Dec-18,14:20,06-Dec-18,15:26,Y,06-Dec-18,,,,,15:14,,06-Dec-18,Axy worked well
-Not Deployed,,EH,25-Nov-18,1,15:10:19,NG,25-Nov-18,15:08:31,30,NA,149.370,,,,,,,,,,,,,,,,not deployed
-Not Deployed,,YE,25-Nov-18,1,15:10:35,HB,25-Nov-18,15:12:18,30,NA,149.570,,,,,,,,,,,,,,,,not deployed
-24194,ChadBear,EH,05-Dec-18,1,15:33:23,NG,05-Dec-18,15:55:39,30,NA,149.770,05-Dec-18,~22:15,15-Jan-19,already off,15-Jan-19,07-Dec-18,,15-Jan-19,,,,,23:58:19,NA,15-Jan-19,"axy worked well, but GPS worked only for 2 days"
-Not Deployed,,YE,05-Dec-18,1,15:31:42,MK,05-Dec-18,15:56:42,30,NA,149.020,,,,,,,,,,,,,,,,not deployed
+Not Deployed,,EC,20-Nov-18,1,19:51:22,NG,20-Nov-18,19:57:04,30,NA,149.57,,,,,,,,,,,,,,,,
+24498,Kloo,BA,20-Nov-18,1,19:53:07,ZA,20-Nov-18,19:59:45,30,NA,149.7,21-Nov-18,~12:15,28-Jan-19,9:42,28-Jan-19,already off,,28-Jan-19,,,,,already off,,27-Jan-19,axy worked well
+Not Deployed,,XD,25-Nov-18,1,15:09:45,AI,25-Nov-18,15:07:28,30,NA,149.67,,,,,,,,,,,,,,,,not deployed
+25206,Jo,CE,25-Nov-18,1,15:10:04,MA,25-Nov-18,15:08:00,30,NA,149.56,27-Nov-18,21:28,6-Dec-18,14:20,6-Dec-18,15:26,Y,6-Dec-18,,,,,15:14,,6-Dec-18,Axy worked well
+Not Deployed,,EH,25-Nov-18,1,15:10:19,NG,25-Nov-18,15:08:31,30,NA,149.37,,,,,,,,,,,,,,,,not deployed
+Not Deployed,,YE,25-Nov-18,1,15:10:35,HB,25-Nov-18,15:12:18,30,NA,149.57,,,,,,,,,,,,,,,,not deployed
+24194,ChadBear,EH,5-Dec-18,1,15:33:23,NG,5-Dec-18,15:55:39,30,NA,149.77,5-Dec-18,~22:15,15-Jan-19,already off,15-Jan-19,7-Dec-18,,15-Jan-19,,,,,23:58:19,NA,15-Jan-19,"axy worked well, but GPS worked only for 2 days"
+Not Deployed,,YE,5-Dec-18,1,15:31:42,MK,5-Dec-18,15:56:42,30,NA,149.02,,,,,,,,,,,,,,,,not deployed
 24347,Rolo,BH,15-Dec-18,1,16:44:04,MA,15-Dec-18,16:43:44,30,NA,149.547,15-Dec-18,~22:55,20-Dec-18,15:15,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,GPS and axy were broken by a predator
 25038,Rolo,HE,15-Dec-18,1,16:45:00,AO,15-Dec-18,16:43:24,30,NA,149.56,15-Dec-18,22:25,23-Jan-19,0:56,23-Jan-19,already off,,23-Jan-19,,,,,,,NA,axy didn’t work
 24335,Kloo,ET,15-Dec-18,1,16:44:23,HB,15-Dec-18,16:43:10,30,NA,149.67,15-Dec-18,23:08,13-Jan-19,22:35,14-Jan-19,0:46,NA,14-Jan-19,,,,,1:01,,14-Jan-19,axy worked well
-25219,Kloo,MP,15-Dec-18,1,16:45:20,AH,15-Dec-18,16:42:14,30,NA,149.37,15-Dec-18,23:25,03-Feb-19,19:30,03-Feb-19,already off,,03-Feb-19,,,,,already off,,01-Feb-19,axy worked ell
-25028,Rolo,XD,15-Dec-18,1,16:45:43,AI,15-Dec-18,16:41:53,30,NA,149.57,15-Dec-18,22:30,03-Jan-19,16:00,03-Jan-19,17:46:40,NA,03-Jan-19,,,,,17:45:52,NA,03-Jan-19,axy worked well
-25050,Kloo,YE,17-Dec-18,1,13:14:52,AX,17-Dec-18,13:15:20,15,NA,149.079,17-Dec-18,22:08,05-Jan-19,14:15,05-Jan-19,15:00,NA,05-Jan-19,,,,,16:27,NA,05-Jan-19,axy worked well
+25219,Kloo,MP,15-Dec-18,1,16:45:20,AH,15-Dec-18,16:42:14,30,NA,149.37,15-Dec-18,23:25,3-Feb-19,19:30,3-Feb-19,already off,,3-Feb-19,,,,,already off,,1-Feb-19,axy worked ell
+25028,Rolo,XD,15-Dec-18,1,16:45:43,AI,15-Dec-18,16:41:53,30,NA,149.57,15-Dec-18,22:30,3-Jan-19,16:00,3-Jan-19,17:46:40,NA,3-Jan-19,,,,,17:45:52,NA,3-Jan-19,axy worked well
+25050,Kloo,YE,17-Dec-18,1,13:14:52,AX,17-Dec-18,13:15:20,15,NA,149.079,17-Dec-18,22:08,5-Jan-19,14:15,5-Jan-19,15:00,NA,5-Jan-19,,,,,16:27,NA,5-Jan-19,axy worked well
 24611,Kloo,HJ alb,17-Dec-18,1,13:15:56,AF,17-Dec-18,13:16:25,15,NA,149.72,17-Dec-18,22:32,11-Feb-19,0:15,11-Feb-19,already off,,11-Feb-19,,,,,1:21,NA,11-Feb-19,axy worked well
 22109,Kloo,HA,17-Dec-18,1,13:16:49,AZ,17-Dec-18,13:17:10,15,NA,149.645,17-Dec-18,22:55,24-Jan-19,0:45,24-Jan-19,already off,,24-Jan-19,,,,,1:32,,24-Jan-19,axy worked well
 22837,Kloo,MZ,17-Dec-18,1,13:17:32,MT,17-Dec-18,13:17:55,15,NA,149.03,17-Dec-18,22:30,13-Jan-19,22:06,14-Jan-19,already off,,14-Jan-19,,,,,0:57,NA,14-Jan-19,axy worked well
@@ -48,57 +48,57 @@ Not Deployed,,YE,05-Dec-18,1,15:31:42,MK,05-Dec-18,15:56:42,30,NA,149.020,,,,,,,
 Not Deployed,,HI,18-Dec-18,1,14:01:55,AR,18-Dec-18,14:01:08,15,NA,149.814,,,,,,,,,,,,,,,,not deployed
 25049,Jo,HB Alb,18-Dec-18,1,14:02:20,NB,18-Dec-18,14:01:29,15,NA,149.34,18-Dec-18,~22:20,27-Jan-19,23:21,27-Jan-19, already off,NA,27-Jan-19,,,,,~ 01:50,NA,28-Jan-19,axy worked well
 Not Deployed,,Z1,31-Dec-18,1,15:54:56,HA,31-Dec-18,15:54:58,15,NA,149.665,,,,,,,,,,,,,,,,not deployed
-22847,Kloo,XD,04-Jan-19,1,15:16:20,AI,04-Jan-19,15:17:00,15,NA,149.57,04-Jan-19,22:30,08-Feb-19,0:53,08-Feb-19,already off,,08-Feb-19,,,,,2:00,,08-Feb-19,axy worked well
-25021,Jo,BO,13-Jan-19,1,17:25:22,HA,13-Jan-19,17:25:46,15,,149.32,18-Jan-19,22:58,04-Feb-19,11:00,04-Feb-19,15:25,,04-Feb-19,,,,,already off,,02-Feb-19,axy worked well
+22847,Kloo,XD,4-Jan-19,1,15:16:20,AI,4-Jan-19,15:17:00,15,NA,149.57,4-Jan-19,22:30,8-Feb-19,0:53,8-Feb-19,already off,,8-Feb-19,,,,,2:00,,8-Feb-19,axy worked well
+25021,Jo,BO,13-Jan-19,1,17:25:22,HA,13-Jan-19,17:25:46,15,,149.32,18-Jan-19,22:58,4-Feb-19,11:00,4-Feb-19,15:25,,4-Feb-19,,,,,already off,,2-Feb-19,axy worked well
 24335,Kloo,YE,13-Jan-19,1,17:26:25,AR,13-Jan-19,17:26:44,15,,149.814,13-Jan-19,22:35,11-Feb-19,0:10,11-Feb-19,already off,,11-Feb-19,,,,,1:34,NA,11-Feb-19,"GPS didn't work properly, but axy orked well"
 22837,Kloo,HC,13-Jan-19,1,17:27:12,8,13-Jan-19,17:27:34,15,,149.924,13-Jan-19,22:06,25-Feb-19,11:32,22-Feb-19,already off,,25-Feb-19,,,,,20:22,,25-Feb-19,axy worked well
-24653,Kloo,HI,13-Jan-19,1,17:28:38,20,13-Jan-19,17:29:30,15,,149.665,13-Jan-19,22:59,07-Feb-19,1:35,07-Feb-19,already off,,07-Feb-19,,,,,2:11,,07-Feb-19,axy worked well
+24653,Kloo,HI,13-Jan-19,1,17:28:38,20,13-Jan-19,17:29:30,15,,149.665,13-Jan-19,22:59,7-Feb-19,1:35,7-Feb-19,already off,,7-Feb-19,,,,,2:11,,7-Feb-19,axy worked well
 25279,Jo,ZI,13-Jan-19,1,17:34:34,AX,13-Jan-19,17:30:10,15,,149.24,19-Jan-19,0:03,18-Feb-19,0:24,18-Feb-19,already off,,18-Feb-19,,,,,1:34,,18-Feb-19,axy worked well
 25676,CB,ZX,NA,1,NA,19,NA,NA,15,,149.309,15-Jan-19,23:17,20-Jan-19,22:16,20-Jan-19,~23:10,,20-Jan-19,,,,,~23:35,,,time for GPS/XYZ turning on was not recorded
 24194,CB,ET,NA,1,NA,10,NA,NA,15,,149.079,15-Jan-19,23:20,28-Jan-19,0:37,28-Jan-19,~01:40,,28-Jan-19,,,,,~01:50,,,time for GPS/XYZ turning on was not recorded
 25678,Jo,CG,,1,,MT,,,15,,149.67,15-Jan-19,22:27,15-Feb-19,0:36,already off,already off,,15-Feb-19,,,,,2:00,,,"time for GPS/XYZ turning on was not recorded, GPS didn't worK"
 24693,Jo,CE,17-Jan-19,1,19:59:08,HB,17-Jan-19,20:00:02,15,,149.829,18-Jan-19,23:16,10-Feb-19,1:03,10-Feb-19,by 02:15,Y,10-Feb-19,,,,,by 02:15,,10-Feb-19,"axy worked well, GPS dump?"
-25253,Kloo/CB,MZ,17-Jan-19,1,19:59:36,MK,17-Jan-19,20:00:26,15,,149.03,19-Jan-19,0:28,05-Feb-19,0:35,05-Feb-19,already off,,05-Feb-19,,,,,~02:50,,05-Feb-19,GPS didn’t work (accidentally turned off?)
+25253,Kloo/CB,MZ,17-Jan-19,1,19:59:36,MK,17-Jan-19,20:00:26,15,,149.03,19-Jan-19,0:28,5-Feb-19,0:35,5-Feb-19,already off,,5-Feb-19,,,,,~02:50,,5-Feb-19,GPS didn’t work (accidentally turned off?)
 24523,Kloo,XM,18-Jan-19,1,19:37:35,17,18-Jan-19,19:38:27,15,,149.77,23-Jan-19,23:51,20-Feb-19,9:45,20-Feb-19,already off,,20-Feb-19,,,,,19:06,,20-Feb-19,axy worked well
 25166,Rolo,CF,18-Jan-19,1,19:37:50,18,18-Jan-19,19:38:46,15,,151.695,19-Jan-19,22:38,18-Feb-19,17:00,11-Feb-19,already off,,23-Feb-19,,,,,already off,,23-Feb-19,axy wroked well
 24547,Jo,HF Alb,18-Jan-19,1,19:38:06,21,18-Jan-19,19:39:05,15,,151.715,22-Jan-19,23:00,10-Feb-19,0:38,10-Feb-19,by 02:15,,10-Feb-19,,,,,by 02:15,,,axy didn't work (turned off?)
-25092,Kloo,EH,19-Jan-19,1,18:45:21,MG,19-Jan-19,18:46:02,15,,151.675,19-Jan-19,23:05,08-Feb-19,8:40,08-Feb-19,9:55,,08-Feb-19,,,,,9:54,,,axy worked well
+25092,Kloo,EH,19-Jan-19,1,18:45:21,MG,19-Jan-19,18:46:02,15,,151.675,19-Jan-19,23:05,8-Feb-19,8:40,8-Feb-19,9:55,,8-Feb-19,,,,,9:54,,,axy worked well
 25029,Kloo,EA,19-Jan-19,1,18:46:25,55,19-Jan-19,18:46:51,15,,151.655,21-Jan-19,23:21,17-Feb-19,0:58,17-Feb-19,1:32,,17-Feb-19,,,,,1:30,,17-Feb-19,axy orked well
-25676,CB,SS,19-Jan-19,1,19:34:50,4,19-Jan-19,19:34:20,15,,151.555,20-Jan-19,22:16,08-Feb-19,1:10,08-Feb-19,already off,,08-Feb-19,,,,,2:10,,08-Feb-19,"axy worked well, but MALE!!"
+25676,CB,SS,19-Jan-19,1,19:34:50,4,19-Jan-19,19:34:20,15,,151.555,20-Jan-19,22:16,8-Feb-19,1:10,8-Feb-19,already off,,8-Feb-19,,,,,2:10,,8-Feb-19,"axy worked well, but MALE!!"
 25297,Jo,HD Alb,19-Jan-19,1,18:48:24,44,19-Jan-19,18:48:47,15,,151.265,22-Jan-19,23:30,10-Feb-19,0:58,10-Feb-19,by 02:15,,10-Feb-19,,,,,by 02:15,,10-Feb-19,axy worked well
 25677,CB,EC,19-Jan-19,1,18:49:08,HI,19-Jan-19,18:49:31,15,,151.635,20-Jan-19,22:40,25-Feb-19,by 20:00,21-Jan-19,already off,,25-Feb-19,,,,,21:52,,25-Feb-19,"Dennis GPS, GPS didn't work"
 25038,Rolo,BU,19-Jan-19,1,18:49:58,MD,19-Jan-19,18:50:23,15,,151.596,23-Jan-19,0:56,24-Feb-19,by 20:00,24-Feb-19,22:15,,24-Feb-19,,,,,22:36,,24-Feb-19,"Dennis GPS, axy orked well"
 25258,Jo,EF,19-Jan-19,1,19:16:01,NG,19-Jan-19,19:17:38,15,,151.615,22-Jan-19,23:55,20-Feb-19,,20-Feb-19,already off,,20-Feb-19,,,,,15:30,,20-Feb-19,"axy worked well, GPS worked for only 2 days"
-25026,Sulphur,ZX,22-Jan-19,1,19:01:01,HD,22-Jan-19,19:02:25,15,,149.309,27-Jan-19,0:06,28-Feb-19,23:20,19-Feb-19,already off,,01-Mar-19,,,,,1:35,,01-Mar-19,"Dennis GPS, axy worked well"
-24168,Sulphur,HH alb,22-Jan-19,1,19:01:45,MM,22-Jan-19,19:02:48,15,,149.329,27-Jan-19,2:10,28-Feb-19,23:48,26-Feb-19,already off,,28-Feb-19,,,,,1:34,,01-Mar-19,"Dennis GPS, axy worked well"
-25695,Jo,BL,22-Jan-19,1,19:02:02,19,22-Jan-19,19:03:06,15,,151.535,22-Jan-19,23:45,09-Feb-19,0:53,09-Feb-19,1:43,,09-Feb-19,,,,,1:46,,09-Feb-19,axy worked well
+25026,Sulphur,ZX,22-Jan-19,1,19:01:01,HD,22-Jan-19,19:02:25,15,,149.309,27-Jan-19,0:06,28-Feb-19,23:20,19-Feb-19,already off,,1-Mar-19,,,,,1:35,,1-Mar-19,"Dennis GPS, axy worked well"
+24168,Sulphur,HH alb,22-Jan-19,1,19:01:45,MM,22-Jan-19,19:02:48,15,,149.329,27-Jan-19,2:10,28-Feb-19,23:48,26-Feb-19,already off,,28-Feb-19,,,,,1:34,,1-Mar-19,"Dennis GPS, axy worked well"
+25695,Jo,BL,22-Jan-19,1,19:02:02,19,22-Jan-19,19:03:06,15,,151.535,22-Jan-19,23:45,9-Feb-19,0:53,9-Feb-19,1:43,,9-Feb-19,,,,,1:46,,9-Feb-19,axy worked well
 22109,Kloo,NB,23-Jan-19,1,21:12:42,AM,23-Jan-19,21:13:17,15,,149.46,24-Jan-19,0:42,31-Jan-19,by 13:30,31-Jan-19,14:35,,31-Jan-19,,,,,,,24-Jan-19,"Dennis GPS, axy didn't work"
 24143,Sulphur,HE,23-Jan-19,1,21:13:55,MP,23-Jan-19,21:14:25,15,,151.575,27-Jan-19,0:49,18-Feb-19,,18-Feb-19,19:35,,18-Feb-19,,,,,already off,,NA,"Dennis GPS, axy didn't work"
-24306,Sulphur,CD,23-Jan-19,1,21:15:09,AO,23-Jan-19,21:15:34,15,,151.515,27-Jan-19,1:00,01-Mar-19,22:33,23-Jan-19,already off,,01-Mar-19,,,,,,,01-Mar-19,"GPS didn’t work, axy data can't be opened"
+24306,Sulphur,CD,23-Jan-19,1,21:15:09,AO,23-Jan-19,21:15:34,15,,151.515,27-Jan-19,1:00,1-Mar-19,22:33,23-Jan-19,already off,,1-Mar-19,,,,,,,1-Mar-19,"GPS didn’t work, axy data can't be opened"
 24498,Kloo,BZ,23-Jan-19,1,21:16:07,ME,23-Jan-19,21:16:34,15,,151.495,28-Jan-19,9:42,20-Feb-19,9:30,20-Feb-19,already off,,20-Feb-19,,,,,19:09,,20-Feb-19,"Dennis GPS, axy worked ell"
 25049,Jo,JJ Alb,27-Jan-19,1,21:31:43,AZ,27-Jan-19,21:05:45,15,,150.435,27-Jan-19,23:21,18-Feb-19,18:00,18-Feb-19,19:46,,18-Feb-19,,,,,19:58,,18-Feb-19,axy worked well
-24194,Chad Bear,HA,27-Jan-19,1,21:32:02,TD,27-Jan-19,21:03:16,15,,151.465,28-Jan-19,0:37,14-Feb-19,15:15,14-Feb-19,by 16:00,,14-Feb-19,,,,,already off,,02-Feb-19,"Dennis GPS, axy worked for only a couple of days"
+24194,Chad Bear,HA,27-Jan-19,1,21:32:02,TD,27-Jan-19,21:03:16,15,,151.465,28-Jan-19,0:37,14-Feb-19,15:15,14-Feb-19,by 16:00,,14-Feb-19,,,,,already off,,2-Feb-19,"Dennis GPS, axy worked for only a couple of days"
 Not Deployed,,2,27-Jan-19,1,21:32:33,HG,27-Jan-19,21:09:00,15,,149.645,,,,,,,,,,,,,,,,Dennis GPS
 25682,Rolo,3,27-Jan-19,1,21:32:57,NH,27-Jan-19,21:12:50,15,,149.861,30-Jan-19,0:39,20-Feb-19,by 12:00,20-Feb-19,14:42,,20-Feb-19,,,,,15:30,,20-Feb-19,"Dennis GPS, axy worked well"
 Not Deployed,,HB,29-Jan-19,1,20:37:42,NB,29-Jan-19,20:38:51,15,,149.34,,,,,,,,,,,,,,,,
 25699,Kloo,BA,29-Jan-19,1,20:38:11,10,29-Jan-19,20:39:28,15,,149.079,30-Jan-19,0:50,25-Feb-19,by 20:00,25-Feb-19,21:21,,25-Feb-19,,,,,21:54,,25-Feb-19,axy worked well
-25253,Chad Bear,ET,29-Jan-19,1,20:38:30,ZA,29-Jan-19,20:40:07,15,,149.701,05-Feb-19,0:37,08-Feb-19,0:56,08-Feb-19,1:45,,08-Feb-19,,,,,2:01,,08-Feb-19,axy worked well
-24404,Rolo,NB,04-Feb-19,1,22:46:46,AM,04-Feb-19,22:47:14,15,,149.46,05-Feb-19,23:48,22-Feb-19,by 19:30,22-Feb-19,22:40,,22-Feb-19,,,,,already off,,06-Feb-19,axy worked for only 1 day
-24271,Kloo,MP,04-Feb-19,1,22:48:00,AH,04-Feb-19,22:48:33,15,,149.37,05-Feb-19,1:34,09-Apr-19,11:00,17-Mar-19,already off,,09-Apr-19,,,,,17:38,,09-Apr-19,axy worked well
-25686,Rolo,BO,04-Feb-19,1,22:48:56,HA,04-Feb-19,22:49:25,15,,149.319,05-Feb-19,23:35,18-Feb-19,0:35,18-Feb-19,1:30,,18-Feb-19,,,,,1:40,,18-Feb-19,"axy worked well, but MALE!!"
-22847,Kloo,HB,06-Feb-19,1,23:10:13,HG,06-Feb-19,23:13:23,15,,149.03,08-Feb-19,0:53,20-Mar-19,0:50,17-Mar-19,already off,,20-Mar-19,,,,,0:53,,20-Mar-19,"Dennis GPS, axy worked well"
-25253,Chad Bear,2,06-Feb-19,1,23:10:37,NB,06-Feb-19,23:15:28,15,,151.445,08-Feb-19,0:56,22-Feb-19,by 19:30,22-Feb-19,22:31,,22-Feb-19,,,,,already off,,12-Feb-19,"Dennis GPS, axy worked for only 4 days"
-Not Deployed,,4,06-Feb-19,1,23:10:58,NF,06-Feb-19,23:16:02,15,,149.11,,,,,,,,,,,,,,,,Dennis GPS
-24653,Kloo,5,06-Feb-19,1,23:11:24,AW,06-Feb-19,23:16:56,15,,149.34,07-Feb-19,1:38,22-Feb-19,by 19:30,22-Feb-19,22:28,,22-Feb-19,,,,,23:05,,22-Feb-19,"Dennis GPS, axy worked well"
-25092,Kloo,NA,06-Feb-19,1,23:31:30,MK,06-Feb-19,23:32:25,15,,149.645,08-Feb-19,8:40,06-Apr-19,10:00,13-Mar-19,already off,,08-Apr-19,,,,,13:48,,08-Apr-19,axy worked well
-25695,Jo,ET,08-Feb-19,1,22:03:50,ZA,08-Feb-19,22:06:06,15,,149.11,09-Feb-19,0:53,21-Mar-19,by 10:00,21-Mar-19,20:45,,21-Mar-19,,,,,20:30,,21-Mar-19,axy worked well
-24547,Jo,SS Alb,08-Feb-19,1,22:04:20,4,08-Feb-19,22:18:40,15,,149.57,10-Feb-19,0:38,12-Mar-19,0:07,15-Feb-19,already off,,12-Mar-19,,,,,1:36,,12-Mar-19,"axy worked well, GPS didn't work well"
-25297,Jo,HI,08-Feb-19,1,22:04:43,20,08-Feb-19,22:07:05,15,,149.701,10-Feb-19,0:58,,,,,,,,,,,,,,axy and GPS were damaged?
-24693,Jo,4,08-Feb-19,1,22:05:03,MG,08-Feb-19,22:07:25,15,,149.665,10-Feb-19,1:03,21-Feb-19,17:30,21-Feb-19,19:05,,21-Feb-19,,,,,19:08,,21-Feb-19,axy worked well
-24335,Kloo,XD,08-Feb-19,1,22:05:25,AI,08-Feb-19,22:07:49,15,,151.555,11-Feb-19,0:10,25-Feb-19,by 20:00,25-Feb-19,21:50,,25-Feb-19,,,,,21:59,,25-Feb-19,axy worked ell
-Not Deployed,,EH,08-Feb-19,1,22:21:50,AC,08-Feb-19,22:21:30,15,,151.675,,,,,,,,,,,,,,,,Dennis GPS
+25253,Chad Bear,ET,29-Jan-19,1,20:38:30,ZA,29-Jan-19,20:40:07,15,,149.701,5-Feb-19,0:37,8-Feb-19,0:56,8-Feb-19,1:45,,8-Feb-19,,,,,2:01,,8-Feb-19,axy worked well
+24404,Rolo,NB,4-Feb-19,1,22:46:46,AM,4-Feb-19,22:47:14,15,,149.46,5-Feb-19,23:48,22-Feb-19,by 19:30,22-Feb-19,22:40,,22-Feb-19,,,,,already off,,6-Feb-19,axy worked for only 1 day
+24271,Kloo,MP,4-Feb-19,1,22:48:00,AH,4-Feb-19,22:48:33,15,,149.37,5-Feb-19,1:34,9-Apr-19,11:00,17-Mar-19,already off,,9-Apr-19,,,,,17:38,,9-Apr-19,axy worked well
+25686,Rolo,BO,4-Feb-19,1,22:48:56,HA,4-Feb-19,22:49:25,15,,149.319,5-Feb-19,23:35,18-Feb-19,0:35,18-Feb-19,1:30,,18-Feb-19,,,,,1:40,,18-Feb-19,"axy worked well, but MALE!!"
+22847,Kloo,HB,6-Feb-19,1,23:10:13,HG,6-Feb-19,23:13:23,15,,149.03,8-Feb-19,0:53,20-Mar-19,0:50,17-Mar-19,already off,,20-Mar-19,,,,,0:53,,20-Mar-19,"Dennis GPS, axy worked well"
+25253,Chad Bear,2,6-Feb-19,1,23:10:37,NB,6-Feb-19,23:15:28,15,,151.445,8-Feb-19,0:56,22-Feb-19,by 19:30,22-Feb-19,22:31,,22-Feb-19,,,,,already off,,12-Feb-19,"Dennis GPS, axy worked for only 4 days"
+Not Deployed,,4,6-Feb-19,1,23:10:58,NF,6-Feb-19,23:16:02,15,,149.11,,,,,,,,,,,,,,,,Dennis GPS
+24653,Kloo,5,6-Feb-19,1,23:11:24,AW,6-Feb-19,23:16:56,15,,149.34,7-Feb-19,1:38,22-Feb-19,by 19:30,22-Feb-19,22:28,,22-Feb-19,,,,,23:05,,22-Feb-19,"Dennis GPS, axy worked well"
+25092,Kloo,NA,6-Feb-19,1,23:31:30,MK,6-Feb-19,23:32:25,15,,149.645,8-Feb-19,8:40,6-Apr-19,10:00,13-Mar-19,already off,,8-Apr-19,,,,,13:48,,8-Apr-19,axy worked well
+25695,Jo,ET,8-Feb-19,1,22:03:50,ZA,8-Feb-19,22:06:06,15,,149.11,9-Feb-19,0:53,21-Mar-19,by 10:00,21-Mar-19,20:45,,21-Mar-19,,,,,20:30,,21-Mar-19,axy worked well
+24547,Jo,SS Alb,8-Feb-19,1,22:04:20,4,8-Feb-19,22:18:40,15,,149.57,10-Feb-19,0:38,12-Mar-19,0:07,15-Feb-19,already off,,12-Mar-19,,,,,1:36,,12-Mar-19,"axy worked well, GPS didn't work well"
+25297,Jo,HI,8-Feb-19,1,22:04:43,20,8-Feb-19,22:07:05,15,,149.701,10-Feb-19,0:58,,,,,,,,,,,,,,axy and GPS were damaged?
+24693,Jo,4,8-Feb-19,1,22:05:03,MG,8-Feb-19,22:07:25,15,,149.665,10-Feb-19,1:03,21-Feb-19,17:30,21-Feb-19,19:05,,21-Feb-19,,,,,19:08,,21-Feb-19,axy worked well
+24335,Kloo,XD,8-Feb-19,1,22:05:25,AI,8-Feb-19,22:07:49,15,,151.555,11-Feb-19,0:10,25-Feb-19,by 20:00,25-Feb-19,21:50,,25-Feb-19,,,,,21:59,,25-Feb-19,axy worked ell
+Not Deployed,,EH,8-Feb-19,1,22:21:50,AC,8-Feb-19,22:21:30,15,,151.675,,,,,,,,,,,,,,,,Dennis GPS
 24611,Kloo,CE alb,10-Feb-19,1,21:27:16,21,10-Feb-19,21:27:38,15,,151.535,11-Feb-19,0:15,19-Mar-19,18:15,19-Feb-19,already off,,19-Mar-19,,,,,18:45,,19-Mar-19,"axy worked well, GPS worked only 8-9 days"
-25246,Jo,HJ alb,13-Feb-19,1,19:13:08,AF,13-Feb-19,19:13:25,15,,149.72,15-Feb-19,1:22,04-Mar-19,by 13:15,02-Mar-19,already off,,04-Mar-19,,,,,16:48,,04-Mar-19,axy worked well
+25246,Jo,HJ alb,13-Feb-19,1,19:13:08,AF,13-Feb-19,19:13:25,15,,149.72,15-Feb-19,1:22,4-Mar-19,by 13:15,2-Mar-19,already off,,4-Mar-19,,,,,16:48,,4-Mar-19,axy worked well
 25678,Jo,HD,14-Feb-19,1,19:06:11,TD,14-Feb-19,19:07:12,15,,149.814,15-Feb-19,0:36,24-Feb-19,by 20:00,24-Feb-19,22:00,,24-Feb-19,,,,,22:27,,24-Feb-19,"Dennis GPS, axy orked ell"
 24498,Kloo,EH,15-Feb-19,1,19:03:15,AC,15-Feb-19,19:02:50,15,,149.589,20-Feb-19,17:15,13-Mar-19,1:05,13-Mar-19,1:52,,13-Mar-19,,,,,1:58,,13-Mar-19,axy worked well
 25029,Kloo,HF Alb,16-Feb-19,1,20:49:29,19,16-Feb-19,20:50:56,15,,149.29,17-Feb-19,0:58,10-Mar-19,23:24,10-Mar-19,1:15,,11-Mar-19,,,,,0:27,,11-Mar-19,axy worked well
@@ -114,38 +114,38 @@ Not Deployed,,HA,20-Feb-19,1,17:42:36,44,20-Feb-19,17:42:58,15,,149.22,,,,,,,,,,
 25253,Chad Bear,EF,20-Feb-19,1,17:43:56,NG,20-Feb-19,17:44:20,15,,149.861,22-Feb-19,21:05,15-Mar-19,9:01,already off,already off,,15-Mar-19,,,,,9:25,,15-Mar-19,"axy worked well, but GPS didn't "
 25677,Chad Bear,BL,21-Feb-19,1,17:36:48,17,21-Feb-19,17:37:28,15,,149.701,25-Feb-19,by 21:30:00,28-Feb-19,by 13:10,28-Feb-19,14:30,,28-Feb-19,,,,,14:33,,28-Feb-19,axy worked well
 25038,Rolo,BZ,21-Feb-19,1,17:37:05,55,21-Feb-19,17:37:42,15,,149.769,24-Feb-19,by 21:30:00,15-Mar-19,8:41,15-Mar-19,9:24,,15-Mar-19,,,,,9:25,,15-Mar-19,axy worked well
-25687,Jo,BX,22-Feb-19,1,17:20:54,HA,22-Feb-19,17:21:24,15,,149.1,24-Feb-19,by 21:30:00,21-Mar-19,by 10:00,21-Mar-19,21:15,,21-Mar-19,,,,,already off,,04-Mar-19,axy worked only for 8-9 days 
-25678,Jo,4,22-Feb-19,1,17:21:48,AR,22-Feb-19,17:22:11,15,,149.81,24-Feb-19,by 21:30:00,01-Mar-19,12:00,01-Mar-19,14:43,,01-Mar-19,,,,,14:53,,01-Mar-19,axy worked well
-22837,Kloo,3,22-Feb-19,1,17:22:32,ME,22-Feb-19,17:22:55,15,,149.665,25-Feb-19,12:00,06-Apr-29,by 10:30,27-Mar-19,already off,,08-Apr-19,,,,,13:40,,08-Apr-19,axy worked well
-25603,Jo,XM,22-Feb-19,1,17:23:12,MG,22-Feb-19,17:23:28,15,,149.158,24-Feb-19,by 21:30:00,01-Mar-19,12:30,01-Mar-19,14:52,,01-Mar-19,,,,,14:57,,01-Mar-19,axy worked well
-24335,Kloo,5,25-Feb-19,1,0:03:10,AW,25-Feb-19,0:03:38,15,,149.01,25-Feb-19,by 21:30:00,06-Apr-19,10:41,06-Apr-19,14:35,,08-Apr-19,,,,,13:44,,08-Apr-19,axy worked well
+25687,Jo,BX,22-Feb-19,1,17:20:54,HA,22-Feb-19,17:21:24,15,,149.1,24-Feb-19,by 21:30:00,21-Mar-19,by 10:00,21-Mar-19,21:15,,21-Mar-19,,,,,already off,,4-Mar-19,axy worked only for 8-9 days 
+25678,Jo,4,22-Feb-19,1,17:21:48,AR,22-Feb-19,17:22:11,15,,149.81,24-Feb-19,by 21:30:00,1-Mar-19,12:00,1-Mar-19,14:43,,1-Mar-19,,,,,14:53,,1-Mar-19,axy worked well
+22837,Kloo,3,22-Feb-19,1,17:22:32,ME,22-Feb-19,17:22:55,15,,149.665,25-Feb-19,12:00,6-Apr-29,by 10:30,27-Mar-19,already off,,8-Apr-19,,,,,13:40,,8-Apr-19,axy worked well
+25603,Jo,XM,22-Feb-19,1,17:23:12,MG,22-Feb-19,17:23:28,15,,149.158,24-Feb-19,by 21:30:00,1-Mar-19,12:30,1-Mar-19,14:52,,1-Mar-19,,,,,14:57,,1-Mar-19,axy worked well
+24335,Kloo,5,25-Feb-19,1,0:03:10,AW,25-Feb-19,0:03:38,15,,149.01,25-Feb-19,by 21:30:00,6-Apr-19,10:41,6-Apr-19,14:35,,8-Apr-19,,,,,13:44,,8-Apr-19,axy worked well
 Not Deployed,,NB,25-Feb-19,1,0:04:01,AM,25-Feb-19,0:04:23,15,,149.814,,,,,,,,,,,,,,,,
-25699,Kloo,CG,25-Feb-19,1,0:04:43,NB,25-Feb-19,0:05:08,15,,149.82,25-Feb-19,by 21:30:00,02-Mar-19,17:00,02-Mar-19,20:19,,02-Mar-19,,,,,,,,axy data can’t be donloaded
+25699,Kloo,CG,25-Feb-19,1,0:04:43,NB,25-Feb-19,0:05:08,15,,149.82,25-Feb-19,by 21:30:00,2-Mar-19,17:00,2-Mar-19,20:19,,2-Mar-19,,,,,,,,axy data can’t be donloaded
 24168,Sulphur,YE alb,28-Feb-19,1,20:24:05,AM,28-Feb-19,20:25:00,15,,149.34,28-Feb-19,23:48,21-Mar-19,by 13:00,21-Mar-19,20:50,,21-Mar-19,,,,,20:30,,21-Mar-19,axy worked well
-25026,Sulphur,JJ,28-Feb-19,1,20:25:22,17,28-Feb-19,20:25:52,15,,149.814,28-Feb-19,23:20,02-Apr-19,9:00,25-Mar-19,already off,,02-Apr-19,,,,,by 17:00,,02-Apr-19,axy worked well
-25236,Sulphur,BL,28-Feb-19,1,20:26:12,44,28-Feb-19,20:26:32,15,,149.924,28-Feb-19,23:28,02-Apr-19,9:00,22-Mar-19,already off,,02-Apr-19,,,,,by 17:00,,02-Apr-19,axy worked well
-25604,Sulphur,NB,28-Feb-19,1,20:26:50,MT,28-Feb-19,20:28:43,15,,149.079,01-Mar-19,0:30,02-Apr-19,9:00,02-Apr-19,16:00,,,,,,,by 17:00,,,"axy data recorded at 100Hz,GPS data missing Mar02-09"
-24306,Sulphur,4,01-Mar-19,1,16:12:16,MM,01-Mar-19,16:14:00,15,,149.81,01-Mar-19,22:33,02-Apr-19,9:00,02-Apr-19,16:05,,02-Apr-19,,,,,by 17:00,,02-Apr-19,axy worked well
-30341,Sulphur,XM,01-Mar-19,1,16:12:59,10,01-Mar-19,16:14:39,15,,149.329,01-Mar-19,22:36,05-Mar-19,13:00,05-Mar-19,21:05,,05-Mar-19,,,,,21:09,,05-Mar-19,axy worked well
-25226,Sulphur,EC,01-Mar-19,1,16:13:17,HD,01-Mar-19,16:15:09,15,,149.309,01-Mar-19,22:47,02-Apr-19,9:00,30-Mar-19,already off,,02-Apr-19,,,,,by 17:00,,02-Apr-19,axy worked well
-25205,Sulphur,ZX,01-Mar-19,1,16:13:33,AI,01-Mar-19,16:17:49,15,,149.159,01-Mar-19,22:20,02-Apr-19,9:00,02-Apr-19,16:30,,02-Apr-19,,,,,by 17:00,,02-Apr-19,axy worked well
-24375,Agnes,BU,07-Mar-19,1,16:23:48,10,07-Mar-19,16:26:39,15,,151.555,08-Mar-19,1:30,09-Apr-19,by 11:00,already off,already off,,09-Apr-19,,,,,17:41,,09-Apr-19,"GPS didn't work, axy worked well"
-24599,Agnes,HJ alb,07-Mar-19,1,16:24:18,AR,07-Mar-19,16:27:04,15,,151.675,07-Mar-19,23:51,09-Apr-19,by 11:00,09-Apr-19,17:25,,09-Apr-19,,,,,17:54,,09-Apr-19,axy worked well
-22113,Agnes,HE,07-Mar-19,1,16:24:35,TD,07-Mar-19,16:27:30,15,,151.515,08-Mar-19,0:27,20-Mar-19,13:00,20-Mar-19,16:27,,,,,,,already off,,NA,axy didn't work
-25277,Agnes,2,07-Mar-19,1,16:24:57,NH,07-Mar-19,16:27:47,15,,151.615,08-Mar-19,0:46,09-Apr-19,by 11:00,already off,already off,,09-Apr-19,,,,,already off,,16-Mar-19,"GPS didn't work, axy worked for only 10 days"
-25086,Agnes,XM,07-Mar-19,1,16:25:09,MG,07-Mar-19,16:28:17,15,,151.445,08-Mar-19,0:25,09-Apr-19,by 11:00,05-Apr-19,already off,,09-Apr-19,,,,,17:45,,09-Apr-19,axy worked well
-25697,Agnes,HH alb,07-Mar-19,1,16:25:27,AF,07-Mar-19,19:52:43,15,,150.435,07-Mar-19,23:48,21-Mar-19,by 13:30,21-Mar-19,21:00,,21-Mar-19,,,,,20:30,,21-Mar-19,axy worked well
-24956,Agnes,BA,07-Mar-19,1,16:25:47,AO,07-Mar-19,19:53:36,15,,151.635,08-Mar-19,0:10,09-Apr-19,by 11:00,06-Apr-19,already off,Y,09-Apr-19,,,,,17:50,,09-Apr-19,axy worked well
-25029,Kloo,CD,09-Mar-19,1,21:05:00,AX,09-Mar-19,21:05:23,15,,149.329,10-Mar-19,23:24,06-Apr-19,9:47,06-Apr-19,15:00,,08-Apr-19,,,,,13:38,,,axy worked incorrectly…
-24498,Kloo,XD,09-Mar-19,1,21:05:50,MD,09-Mar-19,21:06:08,15,,149.82,13-Mar-19,1:05,09-Apr-19,11:00,09-Apr-19,16:45,Y,09-Apr-19,,,,,17:35,,09-Apr-19,axy worked well
-Not Deployed,,HD,09-Mar-19,1,21:06:30,IH,09-Mar-19,21:06:51,15,,149.32,,,,,,,,,,,,,,,,
-24653,Kloo,HA Alb,09-Mar-19,1,21:07:28,NB,09-Mar-19,21:07:50,15,,149.46,10-Mar-19,23:40,06-Apr-19,by 10:30,06-Apr-19,15:20,,08-Apr-19,,,,,13:35,,08-Apr-19,axy wroked well
-24547,Jo,HC Alb,09-Mar-19,1,21:08:26,8,09-Mar-19,21:08:51,15,,149.22,12-Mar-19,0:07,05-Apr-19,13:00,05-Apr-19,14:05,,05-Apr-19,,,,,13:04,,05-Apr-19,axy worked well
-Not Deployed,,1,09-Mar-19,1,21:09:16,NF,09-Mar-19,21:09:35,15,,149.72,,,,,,,,,,,,,,,,
+25026,Sulphur,JJ,28-Feb-19,1,20:25:22,17,28-Feb-19,20:25:52,15,,149.814,28-Feb-19,23:20,2-Apr-19,9:00,25-Mar-19,already off,,2-Apr-19,,,,,by 17:00,,2-Apr-19,axy worked well
+25236,Sulphur,BL,28-Feb-19,1,20:26:12,44,28-Feb-19,20:26:32,15,,149.924,28-Feb-19,23:28,2-Apr-19,9:00,22-Mar-19,already off,,2-Apr-19,,,,,by 17:00,,2-Apr-19,axy worked well
+25604,Sulphur,NB,28-Feb-19,1,20:26:50,MT,28-Feb-19,20:28:43,15,,149.079,1-Mar-19,0:30,2-Apr-19,9:00,2-Apr-19,16:00,,,,,,,by 17:00,,,"axy data recorded at 100Hz,GPS data missing Mar02-09"
+24306,Sulphur,4,1-Mar-19,1,16:12:16,MM,1-Mar-19,16:14:00,15,,149.81,1-Mar-19,22:33,2-Apr-19,9:00,2-Apr-19,16:05,,2-Apr-19,,,,,by 17:00,,2-Apr-19,axy worked well
+30341,Sulphur,XM,1-Mar-19,1,16:12:59,10,1-Mar-19,16:14:39,15,,149.329,1-Mar-19,22:36,5-Mar-19,13:00,5-Mar-19,21:05,,5-Mar-19,,,,,21:09,,5-Mar-19,axy worked well
+25226,Sulphur,EC,1-Mar-19,1,16:13:17,HD,1-Mar-19,16:15:09,15,,149.309,1-Mar-19,22:47,2-Apr-19,9:00,30-Mar-19,already off,,2-Apr-19,,,,,by 17:00,,2-Apr-19,axy worked well
+25205,Sulphur,ZX,1-Mar-19,1,16:13:33,AI,1-Mar-19,16:17:49,15,,149.159,1-Mar-19,22:20,2-Apr-19,9:00,2-Apr-19,16:30,,2-Apr-19,,,,,by 17:00,,2-Apr-19,axy worked well
+24375,Agnes,BU,7-Mar-19,1,16:23:48,10,7-Mar-19,16:26:39,15,,151.555,8-Mar-19,1:30,9-Apr-19,by 11:00,already off,already off,,9-Apr-19,,,,,17:41,,9-Apr-19,"GPS didn't work, axy worked well"
+24599,Agnes,HJ alb,7-Mar-19,1,16:24:18,AR,7-Mar-19,16:27:04,15,,151.675,7-Mar-19,23:51,9-Apr-19,by 11:00,9-Apr-19,17:25,,9-Apr-19,,,,,17:54,,9-Apr-19,axy worked well
+22113,Agnes,HE,7-Mar-19,1,16:24:35,TD,7-Mar-19,16:27:30,15,,151.515,8-Mar-19,0:27,20-Mar-19,13:00,20-Mar-19,16:27,,,,,,,already off,,NA,axy didn't work
+25277,Agnes,2,7-Mar-19,1,16:24:57,NH,7-Mar-19,16:27:47,15,,151.615,8-Mar-19,0:46,9-Apr-19,by 11:00,already off,already off,,9-Apr-19,,,,,already off,,16-Mar-19,"GPS didn't work, axy worked for only 10 days"
+25086,Agnes,XM,7-Mar-19,1,16:25:09,MG,7-Mar-19,16:28:17,15,,151.445,8-Mar-19,0:25,9-Apr-19,by 11:00,5-Apr-19,already off,,9-Apr-19,,,,,17:45,,9-Apr-19,axy worked well
+25697,Agnes,HH alb,7-Mar-19,1,16:25:27,AF,7-Mar-19,19:52:43,15,,150.435,7-Mar-19,23:48,21-Mar-19,by 13:30,21-Mar-19,21:00,,21-Mar-19,,,,,20:30,,21-Mar-19,axy worked well
+24956,Agnes,BA,7-Mar-19,1,16:25:47,AO,7-Mar-19,19:53:36,15,,151.635,8-Mar-19,0:10,9-Apr-19,by 11:00,6-Apr-19,already off,Y,9-Apr-19,,,,,17:50,,9-Apr-19,axy worked well
+25029,Kloo,CD,9-Mar-19,1,21:05:00,AX,9-Mar-19,21:05:23,15,,149.329,10-Mar-19,23:24,6-Apr-19,9:47,6-Apr-19,15:00,,8-Apr-19,,,,,13:38,,,axy worked incorrectly…
+24498,Kloo,XD,9-Mar-19,1,21:05:50,MD,9-Mar-19,21:06:08,15,,149.82,13-Mar-19,1:05,9-Apr-19,11:00,9-Apr-19,16:45,Y,9-Apr-19,,,,,17:35,,9-Apr-19,axy worked well
+Not Deployed,,HD,9-Mar-19,1,21:06:30,IH,9-Mar-19,21:06:51,15,,149.32,,,,,,,,,,,,,,,,
+24653,Kloo,HA Alb,9-Mar-19,1,21:07:28,NB,9-Mar-19,21:07:50,15,,149.46,10-Mar-19,23:40,6-Apr-19,by 10:30,6-Apr-19,15:20,,8-Apr-19,,,,,13:35,,8-Apr-19,axy wroked well
+24547,Jo,HC Alb,9-Mar-19,1,21:08:26,8,9-Mar-19,21:08:51,15,,149.22,12-Mar-19,0:07,5-Apr-19,13:00,5-Apr-19,14:05,,5-Apr-19,,,,,13:04,,5-Apr-19,axy worked well
+Not Deployed,,1,9-Mar-19,1,21:09:16,NF,9-Mar-19,21:09:35,15,,149.72,,,,,,,,,,,,,,,,
 25253,Chad Bear,HD Alb,14-Mar-19,1,19:22:14,4,14-Mar-19,19:22:40,15,,149.72,15-Mar-19,9:01,31-Mar-19,9:30,31-Mar-19,13:00,,31-Mar-19,,,,,13:05,,31-Mar-19,axy worked well
 25038,Rolo,EH,14-Mar-19,1,19:22:59,AC,14-Mar-19,19:23:17,15,,149.32,15-Mar-19,8:41,12-Apr-19,9:00,12-Apr-19,9:25,,12-Apr-19,,,,,9:38,,,axy data is too large
 Not Deployed,,1,18-Mar-19,1,12:13:20,55,18-Mar-19,12:13:43,15,,149.77,,,,,,,,,,,,,,,,
-22847,Kloo,EF,18-Mar-19,1,12:14:05,HB,18-Mar-19,12:14:25,15,,149.69,20-Mar-19,0:50,06-Apr-19,by 10:30,06-Apr-19,15:08,,08-Apr-19,,,,,13:32,,08-Apr-19,axy worked well
-25695,Jo,SS,18-Mar-19,1,12:15:03,IH,18-Mar-19,12:15:21,15,,149.859,21-Mar-19,9:00,04-Apr-19,13:00,27-Mar-19,already off,,04-Apr-19,,,,,15:08,,04-Apr-19,axy worked well
-25687,Jo,BZ,18-Mar-19,1,12:15:38,19,18-Mar-19,12:15:57,15,,149.589,21-Mar-19,9:06,09-Apr-19,by 14:00,,,,09-Apr-19,,,,,17:30,,09-Apr-19,"GPS doesn't turn on, axy worked well"
+22847,Kloo,EF,18-Mar-19,1,12:14:05,HB,18-Mar-19,12:14:25,15,,149.69,20-Mar-19,0:50,6-Apr-19,by 10:30,6-Apr-19,15:08,,8-Apr-19,,,,,13:32,,8-Apr-19,axy worked well
+25695,Jo,SS,18-Mar-19,1,12:15:03,IH,18-Mar-19,12:15:21,15,,149.859,21-Mar-19,9:00,4-Apr-19,13:00,27-Mar-19,already off,,4-Apr-19,,,,,15:08,,4-Apr-19,axy worked well
+25687,Jo,BZ,18-Mar-19,1,12:15:38,19,18-Mar-19,12:15:57,15,,149.589,21-Mar-19,9:06,9-Apr-19,by 14:00,,,,9-Apr-19,,,,,17:30,,9-Apr-19,"GPS doesn't turn on, axy worked well"
 25017,Kloo,HF Alb,18-Mar-19,1,12:16:16,NF,18-Mar-19,12:16:35,15,,149.7,21-Mar-19,10:02,16-Apr-19,15:30,already off,already off,,16-Apr-19,,,,,21:53,,16-Apr-19,"GPS didn't work, axy worked well"
