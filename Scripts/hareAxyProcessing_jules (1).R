@@ -21,22 +21,18 @@ library(lubridate)
 ####################################-
 #cleaning up the master deployment file as this provides the date on and off of the collar to clean axy data, also creates the FileName column so that all info from the deployment can be easily linked to axy data
 
-master <- read.csv("Input/GPS_XYZ_Data_StartingMay2018 _May22_2019.csv")
 
-master = filter(master, Date.XYZ.Off!="")
+master <- fread("Axy/Master_collar_sheet.csv")
 
-FOO = colsplit(master$Date.XYZ.Off, split = "-", names = c('day', 'month', "year"))
-
-master$DateFile = paste(FOO$month, str_pad(FOO$day, 2, "left", 0),"_20",FOO$year, sep="")
-
-master$FileName = paste(master$DateFile, master$XYZ, master$Bunny.ID,"1.csv", sep="_")
-
-write.csv(master, "y2019_master.csv")
-
+#Whats the working directory
+setwd("Axy")
 
 ####################################-
 ### load functions ####
 ####################################-
+
+#these functions do the behaviour classification
+
 
 ## Do not change anything in here
 diffX<-function(data){
@@ -69,23 +65,32 @@ behavclass<-function(axy) {
   return(axy1)
 }
 
+
+
+
 ## may need to make changes to the next function depending on what the axy file looks like from the latest axy manager.  I provide two alternative functions depending on one change in file format that I know varies between years of axy manager.  You'll have to choose which is best but may have to change the first line more if axy file format has changed more.
+
+
+#everything we want R to do with each axy file. Loads file, does classification, then calculates a daily summary. 
+#saves a conversion file and a daily summary file.
+#these two functions below use the functions above
+#i should use the first option
 
 # might also want to adjust the last two lines depending where you want the converted file to be saved. 
 
 #use if date and time are in separate columns.  Also double check format of date and adjust the third line of the function as needed.  
-convert2019=function(axyfile){
-  axy=fread(axyfile, col.names=c("date", "time", "X", "Y", "Z", "temp", "alt"))
-  axy=behavclass(axy)
-  axy=axy %>% mutate(Date=as.Date(date, "%d-%m-%Y"))
-  byDay=axy %>% group_by(Date, All) %>% summarise(num=n())
-  byDay=spread(byDay, All, num )
-  master1=filter(master, FileName==axyfile)
-  byDay$id=master1$Bunny.ID
-  byDay=filter(byDay, Date>master1$Date.on.Bunny & Date<master1$Date.Off.Bunny)
+convert2019 = function(axyfile){
+  axy = fread(axyfile, col.names = c("date", "time", "X", "Y", "Z", "temp", "alt")) #create column names
+  axy = behavclass(axy) #run function above
+  axy = axy %>% mutate(Date = as.Date(date, "%d-%m-%Y")) 
+  byDay = axy %>% group_by(Date, All) %>% summarise(num = n())
+  byDay = spread(byDay, All, num )
+  master1 = filter(master, FileName == axyfile)
+  byDay$id = master1$Bunny.ID
+  byDay = filter(byDay, Date > master1$Date.on.Bunny & Date < master1$Date.Off.Bunny)
   ## if you want the converted file saved in a different folder from the original file this needs to be adjusted to include a filepath to the folder you wish to save them in.
-  write.csv(byDay, paste(unlist(strsplit(axyfile, "[.]"))[1],"daily.csv", sep=""))
-  write.csv(axy, paste(unlist(strsplit(axyfile, "[.]"))[1], "convert.csv", sep=""))
+  write.csv(byDay, paste(unlist(strsplit(axyfile, "[.]"))[1],"daily.csv", sep = ""))
+  write.csv(axy, paste(unlist(strsplit(axyfile, "[.]"))[1], "convert.csv", sep = ""))
 }
 
 # use if date and time are combined in one column. Also double check format of date and adjust the fifth line of the function as needed.  
@@ -105,23 +110,26 @@ convert2019a=function(axyfile){
   write.csv(axy, paste(unlist(strsplit(axyfile, "[.]"))[1], "convert.csv", sep=""))
 }
 
+
+
+
 ####################################-
 ### Convert axy data to behaviour ####
 ####################################-
 #This is set up for data that is organized in the folder in the following manner: HareDataFolder/BunID/XYZ/axyfiles.  I.e. there is a folder for each bun, that contains two folders, one for GPS and one for XYZ.  The axy files should be labelled as dateOffBun_axyName_BunID_1.csv.  If they aren't organized or labelled in this way, this script will not work.  
 
 
-# bring in master deployment file. Adjust file path as needed.
-master=read.csv("y2019_master.csv")
+
+#make sure dates are classed as dates
 master<-master %>% mutate(Date.on.Bunny=as.Date(Date.on.Bunny, "%d-%b-%y"), Date.Off.Bunny=as.Date(Date.Off.Bunny, "%d-%b-%y"))
 
 # run the conversion on all files in the folder of hare data. # adjust file path as needed.   
-setwd("/Volumes/PhDAllBack/GPS_XYZ_Data/May12_2019/Agnes")
+
 hares=dir()               
 for(i in 1:length(hares)){
-  setwd(paste("/Volumes/PhDAllBack/GPS_XYZ_Data/May12_2019/Agnes",hares[i], sep="/"))
+  setwd(paste("Axy",hares[i], sep="/"))
   a=paste(getwd(),"XYZ", sep="/")
   setwd(a)
-  files=dir(pattern="*_1.csv")
+  files=dir(pattern="*.csv")
   files %>% map(convert2019)
 }
