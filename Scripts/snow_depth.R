@@ -4,15 +4,16 @@
 
 
 #source the R folder to load any packages and functions
-lapply(dir('R', '*.R', full.names = TRUE), source)
+#lapply(dir('R', '*.R', full.names = TRUE), source)
 
+library(data.table)
 
 
 
 # collect data ------------------------------------------------------------
 
 #list snow files from grid-level measurements and fread
-snowfiles <- dir("data/", "Snow_grid*", full.names = TRUE) 
+snowfiles <- dir("Input/", "Snow_grid*", full.names = TRUE) 
 ls.snowfiles <- lapply(snowfiles, fread)
 #rbindlist with an origin column
 snowgrids <- rbindlist(ls.snowfiles, fill = TRUE, use.names = TRUE, idcol = "origin")
