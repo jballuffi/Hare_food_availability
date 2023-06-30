@@ -7,8 +7,8 @@
 #lapply(dir('R', '*.R', full.names = TRUE), source)
 
 library(data.table)
-
-
+library(lubridate)
+library(ggplot2)
 
 # collect data ------------------------------------------------------------
 
@@ -22,7 +22,7 @@ snowgrids[, origin := factor(origin, labels = basename(snowfiles))]
 
 
 #data from camera traps
-snowcams <- fread("data/Snow_cameras.csv")
+snowcams <- fread("Input/Snow_cameras.csv")
 
 
 
@@ -122,8 +122,6 @@ snowfull[month(Date) == 11 & winter == "2018-2019", SD := 0]
   facet_wrap(~winter, scales = "free"))
 
 #save data
-saveRDS(snowfull, "data/snowgrids.rds")
+saveRDS(snowfull, "Output/Data/snowgrids.rds")
 
-#save figure
-ggsave("Output/figures/snowdepth_summary.jpeg", splot, width = 11, height = 8.5, units = "in")
 
