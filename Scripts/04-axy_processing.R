@@ -2,6 +2,7 @@
 ### Axy Conversion Script
 ### Emily Studd
 ### Feb 2023
+### Edited by Juliana Balluffi-Fry (June 2023)
 ####################################-
 
 library(reshape)
@@ -16,7 +17,7 @@ library(lubridate)
 
 # read in master collar sheet ---------------------------------------------
 
-master <- fread("Axy/Master_collar_sheet.csv")
+master <- fread("Axy_data/Master_collar_sheet.csv")
 #make sure dates are classed as dates
 master[, Date.on.Bunny := dmy(Date.on.Bunny)]
 master[, Date.Off.Bunny := dmy(Date.Off.Bunny)]
@@ -63,16 +64,33 @@ behavclass<-function(axy) {
 
 # use if date and time are in separate columns. 
 convert2019 = function(axyfilepath){
+  
+  #take just the file name from the file path
   axyfile = tstrsplit(axyfilepath, "/", keep = 4)
+  
+  #fread in all axy files and give column names
   axy = fread(axyfilepath, col.names = c("date", "time", "X", "Y", "Z", "temp", "alt")) #create column names
-  axy = behavclass(axy) #run function above
+  
+  #run the behaviour function 
+  axy = behavclass(axy) 
+  
+  #classify date in the axy behaviour output 
   axy[, Date := dmy(date)]
+  
+  #group behaviours by date
   byDay = axy %>% group_by(Date, All) %>% summarise(num = n())
   byDay = spread(byDay, All, num )
+  
+  #subset the master sheet to just this file
   master1 = filter(master, FileName == axyfile)
+  
+  #filter behaviours to only include dates within bunny deployment
   byDay = filter(byDay, Date > master1$Date.on.Bunny & Date < master1$Date.Off.Bunny)
+  
+  #create an ID column in the behaviour data using whats in master sheet
   byDay$ID <- as.numeric(master1$ID)
-  ## if you want the converted file saved in a different folder from the original file this needs to be adjusted to include a filepath to the folder you wish to save them in.
+  
+  #save both original conversion data and the daily behaviours to output folder
   write.csv(byDay, paste0("Output/Data/Axy_behaviours/", "daily_", axyfile))
   write.csv(axy, paste0("Output/Data/Axy_behaviours/", "convert_", axyfile))
 }
@@ -83,62 +101,29 @@ convert2019 = function(axyfilepath){
 # Run function on list of file paths --------------------------------------
 
 #create starting directory to Axy folder
-hares = dir("Axy/")
+hares = dir("Axy_data/")
 
 #within the hare directory get filepaths that are in the XYZ folders and have .csv 
 getfiles <- function(hare){
-  files <- list.files(paste0("Axy/", hare, "/", "XYZ"), pattern = "*csv", full.names = TRUE)
+  files <- list.files(paste0("Axy_data/", hare, "/", "XYZ"), pattern = "*csv", full.names = TRUE)
   return(files)
 }
+
 #run this file fetching function on all hares listed in the hare directory
 files <- lapply(hares, getfiles)
+#unlist to get all file paths as characters, then list again
+files <- unlist(files)
+files <- as.list(files)
 
-
-test <- files[7:9]
-lapply(test, convert2019)
-
-
-
-
-
-
-
-
-####################################-
-### Convert axy data to behaviour ####
-####################################-
-#This is set up for data that is organized in the folder in the following manner: HareDataFolder/BunID/XYZ/axyfiles.  I.e. there is a folder for each bun, that contains two folders, one for GPS and one for XYZ.  The axy files should be labelled as dateOffBun_axyName_BunID_1.csv.  If they aren't organized or labelled in this way, this script will not work.  
-
-
-
-
-# run the conversion on all files in the folder of hare data. # adjust file path as needed.   
-
-
-#setwd("Axy")
-
-hares=dir("Axy/")               
-for(i in 1:length(hares)){
-  setwd(paste("Axy", hares[i], sep="/"))
-  a=paste(getwd(),"XYZ", sep="/")
-  setwd(a)
-  files=dir(pattern="*.csv")
-  files %>% map(convert2019)
-}
+#lapply the convert function to this list of file paths
+lapply(files, convert2019)
 
 
 
 
 
 
-
-
-
-
-
-
-
-# use if date and time are combined in one column. Also double check format of date and adjust the fifth line of the function as needed.  
+# extra version of the conversion function if date and time are combined in one column.
 convert2019a=function(axyfile){
   axy=fread(axyfile, col.names=c("datetime", "X", "Y", "Z", "temp", "alt"))
   axy=mutate(axy, date=substr(datetime,1, 10), time=substr(datetime, 12, 25))
