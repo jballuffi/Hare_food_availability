@@ -9,6 +9,7 @@ library(ggpubr)
 
 beh <- fread("Input/allHareDailyValues2015_2021.csv")
 trapping <- fread("Input/Trapping_data_all_records.csv")
+snow <- readRDS("Output/Data/snowgrids.rds")
 
 
 #this function is from the R folder in the footload project
@@ -19,32 +20,6 @@ getmode <- function(v) {
   uniqv[which.max(tabulate(match(v, uniqv)))]
 }
 
-
-
-
-
-# Snow data ---------------------------------------------------------------
-
-#list snow files and read in
-snowfiles <- dir("Input/", "Snow_grid*", full.names = TRUE) 
-ls.snowfiles <- lapply(snowfiles, fread)
-
-#rbindlist with an origin column
-snows <- rbindlist(ls.snowfiles, fill = TRUE, use.names = TRUE, idcol = "origin")
-#now re-assign the origin column the file names
-snows[, origin := factor(origin, labels = basename(snowfiles))]
-
-#redo the grid names
-snows[grep("agnes", origin), snowgrid := "Agnes"]
-snows[grep("jo", origin), snowgrid := "Jo"]
-snows[grep("kloo", origin), snowgrid := "Kloo"]
-
-#fix up other data cols
-snows[, COMMENTS := NULL]
-snows[, Date := lubridate::dmy(DATE)]
-setnames(snows, "OPEN SD", "SD")
-
-snow <- snows[, .(Date, snowgrid, SD)]
 
 
 
@@ -96,7 +71,7 @@ full <- full[!is.na(SD)]
 
 full[, Moving := Forage + Hopping + Sprinting]
 
-full[, Moving + notmoving]
+
 
 # figures -----------------------------------------------------------------
 
