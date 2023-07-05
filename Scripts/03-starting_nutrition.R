@@ -34,8 +34,12 @@ nuts <- nuts[!is.na(Species)]
 
 #create data table of mean nutritional values by species and height
 meannuts <- nuts[, .(mean(NDF_F, na.rm = TRUE), mean(ADF_F, na.rm = TRUE), 
-                     mean(ADL_F, na.rm = TRUE), mean(CP_F, na.rm = TRUE)), by = .(Species, Height, Grid)]
-names(meannuts) <- c("Species", "Height", "Grid", "NDF", "ADF", "ADL", "CP")
+                     mean(ADL_F, na.rm = TRUE), mean(CP_F, na.rm = TRUE)), by = .(Species, Height)]
+names(meannuts) <- c("Species", "Height", "NDF", "ADF", "ADL", "CP")
+
+
+
+# Investigate nutrition trends by height class ----------------------------
 
 #create a melted version of nutrient data, melted by nutrient
 justnuts <- nuts[, .(NDF_F, ADF_F, ADL_F, CP_F, Species, Height, Grid)]
@@ -48,26 +52,20 @@ justnuts[, Height := factor(Height, levels = c("low", "medium", "high"), ordered
 justnuts[, Nutrient := gsub("_F", "", Nutrient)]
 
 #figure to look at difference between height classes if any
-ggplot(justnuts)+
+(allnuts <- 
+  ggplot(justnuts)+
   geom_boxplot(aes(x = Species, y = Composition, fill = Height))+
+  labs(y = "Composition (%)", x = "Forage type")+
   theme_minimal()+
-  facet_wrap(~ Nutrient, scales = "free")
+  facet_wrap(~ Nutrient, scales = "free"))
 
 
 
 # merge nutrients and starting biomass ------------------------------------
 
 #initial merge
-full <- merge(heights, meannuts, by = c("Species", "Height", "Grid"), all.x = TRUE)
+full <- merge(heights, meannuts, by = c("Species", "Height"), all.x = TRUE)
 
-#calculate biomass of protein
-full[, CPmass := Biomass*(CP/100)]
-
-#make height a factor leveled
-full[, Height := factor(Height, levels = c("low", "medium", "high"), ordered = TRUE)]
-
-ggplot(full)+
-  geom_boxplot(aes(x = Species, y = CPmass, fill = Height))+
-  ylim(0, 15)+
-  theme_minimal()
   
+saveRDS(full, "Output/Data/nutrient_biomass.rds")
+ggsave("Output/Figures/composition_by_height.jpeg", allnuts, width = 8, height = 6, unit = "in")
