@@ -69,8 +69,7 @@ willowavail[, CPavail := CPtotal*propavail]
 willowavail[, NDFavail := NDFtotal*propavail]
 
 ggplot(willowavail)+
-  geom_path(aes(x = Date, y = biomassavail, group = height, color = height))+
-  facet_wrap(~grid, scales = "free")
+  geom_path(aes(x = Date, y = biomassavail, group = height, color = height))
 
 
 # sum all willow avail across height by day --------------------------------------
