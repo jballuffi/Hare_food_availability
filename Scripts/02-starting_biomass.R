@@ -65,10 +65,12 @@ heights <- melt(sums, measure.vars = c("low", "med", "high"), variable.name = "H
 heights[Height == "med", Height := "medium"]
 
 #take avgerage biomass by species, height, and grid
+# this will be exported to later be merged with nutrition and availability
 avg <- heights[, .(mean(Biomass), median(Biomass), sd(Biomass)), by = .(Species, Height, Grid)]
 names(avg) <- c("species", "height", "grid", "biomass_mean", "biomass_median", "biomass_sd")
 
 
 
-#save as RDS file
+# save outputs ------------------------------------------------------------
+
 saveRDS(avg, "Output/Data/starting_biomass.rds")
