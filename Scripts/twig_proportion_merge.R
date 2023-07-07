@@ -78,6 +78,13 @@ willowall <- willowavail[, .(mean(snowdepth), mean(Temp), sum(biomassavail), sum
 names(willowall) <- c("grid", "date", "snowd", "temp", "biomass", "CP", "NDF")
 
 
+ggplot(willowavail)+
+  geom_point(aes(x = snowdepth, y = CPavail, color = height))+
+  geom_smooth(aes(x = snowdepth, y = CPavail, color = height))
+
+
 ggplot(willowall)+
-  geom_path(aes(x = date, y = biomass, group = grid, color = grid))
+  geom_point(aes(x = snowd, y = biomass))+
+  geom_smooth(aes(x = snowd, y = biomass))
+  
 
