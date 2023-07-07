@@ -30,6 +30,7 @@ biomass[is.na(Mass_high), Mass_high := 0]
 biomass[is.na(Mass_total), Mass_total := 0]
 
 #sum biomass per transect then divide by size of transect (15 m2)
+#final unit is g/m2
 sums <- biomass[, .(sum(Mass_low, na.rm = TRUE)/15, sum(Mass_med, na.rm = TRUE)/15, sum(Mass_high, na.rm = TRUE)/15, sum(Mass_total, na.rm = TRUE)/15), by = .(Species, Grid, Loc)]
 names(sums) <- c("Species", "Grid", "Loc", "low", "med", "high", "total")
 
@@ -57,5 +58,17 @@ sums[is.na(low), low := 0][is.na(med), med := 0][is.na(high), high := 0][is.na(t
 
 
 
+# get average biomass by grid -------------------------
+
+#make data long form to work by height class
+heights <- melt(sums, measure.vars = c("low", "med", "high"), variable.name = "Height", value.name = "Biomass")
+heights[Height == "med", Height := "medium"]
+
+#take avgerage biomass by species, height, and grid
+avg <- heights[, .(mean(Biomass), median(Biomass), sd(Biomass)), by = .(Species, Height, Grid)]
+names(avg) <- c("species", "height", "grid", "biomass_mean", "biomass_median", "biomass_sd")
+
+
+
 #save as RDS file
-saveRDS(sums, "Output/Data/transect_biomass.rds")
+saveRDS(avg, "Output/Data/starting_biomass.rds")
