@@ -6,85 +6,60 @@ library(ggplot2)
 
 # Read in data ------------------------------------------------------------
 
-nuts <- readRDS("Output/Data/nutrient_biomass.rds")
-
+#list all cam trap data
 camfiles <- list.files(path = "Input/Camera_traps/", full.names = TRUE)
 
+#read in files and rbind
 cams <- lapply(camfiles, fread)
 cams <- rbindlist(cams, use.names = TRUE)
 
+#set date as date
 cams[, Date := mdy(Date)]
+
+#fix issue with date on one camera
 cams[Location == "KL 48", Date := Date + 365]
 
-camflags <- fread("Input/camera_flag_count.csv")
+#read in initial flag counts for cameras
+#this data is from the first count of all flags in the camera trap image
+#it is not from my field book where I logged how many twigs we flagged
+flags <- fread("Input/camera_flag_count.csv")
 
 
 
-# get twig availability ---------------------------------------------------
+# get twig availability by height ---------------------------------------------------
 
 #make new full loc column
-camflags[, Location := paste0(grid, " ", loc)]
+flags[, Location := paste0(grid, " ", loc)]
 
-twigs <- merge(cams, camflags, by = "Location", all.x = TRUE)
+#merge cam data with starting flag counts
+twigs <- merge(cams, flags, by = "Location", all.x = TRUE)
 setnames(twigs, "4_snow", "snowdepth")
 
-twigs[, orangeprop := `1_orange`/orange]
-twigs[, yellowprop := `2_yellow`/yellow]
-twigs[, pinkprop := `3_pink`/pink]
+#calculate the proportion of twig colors available according to photos
+#height according to color
+twigs[, low := `1_orange`/orange]
+twigs[, medium := `2_yellow`/yellow]
+twigs[, high := `3_pink`/pink]
 
 #subset camera trap data to just proportions and info 
-twigs <- twigs[, .(Location, Date, snowdepth, Temp, grid, loc, orangeprop, yellowprop, pinkprop)]
+twigs <- twigs[, .(Location, Date, snowdepth, Temp, grid, loc, low, medium, high)]
 
-#rename flag colors to be height classes
-setnames(twigs, c("orangeprop", "yellowprop", "pinkprop"), c("low", "medium", "high"))
-
-#melt twig data
-twigs <- melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail")
+#melt twig availability by height class
+heights <- melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail")
 
 
+# collect all stats for twig availability ---------------------------------
 
-# get average biomass and nutrient biomass by grid for willow ------------------------
-
-#calculate available CP and Biomass
-nuts[, CPavail := Biomass*(CP/100)]
-nuts[, NDFavail := Biomass*(NDF/100)]
-
-#calculate total availability by height class, species, and grid
-totals <- nuts[, .(mean(Biomass), mean(CPavail), mean(NDFavail)), by = .(Species, Height, Grid)]
-names(totals) <- c("species", "height", "grid", "biomasstotal", "CPtotal", "NDFtotal")
-
-#take just willow from nutrient availability
-willow <- totals[species == "willow"]
+#collect avg willow twig availability by grid, date, and height, along with snow and temp data
+availavg <- heights[, .(mean(snowdepth), mean(Temp), mean(propavail)), by = .(grid, Date, height)]
+names(availavg) <- c("snowd", "temp", "propavail_mean", "grid", "date", "height")
 
 
 
-# merge starting nutrient avail with twig avail ---------------------------
+# save output data --------------------------------------------------------
 
-#merge total availability with proportions of twig available 
-willowavail <- merge(twigs, willow, by = c("grid","height"), all.x = TRUE)
+#save the daily measure of avail across all grids
+saveRDS(availavg, "Output/Data/starting_willow_avail_bygrid.rds")
 
-#now calc the actual availability of biomass, CP, and NDF with snow depth
-willowavail[, biomassavail := biomasstotal*propavail]
-willowavail[, CPavail := CPtotal*propavail]
-willowavail[, NDFavail := NDFtotal*propavail]
-
-ggplot(willowavail)+
-  geom_path(aes(x = Date, y = biomassavail, group = height, color = height))
-
-
-# sum all willow avail across height by day --------------------------------------
-
-willowall <- willowavail[, .(mean(snowdepth), mean(Temp), sum(biomassavail), sum(CPavail), sum(NDFavail)), by = .(grid, Date)]
-names(willowall) <- c("grid", "date", "snowd", "temp", "biomass", "CP", "NDF")
-
-
-ggplot(willowavail)+
-  geom_point(aes(x = snowdepth, y = CPavail, color = height))+
-  geom_smooth(aes(x = snowdepth, y = CPavail, color = height))
-
-
-ggplot(willowall)+
-  geom_point(aes(x = snowd, y = biomass))+
-  geom_smooth(aes(x = snowd, y = biomass))
-  
-
+#save the daily measures of avail by camera trap site
+saveRDS(heights, "Output/Data/starting_willow_avail_bysite.rds")
