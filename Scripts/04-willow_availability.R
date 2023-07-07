@@ -47,12 +47,17 @@ twigs <- twigs[, .(Location, Date, snowdepth, Temp, grid, loc, low, medium, high
 #melt twig availability by height class
 heights <- melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail")
 
+#convert farenheit to celcius
+heights[, temp := (Temp-32)/1.8][, Temp := NULL]
+
+#change some col names
+setnames(heights, c("Date", "Location"), c("date", "location"))
 
 # collect all stats for twig availability ---------------------------------
 
 #collect avg willow twig availability by grid, date, and height, along with snow and temp data
-availavg <- heights[, .(mean(snowdepth), mean(Temp), mean(propavail)), by = .(grid, Date, height)]
-names(availavg) <- c("snowd", "temp", "propavail_mean", "grid", "date", "height")
+availavg <- heights[, .(mean(snowdepth), mean(temp), mean(propavail)), by = .(grid, date, height)]
+names(availavg) <- c("grid", "date", "height", "snowdepth", "temp", "propavail")
 
 
 
