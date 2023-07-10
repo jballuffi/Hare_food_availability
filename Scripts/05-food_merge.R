@@ -2,7 +2,7 @@
 library(data.table)
 library(lubridate)
 library(ggplot2)
-
+library(ggpubr)
 
 
 # read in all cleaned and prepped data ------------------------------------
@@ -11,7 +11,6 @@ biomass <- readRDS("Output/Data/starting_biomass.rds")
 nuts <- readRDS("Output/Data/starting_nutrition.rds")
 willowgrid <- readRDS("Output/Data/starting_willow_avail_bygrid.rds")
 willowsite <- readRDS("Output/Data/starting_willow_avail_bysite.rds")
-
 
 
 
@@ -47,16 +46,31 @@ willow[, biomassprop := biomassavail/biomassavail_allheight]
 willow <- merge(willow, nuts, by = "height", all.x = TRUE)
 
 #multiply composition by proportion available
-willow[, CPxbiomassprop := biomassprop*CP_mean]
-willow[, NDFxbiomassprop := biomassprop*NDF_mean]
+willow[, DMDxbiomassprop := biomassprop*DMD_median]
 
 #sum biomass across all heights by day and calculate average compositions
-
-foodavail <- willow[, .(mean(temp), mean(snowdepth), sum(biomassavail), sum(CPxbiomassprop), sum(NDFxbiomassprop)), by = .(grid, date)]
-names(foodavail) <- c("grid", "date", "temp", "snowdepth", "biomassavail", "CPavail", "NDFavail")
-
-
-ggplot(foodavail)+
-  geom_path(aes(x = date, y = biomassavail, color = grid, group = grid))
+foodavail <- willow[, .(mean(temp), mean(snowdepth), sum(biomassavail), sum(DMDxbiomassprop)), by = .(grid, date)]
+names(foodavail) <- c("grid", "date", "temp", "snowdepth", "biomassavail", "DMDavail")
 
 
+
+# Make figure showing food trends over time -------------------------------
+
+(biomassplot <- 
+  ggplot(foodavail)+
+  geom_path(aes(x = date, y = biomassavail, color = grid, group = grid))+
+  labs(y = "Available biomass (g/m2", x = "Date")+
+  theme_minimal())
+
+(DMDplot <- 
+  ggplot(foodavail)+
+  geom_path(aes(x = date, y = DMDavail*100, color = grid, group = grid))+
+  labs(y = "Average available DMD (%)", x = "Date")+
+  theme_minimal())
+
+plot <- ggarrange(biomassplot, DMDplot, ncol = 1, nrow = 2)
+
+# save  -------------------------------------------------------------------
+
+saveRDS(foodavail, "Output/Data/Total_daily_food_availability.rds")
+ggsave("Output/Figures/Food_availability_over_winter.jpeg", plot, width = 8, height = 9, units = "in")
