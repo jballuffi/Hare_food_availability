@@ -7,6 +7,9 @@ library(ggplot2)
 
 # read in files -----------------------------------------------------------
 
+#read in food availability final datasheet
+food <- readRDS("Output/Data/Total_daily_food_availability.rds")
+
 #list just the daily foraging files and fread in
 daily <- list.files("Output/Data/Axy_behaviours/", pattern = "daily", full.names = TRUE)
 axy <- lapply(daily, fread)
@@ -68,21 +71,29 @@ beh <- merge(axy, info, by = "ID", all.x = TRUE)
 
 #merge in trap nights
 beh <- merge(beh, trapnights, by = c("ID", "Date"), all.x = TRUE)
+
 #remove trap nights from axy data
-beh <- beh[!trapped == "yes"]
+beh <- beh[is.na(trapped)][, trapped := NULL]
 
-
-#next merge in snow data and final nutrient availability data
-#what do I want the final datasheet to look like? 
-
-
-# Look into data ----------------------------------------------------------
+#clean up behaviour names/cols
+beh[, V1 := NULL]
+setnames(beh, c("Date", "Forage", "Hopping", "Sprinting"), c("date", "foraging", "hoppping", "sprinting"))
 
 
 
-ggplot(beh)+
-  geom_point(aes(x = Date, y = Forage, color = sex))
+# merge food data with axy data -------------------------------------------
+
+#make grids match
+food[grid == "JO", grid := "Jo"][grid == "SU", grid := "Sulphur"][grid == "KL", grid := "Kloo"]
+
+#final merge, by date and grid
+#every day of animal behaviour should be paired to a snow depth, temp, biomass availability, and DMD availability 
+fulldata <- merge(beh, food, by = c("date", "grid"), all.x = TRUE)
 
 
-ggplot(beh)+
-  geom_point(aes(x = Date, y = Sprinting, color = sex))
+
+
+# save --------------------------------------------------------------------
+
+saveRDS(fulldata, "Output/Data/Full_data_behandfood.rds")
+
