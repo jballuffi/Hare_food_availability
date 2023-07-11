@@ -59,7 +59,7 @@ trapping[, Sex := as.factor(Sex)]
 info <- trapping[, .(getmode(grid), getmode(Sex)), ID]
 names(info) <- c("ID", "grid", "sex")
 
-#if sex = 1 it's a male, if sex = 2 it's a femal
+#if sex = 1 it's a male, if sex = 2 it's a female
 info[sex == 1, sex := "male"]
 info[sex == 2, sex := "female"]
 
@@ -68,8 +68,8 @@ trapnights <- trapping[, Date, ID]
 trapnights[, trapped := "yes"]
 
 #get just weights
-weights <- trapping[Weight > 0, .(Date, ID, grid, Weight)]
-names(weights) <- c("date", "ID", "grid", "weight")
+weights <- trapping[Weight > 0, .(Date, ID, grid, Sex, Weight)]
+names(weights) <- c("date", "ID", "grid", "Sex", "weight")
 
 
 # merge individual info with axy data -------------------------------------
@@ -109,6 +109,29 @@ fullaxy <- merge(beh, food, by = c("date", "grid"), all.x = TRUE)
 # merge food data with weight data ----------------------------------------
 
 
+#function to pull mean snow depth, temp, biomass, and DMD from the week around each weight data 
+weeklyfood <- function(weekdate, haregrid) {
+  
+  #take three days before home range date and three days after
+  datelist <- c(
+    weekdate - 3,
+    weekdate - 2,
+    weekdate - 1,
+    weekdate,
+    weekdate + 1,
+    weekdate + 2,
+    weekdate + 3
+  )
+  
+  #in the date list and snow grid of the "snow" data, average the snow depth
+  food[date %in% datelist & grid %in% haregrid, .(mean(snowdepth), mean(temp), mean(biomassavail), mean(DMDavail))]
+}
+
+weightavgfood <- weights[, weeklyfood(weekdate = .BY[[1]], haregrid = grid), by = .(date, ID)]
+names(weightavgfood) <- c("date", "ID", "snowdepth", "temp", "biomassavail", "DMDavail")
+weightavgfood <- weightavgfood[duplicated(weightavgfood) == FALSE]
+
+fullweight <- merge(weights, weightavgfood, by = c("date","ID"))
 
 
 
@@ -116,4 +139,4 @@ fullaxy <- merge(beh, food, by = c("date", "grid"), all.x = TRUE)
 # save --------------------------------------------------------------------
 
 saveRDS(fullaxy, "Output/Data/Full_data_behandfood.rds")
-saveRDS(weights, "Output/Data/weight_data.rds")
+saveRDS(fullweight, "Output/Data/weight_data.rds")
