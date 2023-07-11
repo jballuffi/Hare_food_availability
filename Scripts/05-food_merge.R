@@ -49,8 +49,8 @@ willow <- merge(willow, nuts, by = "height", all.x = TRUE)
 willow[, DMDxbiomassprop := biomassprop*DMD_median]
 
 #sum biomass across all heights by day and calculate average compositions
-foodavail <- willow[, .(mean(temp), mean(snowdepth), sum(biomassavail), sum(DMDxbiomassprop)), by = .(grid, date)]
-names(foodavail) <- c("grid", "date", "temp", "snowdepth", "biomassavail", "DMDavail")
+foodavail <- willow[, .(mean(temp), mean(snowdepth), mean(moon), sum(biomassavail), sum(DMDxbiomassprop)), by = .(grid, date)]
+names(foodavail) <- c("grid", "date", "temp", "snowdepth", "moon", "biomassavail", "DMDavail")
 
 
 
