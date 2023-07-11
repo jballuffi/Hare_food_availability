@@ -91,7 +91,7 @@ beh <- beh[is.na(trapped)][, trapped := NULL]
 
 #clean up behaviour names/cols
 beh[, V1 := NULL]
-setnames(beh, c("Date", "Forage", "Hopping", "Sprinting"), c("date", "foraging", "hoppping", "sprinting"))
+setnames(beh, c("Date", "Forage", "Hopping", "Sprinting"), c("date", "foraging", "hopping", "sprinting"))
 
 
 
@@ -102,12 +102,18 @@ food[grid == "JO", grid := "Jo"][grid == "SU", grid := "Sulphur"][grid == "KL", 
 
 #final merge, by date and grid
 #every day of animal behaviour should be paired to a snow depth, temp, biomass availability, and DMD availability 
-fulldata <- merge(beh, food, by = c("date", "grid"), all.x = TRUE)
+fullaxy <- merge(beh, food, by = c("date", "grid"), all.x = TRUE)
+
+
+
+# merge food data with weight data ----------------------------------------
+
+
 
 
 
 
 # save --------------------------------------------------------------------
 
-saveRDS(fulldata, "Output/Data/Full_data_behandfood.rds")
+saveRDS(fullaxy, "Output/Data/Full_data_behandfood.rds")
 saveRDS(weights, "Output/Data/weight_data.rds")
