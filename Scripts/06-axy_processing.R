@@ -124,20 +124,20 @@ lapply(files, convert2019)
 
 
 # extra version of the conversion function if date and time are combined in one column.
-convert2019a=function(axyfile){
-  axy=fread(axyfile, col.names=c("datetime", "X", "Y", "Z", "temp", "alt"))
-  axy=mutate(axy, date=substr(datetime,1, 10), time=substr(datetime, 12, 25))
-  axy=select(axy, date, time, X, Y, Z, temp, alt)
-  axy=behavclass(axy)
-  axy=axy %>% mutate(Date=as.Date(date, "%d-%m-%Y"))
-  byDay=axy %>% group_by(Date, All) %>% summarise(num=n())
-  byDay=spread(byDay, All, num )
-  master1=filter(master, FileName==axyfile)
-  byDay$id=master1$Bunny.ID
-  byDay=filter(byDay, Date>master1$Date.on.Bunny & Date<master1$Date.Off.Bunny)
-  ## if you want the converted file saved in a different folder this needs to be adjusted to include a filepath to the folder you wish to save them in.  
-  write.csv(byDay, paste(unlist(strsplit(axyfile, "[.]"))[1],"daily.csv", sep="")) 
-  write.csv(axy, paste(unlist(strsplit(axyfile, "[.]"))[1], "convert.csv", sep=""))
-}
+# convert2019a=function(axyfile){
+#   axy=fread(axyfile, col.names=c("datetime", "X", "Y", "Z", "temp", "alt"))
+#   axy=mutate(axy, date=substr(datetime,1, 10), time=substr(datetime, 12, 25))
+#   axy=select(axy, date, time, X, Y, Z, temp, alt)
+#   axy=behavclass(axy)
+#   axy=axy %>% mutate(Date=as.Date(date, "%d-%m-%Y"))
+#   byDay=axy %>% group_by(Date, All) %>% summarise(num=n())
+#   byDay=spread(byDay, All, num )
+#   master1=filter(master, FileName==axyfile)
+#   byDay$id=master1$Bunny.ID
+#   byDay=filter(byDay, Date>master1$Date.on.Bunny & Date<master1$Date.Off.Bunny)
+#   ## if you want the converted file saved in a different folder this needs to be adjusted to include a filepath to the folder you wish to save them in.  
+#   write.csv(byDay, paste(unlist(strsplit(axyfile, "[.]"))[1],"daily.csv", sep="")) 
+#   write.csv(axy, paste(unlist(strsplit(axyfile, "[.]"))[1], "convert.csv", sep=""))
+# }
 
 
