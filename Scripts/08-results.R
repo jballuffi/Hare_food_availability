@@ -40,7 +40,6 @@ summary(lm(biomassavail ~ temp + snowdepth, food))
 
 
 
-
 # investigate foraging trends ---------------------------------------------
 
 #remove any days of not moving greater than 80,000 sec_axis
