@@ -4,6 +4,16 @@ library(data.table)
 library(lubridate)
 library(ggplot2)
 
+#get mode function
+#this function is from the R folder in the footload project
+getmode <- function(v) {
+  uniqv <- data.table(unique(v))
+  uniqv <- uniqv[!is.na(V1)]
+  uniqv <- uniqv$V1
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+
 
 # read in files -----------------------------------------------------------
 
@@ -23,18 +33,12 @@ axy <- rbindlist(axy)
 #read in trapping data
 trapping <- fread("Input/Trapping_data_all_records.csv")
 
-#get mode function
-#this function is from the R folder in the footload project
-getmode <- function(v) {
-  uniqv <- data.table(unique(v))
-  uniqv <- uniqv[!is.na(V1)]
-  uniqv <- uniqv$V1
-  uniqv[which.max(tabulate(match(v, uniqv)))]
-}
-
 
 
 # get individual info from trapping data ----------------------------------
+
+#list individuals in axy data
+inds <- axy[, unique(ID)]
 
 #make eartag an ID as character
 trapping[, ID := as.character(Eartag)]
@@ -42,19 +46,37 @@ trapping[, ID := as.character(Eartag)]
 #make date a date
 trapping[, Date := dmy(dateCap)]
 
+#cut trapping data to only include individuals collared with axys
+trapping <- trapping[ID %in% inds & year(Date) > 2022]
+
+#turn sex 0s to NAs
+trapping[Sex == 0, Sex := NA]
+
+#change sex to factor
+trapping[, Sex := as.factor(Sex)]
+
 #pull out the grid and sex of every individual
 info <- trapping[, .(getmode(grid), getmode(Sex)), ID]
 names(info) <- c("ID", "grid", "sex")
-
-#make sex factor
-info[, sex := as.factor(sex)]
 
 #if sex = 1 it's a male, if sex = 2 it's a femal
 info[sex == 1, sex := "male"]
 info[sex == 2, sex := "female"]
 
+#get the nights bunnies were trapped, these will be removed from axy data
 trapnights <- trapping[, Date, ID]
 trapnights[, trapped := "yes"]
+
+
+#pull just weights
+weights <- trapping[Weight > 0, .(Weight, Date, ID)]
+
+summary(lm(Weight ~ poly(Date, 2), weights))
+
+
+ggplot(weights)+
+  geom_point(aes(x = Date, y = Weight))+
+  geom_smooth(aes(x = Date, y = Weight))
 
 
 
