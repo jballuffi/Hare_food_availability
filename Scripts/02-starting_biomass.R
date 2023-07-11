@@ -71,6 +71,23 @@ names(avg) <- c("species", "height", "grid", "biomass_mean", "biomass_median", "
 
 
 
+# Figures for biomass -----------------------------------------------------
+
+#basic plot showing different between species biomass per transect
+ggplot(sums)+
+  geom_boxplot(aes(x = species, y = biomass_median, fill = grid))+
+  labs(y = "Dry biomass (g/m2)")+
+  theme_minimal()
+
+#summary figure showing 
+summary <- ggplot(heights)+
+  geom_boxplot(aes(x = Height, y = Biomass, fill = Grid))+
+  labs(x = "Height class", y = "Available forage (dry g/m2)")+
+  facet_wrap(~Species, scales = "free")+
+  theme_minimal()
+
+
 # save outputs ------------------------------------------------------------
 
 saveRDS(avg, "Output/Data/starting_biomass.rds")
+ggsave("Output/Figures/sum_starting_biomass.jpeg", summary, width = 6, height = 4, unit = "in")
