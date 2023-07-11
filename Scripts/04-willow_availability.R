@@ -26,6 +26,15 @@ flags <- fread("Input/camera_flag_count.csv")
 
 
 
+# load function  ---------------------------------------------------------------
+
+getmode <- function(v) {
+  uniqv <- data.table(unique(v))
+  uniqv <- uniqv[!is.na(V1)]
+  uniqv <- uniqv$V1
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
 # get twig availability by height ---------------------------------------------------
 
 #make new full loc column
@@ -34,6 +43,7 @@ flags[, Location := paste0(grid, " ", loc)]
 #merge cam data with starting flag counts
 twigs <- merge(cams, flags, by = "Location", all.x = TRUE)
 setnames(twigs, "4_snow", "snowdepth")
+setnames(twigs, "Moon Phase", "moon")
 
 #calculate the proportion of twig colors available according to photos
 #height according to color
@@ -42,7 +52,7 @@ twigs[, medium := `2_yellow`/yellow]
 twigs[, high := `3_pink`/pink]
 
 #subset camera trap data to just proportions and info 
-twigs <- twigs[, .(Location, Date, snowdepth, Temp, grid, loc, low, medium, high)]
+twigs <- twigs[, .(Location, Date, snowdepth, Temp, moon, grid, loc, low, medium, high)]
 
 #melt twig availability by height class
 heights <- melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail")
@@ -53,11 +63,26 @@ heights[, temp := (Temp-32)/1.8][, Temp := NULL]
 #change some col names
 setnames(heights, c("Date", "Location"), c("date", "location"))
 
+# convert moon phases to levels of illumination ---------------------------
+
+#convert to a proportion of illumination
+heights[grep("Quarter", moon), moon := .5]
+heights[grep("New", moon), moon := 0]
+heights[grep("Full", moon), moon := 1]
+heights[grep("Crescent", moon), moon := .25]
+heights[grep("Gibbous", moon), moon := .75]
+
+#set as numeric
+heights[, moon := as.numeric(moon)]
+
+
 # collect all stats for twig availability ---------------------------------
 
 #collect avg willow twig availability by grid, date, and height, along with snow and temp data
-availavg <- heights[, .(mean(snowdepth), mean(temp), mean(propavail)), by = .(grid, date, height)]
-names(availavg) <- c("grid", "date", "height", "snowdepth", "temp", "propavail")
+availavg <- heights[, .(mean(snowdepth), mean(temp), mean(moon), mean(propavail)), by = .(grid, date, height)]
+names(availavg) <- c("grid", "date", "height", "snowdepth", "temp", "moon", "propavail")
+
+
 
 
 
