@@ -67,17 +67,9 @@ info[sex == 2, sex := "female"]
 trapnights <- trapping[, Date, ID]
 trapnights[, trapped := "yes"]
 
-
-#pull just weights
-weights <- trapping[Weight > 0, .(Weight, Date, ID)]
-
-summary(lm(Weight ~ poly(Date, 2), weights))
-
-
-ggplot(weights)+
-  geom_point(aes(x = Date, y = Weight))+
-  geom_smooth(aes(x = Date, y = Weight))
-
+#get just weights
+weights <- trapping[Weight > 0, .(Date, ID, grid, Weight)]
+names(weights) <- c("date", "ID", "grid", "weight")
 
 
 # merge individual info with axy data -------------------------------------
@@ -118,4 +110,4 @@ fulldata <- merge(beh, food, by = c("date", "grid"), all.x = TRUE)
 # save --------------------------------------------------------------------
 
 saveRDS(fulldata, "Output/Data/Full_data_behandfood.rds")
-
+saveRDS(weights, "Output/Data/weight_data.rds")
