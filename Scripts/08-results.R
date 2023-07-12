@@ -2,7 +2,7 @@
 library(data.table)
 library(ggplot2)
 library(lme4)
-
+library(ggpubr)
 
 
 
@@ -16,47 +16,58 @@ dat <- readRDS("Output/Data/Full_data_behandfood.rds")
 dat <- dat[notmoving < 80000]
 
 
-# investigate food availability trends ------------------------------------
 
-#no correlation between biomass and DMD available
-cor(food$biomassavail, food$DMDavail)
+# Make figure showing food trends over time -------------------------------
 
-#snow depth and DMD
-ggplot(food)+
-  geom_point(aes(y = DMDavail, x = snowdepth))+
-  theme_minimal()
+maxdate <- max(dat$date)
+mindate <- min(dat$date)
 
-#snow depth and biomass
-ggplot(food)+
-  geom_point(aes(y = biomassavail, x = snowdepth))+
-  theme_minimal()
+food2 <- food[date > mindate & date < maxdate]
 
+(biomassplot <- 
+   ggplot(food2)+
+   geom_path(aes(x = date, y = biomassavail, color = grid, group = grid))+
+   labs(y = "Available biomass (g/m2", x = "Date")+
+   theme_minimal())
 
-#test how well we can predict DMD availability
-summary(lm(DMDavail ~ temp + snowdepth, food))
+(DMDplot <- 
+    ggplot(food2)+
+    geom_path(aes(x = date, y = DMDavail*100, color = grid, group = grid))+
+    labs(y = "Average available DMD (%)", x = "Date")+
+    theme_minimal())
 
-#test how well we can predict biomass availability 
-summary(lm(biomassavail ~ temp + snowdepth, food))
+foodplot <- ggarrange(biomassplot, DMDplot, ncol = 1, nrow = 2)
 
 
 
 # investigate foraging trends ---------------------------------------------
 
 #general trend over time
-ggplot(dat)+
-  geom_point(aes(x = date, y = foraging))+
-  geom_path(aes(x = date, y = foraging, group = ID))
+(foragetrend <- 
+  ggplot(dat)+
+  geom_point(aes(x = date, y = foraging/3600, color = grid))+
+  geom_path(aes(x = date, y = foraging/3600, group = ID, color = grid))+
+  labs(y = "Foraging rate (hrs/day)", x = "Date")+
+  theme_minimal())
+
+foragemod <- glmer(foraging/3600 ~ moon + temp + DMDavail + biomassavail + (1|ID), dat)
 
 
-ggplot(dat)+
-  geom_point(aes(x = temp, y = foraging, color = grid))
+(foragetemp <- ggplot(dat)+
+  geom_point(aes(x = temp, y = foraging/3600))+
+  labs(y = "Foraging rate (hrs/day)", x = "Temperature (C)")+
+  theme_minimal())
 
-ggplot(weights)+
-  geom_point(aes(x = DMDavail, y = weight, color = grid))
+(foragebiomass <- ggplot(dat)+
+  geom_point(aes(x = biomassavail, y = foraging/3600))+
+  labs(y = "Foraging rate (hrs/day)", x = "Available bimoass (g/m2)")+
+  theme_minimal())
 
 
-summary(glmer(foraging ~ moon + temp + DMDavail + biomassavail + (1|ID), dat))
 
+# save --------------------------------------------------------------------
 
-summary(glmer(weight ~ temp + DMDavail + biomassavail + (1|ID), weights))
-
+ggsave("Output/Figures/Food_availability_over_winter.jpeg", foodplot, width = 8, height = 9, units = "in")
+ggsave("Output/Figures/Forage_over_winter.jpeg", foragetrend, width = 6, height = 4, units = "in")
+ggsave("Output/Figures/Forage_temperature.jpeg", foragetemp, width = 6, height = 4, units = "in")
+ggsave("Output/Figures/Forage_biomass.jpeg", foragebiomass, width = 6, height = 4, units = "in")

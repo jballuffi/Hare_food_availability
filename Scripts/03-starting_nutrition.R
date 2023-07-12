@@ -12,6 +12,19 @@ nuts <- fread("Input/Plant_nutrition.csv")
 days <- readRDS("../NutritionalGeometryHares/Output/data/dailyresultscleaned.rds")
 trials <- readRDS("../NutritionalGeometryHares/Output/data/trialresultscleaned.rds")
 
+themepoints <- theme(axis.title = element_text(size=13),
+                     axis.text = element_text(size=10),
+                     legend.position = "top",
+                     legend.key = element_blank(),
+                     legend.title = element_blank(),
+                     panel.background = element_blank(),
+                     axis.line.x.top = element_blank(),
+                     axis.line.y.right = element_blank(),
+                     axis.line.x.bottom = element_line(linewidth = .5),
+                     axis.line.y.left = element_line(size=.5),
+                     panel.border = element_blank(),
+                     panel.grid.major = element_line(size = 0.5, color = "grey90"))
+
 
 # show trend for weight change an DMD -------------------------------------
 
@@ -22,13 +35,15 @@ wint <- coef(weightmod)["(Intercept)"]
 wsl <- coef(weightmod)["DMD"]
 
 #show relationship between DMD and weight change 
-ggplot(trials, aes(x = DMD, y = Weight_change))+
+weight_DMD <- 
+  ggplot(trials, aes(x = DMD, y = Weight_change))+
   geom_abline(intercept = 0, slope = 0, linetype = 2, color = "grey65", size = 1)+
   geom_point()+
-  geom_abline(intercept = wint, slope = wsl, color = "grey20", size = 1)+
-  theme_minimal()
+  geom_abline(intercept = wint, slope = wsl, color = "grey20", size = .75)+
+  labs(y = "Weight Change (%/day)", x = "Dry matter digestibility (%)")+
+  themepoints
 
-
+ggsave("Output/Figures/weightchange_DMD.jpeg", width = 6, height = 5, unit = "in")
 
 # Predict digestibility from food composition in feeding trials  ----------
 
@@ -119,7 +134,7 @@ justnuts[, Nutrient := gsub("_F", "", Nutrient)]
 (justDMD <- 
   ggplot(justnuts[Nutrient == "DMD" & Species == "willow"])+
   geom_boxplot(aes(x = Height, y = Composition))+
-  labs(y = "Proportion DMD", x = "Browse height")+
+  labs(y = "Dry matter digestibility (%)", x = "Browse height")+
   theme_minimal())
 
 summary(lm(Composition ~ Height, data = justnuts[Nutrient == "DMD" & Species == "willow"]))

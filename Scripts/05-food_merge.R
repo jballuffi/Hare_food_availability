@@ -54,23 +54,6 @@ names(foodavail) <- c("grid", "date", "temp", "snowdepth", "moon", "biomassavail
 
 
 
-# Make figure showing food trends over time -------------------------------
-
-(biomassplot <- 
-  ggplot(foodavail)+
-  geom_path(aes(x = date, y = biomassavail, color = grid, group = grid))+
-  labs(y = "Available biomass (g/m2", x = "Date")+
-  theme_minimal())
-
-(DMDplot <- 
-  ggplot(foodavail)+
-  geom_path(aes(x = date, y = DMDavail*100, color = grid, group = grid))+
-  labs(y = "Average available DMD (%)", x = "Date")+
-  theme_minimal())
-
-plot <- ggarrange(biomassplot, DMDplot, ncol = 1, nrow = 2)
-
 # save  -------------------------------------------------------------------
 
 saveRDS(foodavail, "Output/Data/Total_daily_food_availability.rds")
-ggsave("Output/Figures/Food_availability_over_winter.jpeg", plot, width = 8, height = 9, units = "in")
