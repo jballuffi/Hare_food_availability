@@ -25,13 +25,13 @@ mindate <- min(dat$date)
 food2 <- food[date > mindate & date < maxdate]
 
 (biomassplot <- 
-   ggplot(food2)+
+   ggplot(food)+
    geom_path(aes(x = date, y = biomassavail, color = grid, group = grid))+
    labs(y = "Available biomass (g/m2", x = "Date")+
    theme_minimal())
 
 (DMDplot <- 
-    ggplot(food2)+
+    ggplot(food)+
     geom_path(aes(x = date, y = DMDavail*100, color = grid, group = grid))+
     labs(y = "Average available DMD (%)", x = "Date")+
     theme_minimal())
@@ -40,13 +40,19 @@ foodplot <- ggarrange(biomassplot, DMDplot, ncol = 1, nrow = 2)
 
 
 
+# food trends in response to snow -----------------------------------------
+
+
+
+
+
 # investigate foraging trends ---------------------------------------------
 
 #general trend over time
 (foragetrend <- 
   ggplot(dat)+
-  geom_point(aes(x = date, y = foraging/3600, color = grid))+
-  geom_path(aes(x = date, y = foraging/3600, group = ID, color = grid))+
+  geom_point(aes(x = date, y = foraging/3600, ))+
+  geom_path(aes(x = date, y = foraging/3600, group = ID))+
   labs(y = "Foraging rate (hrs/day)", x = "Date")+
   theme_minimal())
 
