@@ -135,7 +135,7 @@ justnuts[, Nutrient := gsub("_F", "", Nutrient)]
   ggplot(justnuts[Nutrient == "DMD" & Species == "willow"])+
   geom_boxplot(aes(x = Height, y = Composition))+
   labs(y = "Dry matter digestibility (%)", x = "Browse height")+
-  theme_minimal())
+  themepoints)
 
 summary(lm(Composition ~ Height, data = justnuts[Nutrient == "DMD" & Species == "willow"]))
   
