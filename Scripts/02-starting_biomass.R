@@ -9,6 +9,19 @@ dat <- fread("Input/transects.csv")
 dat[, length(unique(Loc)), by = Grid]
 
 
+themepoints <- theme(axis.title = element_text(size=13),
+                     axis.text = element_text(size=10),
+                     legend.position = "top",
+                     legend.key = element_blank(),
+                     legend.title = element_blank(),
+                     panel.background = element_blank(),
+                     axis.line.x.top = element_blank(),
+                     axis.line.y.right = element_blank(),
+                     axis.line.x.bottom = element_line(linewidth = .5),
+                     axis.line.y.left = element_line(size=.5),
+                     panel.border = element_blank(),
+                     panel.grid.major = element_line(size = 0.5, color = "grey90"))
+
 
 # convert to biomass ------------------------------------------------------
 
@@ -73,18 +86,15 @@ names(avg) <- c("species", "height", "grid", "biomass_mean", "biomass_median", "
 
 # Figures for biomass -----------------------------------------------------
 
-#basic plot showing different between species biomass per transect
-ggplot(sums)+
-  geom_boxplot(aes(x = species, y = biomass_median, fill = grid))+
-  labs(y = "Dry biomass (g/m2)")+
-  theme_minimal()
+#set height to leveled factor
+heights[, Height := factor(Height, levels = c("low", "medium", "high"))]
 
 #summary figure showing 
-summary <- ggplot(heights)+
-  geom_boxplot(aes(x = Height, y = Biomass, fill = Grid))+
+summary <- ggplot(heights[Species == "willow"])+
+  geom_boxplot(aes(x = Height, y = Biomass))+
   labs(x = "Height class", y = "Available forage (dry g/m2)")+
-  facet_wrap(~Species, scales = "free")+
-  theme_minimal()
+  #facet_wrap(~Species, scales = "free")+
+  themepoints
 
 
 # save outputs ------------------------------------------------------------
