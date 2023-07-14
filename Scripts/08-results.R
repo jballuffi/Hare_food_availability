@@ -76,7 +76,7 @@ snowplot <- ggarrange(snowplotbiomass, snowplotDMD, ncol = 1, nrow = 2)
   geom_point(aes(x = date, y = foraging/3600, ))+
   geom_path(aes(x = date, y = foraging/3600, group = ID))+
   labs(y = "Foraging rate (hrs/day)", x = "Date")+
-  theme_minimal())
+  themepoints)
 
 foragemod <- glmer(foraging/3600 ~ moon + temp + DMDavail + biomassavail + (1|ID), dat)
 
@@ -98,6 +98,8 @@ foragemod <- glmer(foraging/3600 ~ moon + temp + DMDavail + biomassavail + (1|ID
 ggsave("Output/Figures/Food_availability_over_winter.jpeg", foodplot, width = 8, height = 9, units = "in")
 ggsave("Output/Figures/Food_availability_snow.jpeg", snowplot, width = 8, height = 9, units = "in")
 
-ggsave("Output/Figures/Forage_over_winter.jpeg", foragetrend, width = 6, height = 4, units = "in")
+ggsave("Output/Figures/Forage_over_winter.jpeg", foragetrend, width = 6, height = 5, units = "in")
+
+
 ggsave("Output/Figures/Forage_temperature.jpeg", foragetemp, width = 6, height = 4, units = "in")
 ggsave("Output/Figures/Forage_biomass.jpeg", foragebiomass, width = 6, height = 4, units = "in")
