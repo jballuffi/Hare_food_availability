@@ -100,4 +100,4 @@ summary <- ggplot(heights[Species == "willow"])+
 # save outputs ------------------------------------------------------------
 
 saveRDS(avg, "Output/Data/starting_biomass.rds")
-ggsave("Output/Figures/sum_starting_biomass.jpeg", summary, width = 6, height = 4, unit = "in")
+ggsave("Output/Figures/sum_starting_biomass.jpeg", summary, width = 6, height = 5, unit = "in")
