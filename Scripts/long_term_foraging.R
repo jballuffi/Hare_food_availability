@@ -63,7 +63,7 @@ beh[grid == "Chitty", snowgrid := "Agnes"]
 
 # merge snow data with behaviour data -------------------------------------------------------------------
 
-full <- merge(beh, snow, by = c("Date", "snowgrid"), all.x = TRUE)
+full <- merge(beh, snow, by = c("Date", "winter", "snowgrid"), all.x = TRUE)
 
 #remove values without snow depth for now
 
@@ -98,6 +98,10 @@ movbysnow <- ggarrange(forg, mov, nonmov, ncol = 1, nrow = 3)
 ggsave("Output/figures/behavandsnow.jpg", movbysnow, width = 5, height = 9, unit = "in")
 
 
+
+ggplot(full[m < 5 & m > 1])+
+  geom_point(aes(x = Date, y = Forage/3600))+
+  facet_wrap(~winter, scales = "free")
 
 
 
