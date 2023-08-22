@@ -24,4 +24,5 @@ fec[loc == "AG", grid := "AG"]
 
 ggplot(fec[!grid == "AG"])+
   geom_point(aes(x = date, y = CP_F, color = grid))+
-  geom_smooth(aes(x = date, y = CP_F, group = grid, color = grid))
+  geom_smooth(aes(x = date, y = CP_F, group = grid, color = grid), alpha = .3)+
+  theme_minimal()
