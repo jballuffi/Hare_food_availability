@@ -22,7 +22,14 @@ fec[loc == 'LL' | loc == "RL" | loc == "SU", grid := "Su" ]
 fec[loc == "AG", grid := "AG"]
 
 
-ggplot(fec[!grid == "AG"])+
+fecals <- 
+  ggplot(fec[!grid == "AG"])+
   geom_point(aes(x = date, y = CP_F, color = grid))+
   geom_smooth(aes(x = date, y = CP_F, group = grid, color = grid), alpha = .3)+
+  labs(y = "Crude protein (%)", x = "Date")+
   theme_minimal()
+
+
+ggsave("Output/Figures/fecal_protein.jpeg", fecals, width = 6, height = 4, unit = "in")
+
+
