@@ -99,9 +99,11 @@ ggsave("Output/figures/behavandsnow.jpg", movbysnow, width = 5, height = 9, unit
 
 
 
-ggplot(full[m < 5 & m > 1])+
+allwinters <- 
+  ggplot(full[m < 5 & m > 1])+
   geom_point(aes(x = Date, y = Forage/3600))+
-  facet_wrap(~winter, scales = "free")
+  facet_wrap(~winter, scales = "free")+
+  theme_minimal()
 
 
 
@@ -119,6 +121,8 @@ winter1415 <-
   labs(x = "Date", y = "Forage effort (hr/day)", title = "2014-2015")+
   theme_minimal()
 
+
+ggsave("Output/figures/allwinters.jpg", allwinters, width = 12, height = 10, unit = "in")
 
 ggsave("Output/figures/winter1617.jpg", winter1617, width = 4.5, height = 3.5, unit = "in")
 
