@@ -140,3 +140,4 @@ fullweight <- merge(weights, weightavgfood, by = c("date","ID"))
 
 saveRDS(fullaxy, "Output/Data/Full_data_behandfood.rds")
 saveRDS(fullweight, "Output/Data/weight_data.rds")
+write.csv(axy, "Output/Data/axy_behaviours_2023.csv")
