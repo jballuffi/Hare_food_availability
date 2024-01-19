@@ -9,9 +9,21 @@ library(ggplot2)
 #list all cam trap data
 camfiles <- list.files(path = "Input/Camera_traps/", full.names = TRUE)
 
-#read in files and rbind
-cams <- lapply(camfiles, fread)
-cams <- rbindlist(cams, use.names = TRUE)
+#read in files
+camdat <- lapply(camfiles, fread)
+
+#function to clean up dataframes
+cleandat <- function(X){
+  colnames(X) <- as.character(X[2,])
+  x <- tail(X, -2)
+  return(x)
+}
+
+camdat <- lapply(camdat, cleandat)
+
+cams <- rbindlist(camdat, use.names = FALSE)
+
+
 
 #set date as date
 cams[, Date := mdy(Date)]
@@ -47,9 +59,9 @@ setnames(twigs, "Moon Phase", "moon")
 
 #calculate the proportion of twig colors available according to photos
 #height according to color
-twigs[, low := `1_orange`/orange]
-twigs[, medium := `2_yellow`/yellow]
-twigs[, high := `3_pink`/pink]
+twigs[, low := as.integer(`1_orange`)/orange]
+twigs[, medium := as.integer(`2_yellow`)/yellow]
+twigs[, high := as.integer(`3_pink`)/pink]
 
 #subset camera trap data to just proportions and info 
 twigs <- twigs[, .(Location, Date, snowdepth, Temp, moon, grid, loc, low, medium, high)]
@@ -58,6 +70,7 @@ twigs <- twigs[, .(Location, Date, snowdepth, Temp, moon, grid, loc, low, medium
 heights <- melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail")
 
 #convert farenheit to celcius
+heights[, Temp := as.integer(Temp)]
 heights[, temp := (Temp-32)/1.8][, Temp := NULL]
 
 #change some col names
@@ -74,7 +87,7 @@ heights[grep("Gibbous", moon), moon := .75]
 
 #set as numeric
 heights[, moon := as.numeric(moon)]
-
+heights[, snowdepth := as.integer(snowdepth)]
 
 # collect all stats for twig availability ---------------------------------
 
