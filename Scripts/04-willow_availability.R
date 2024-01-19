@@ -18,17 +18,22 @@ cleandat <- function(X){
   x <- tail(X, -2)
   return(x)
 }
-
 camdat <- lapply(camdat, cleandat)
 
+#rbind all dataframes
 cams <- rbindlist(camdat, use.names = FALSE)
 
 
 
-#set date as date
-cams[, Date := mdy(Date)]
+# clean data  -------------------------------------------------------------
 
-#fix issue with date on one camera
+cams[, sample(Date, 1), Location]
+
+#fix dates
+cams[grepl("/", Date), Date := mdy(Date)]
+cams[grepl("-", Date), Date := ymd(Date)]
+
+#fixx issue with date on one camera
 cams[Location == "KL 48", Date := Date + 365]
 
 #read in initial flag counts for cameras

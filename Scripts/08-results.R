@@ -35,6 +35,7 @@ mindate <- min(dat$date)
 
 food2 <- food[date > mindate & date < maxdate]
 
+
 (biomassplot <- 
    ggplot(food)+
    geom_path(aes(x = date, y = biomassavail, color = grid, group = grid))+
