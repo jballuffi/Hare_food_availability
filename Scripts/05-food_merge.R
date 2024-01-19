@@ -56,4 +56,7 @@ names(foodavail) <- c("grid", "date", "temp", "snowdepth", "moon", "biomassavail
 
 # save  -------------------------------------------------------------------
 
+#why is there a grid that is NA
+foodavail <- foodavail[!is.na(grid)]
+
 saveRDS(foodavail, "Output/Data/Total_daily_food_availability.rds")
