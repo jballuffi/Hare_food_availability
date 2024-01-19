@@ -12,7 +12,7 @@ camfiles <- list.files(path = "Input/Camera_traps/", full.names = TRUE)
 #read in files
 camdat <- lapply(camfiles, fread)
 
-#function to clean up dataframes
+#function to clean up data frames
 cleandat <- function(X){
   colnames(X) <- as.character(X[2,])
   x <- tail(X, -2)
@@ -27,19 +27,29 @@ cams <- rbindlist(camdat, use.names = FALSE)
 
 # clean data  -------------------------------------------------------------
 
-cams[, sample(Date, 1), Location]
+#take only timer photos
+cams <- cams[Trigger == "T"]
 
-#fix dates
-cams[grepl("/", Date), Date := mdy(Date)]
-cams[grepl("-", Date), Date := ymd(Date)]
+#what are the locations
+cams[, unique(Location)]
 
-#fixx issue with date on one camera
-cams[Location == "KL 48", Date := Date + 365]
+#fix issue with names of locations, replace space with underscores
+cams[, Location := gsub(" ", "_", Location)]
+
+#create dates
+cams[, Date := tstrsplit(`Image Name`, " ", keep = 1)]
+cams[, Date := ymd(Date)]
+
+#check dates
+cams[, min(Date), Location]
+
+#fix issue with date on one camera
+cams[Location == "KL_48", Date := Date + 365]
 
 #read in initial flag counts for cameras
 #this data is from the first count of all flags in the camera trap image
 #it is not from my field book where I logged how many twigs we flagged
-flags <- fread("Input/camera_flag_count.csv")
+flags <- fread("Input/starting_flag_count.csv")
 
 
 
@@ -52,10 +62,15 @@ getmode <- function(v) {
   uniqv[which.max(tabulate(match(v, uniqv)))]
 }
 
+
+
 # get twig availability by height ---------------------------------------------------
 
+#remove extra underscore from loc
+flags[, loc := gsub("_", "", loc)]
+
 #make new full loc column
-flags[, Location := paste0(grid, " ", loc)]
+flags[, Location := paste0(grid, "_", loc)]
 
 #merge cam data with starting flag counts
 twigs <- merge(cams, flags, by = "Location", all.x = TRUE)
@@ -81,6 +96,8 @@ heights[, temp := (Temp-32)/1.8][, Temp := NULL]
 #change some col names
 setnames(heights, c("Date", "Location"), c("date", "location"))
 
+
+
 # convert moon phases to levels of illumination ---------------------------
 
 #convert to a proportion of illumination
@@ -94,13 +111,13 @@ heights[grep("Gibbous", moon), moon := .75]
 heights[, moon := as.numeric(moon)]
 heights[, snowdepth := as.integer(snowdepth)]
 
+
+
 # collect all stats for twig availability ---------------------------------
 
 #collect avg willow twig availability by grid, date, and height, along with snow and temp data
 availavg <- heights[, .(mean(snowdepth), mean(temp), mean(moon), mean(propavail)), by = .(grid, date, height)]
 names(availavg) <- c("grid", "date", "height", "snowdepth", "temp", "moon", "propavail")
-
-
 
 
 
