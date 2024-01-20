@@ -37,13 +37,13 @@ food2 <- food[date > mindate & date < maxdate]
 
 
 (biomassplot <- 
-   ggplot(food)+
+   ggplot(food2)+
    geom_path(aes(x = date, y = biomassavail, color = grid, group = grid))+
    labs(y = "Available biomass (g/m2)", x = "")+
    themepoints)
 
 (DMDplot <- 
-    ggplot(food)+
+    ggplot(food2)+
     geom_path(aes(x = date, y = DMDavail*100, color = grid, group = grid))+
     labs(y = "Average available DMD (%)", x = "Date")+
     themepoints)
@@ -53,6 +53,8 @@ foodplot <- ggarrange(biomassplot, DMDplot, ncol = 1, nrow = 2)
 
 
 # food trends in response to snow -----------------------------------------
+
+food[, m :=  as.factor(month(date))]
 
 snowplotbiomass <-
    ggplot(food)+
