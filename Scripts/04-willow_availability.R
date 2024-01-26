@@ -77,6 +77,9 @@ twigs <- merge(cams, flags, by = "Location", all.x = TRUE)
 setnames(twigs, "4_snow", "snowdepth")
 setnames(twigs, "Moon Phase", "moon")
 
+#copy twigs at this stage for stan's figures
+twigstan <- twigs
+
 #calculate the proportion of twig colors available according to photos
 #height according to color
 twigs[, low := as.integer(`1_orange`)/orange]
@@ -121,6 +124,47 @@ names(availavg) <- c("grid", "date", "height", "snowdepth", "temp", "moon", "pro
 
 
 
+
+# for stan ----------------------------------------------------------------
+
+themepoints <- theme(axis.title = element_text(size=13),
+                     axis.text = element_text(size=10),
+                     legend.key = element_blank(),
+                     legend.title = element_blank(),
+                     panel.background = element_blank(),
+                     axis.line.x.top = element_blank(),
+                     axis.line.y.right = element_blank(),
+                     axis.line.x.bottom = element_line(linewidth = .5),
+                     axis.line.y.left = element_line(size=.5),
+                     panel.border = element_blank(),
+                     panel.grid.major = element_line(size = 0.5, color = "grey90"))
+
+head(twigstan)
+
+twigstan[, avail := as.integer(`1_orange`) + as.integer(`2_yellow`) + as.integer(`3_pink`)]
+twigstan[, total := orange + yellow + pink]
+twigstan[, prop_avail := avail/total]
+
+twigstan[, snowdepth := as.numeric(snowdepth)]
+
+stan <- twigstan[, .(mean(snowdepth, na.rm = TRUE), mean(prop_avail, na.rm = TRUE)), Date]
+names(stan) <- c("date", "snowdepth", "propavail")
+
+prop_date <- 
+ggplot(stan)+
+  geom_path(aes(x = date, y = propavail, group = 1))+
+  labs(y = "Proportion of twigs available", x = "Date")+
+  themepoints
+
+prop_snow <-
+ggplot(stan)+
+  geom_point(aes(x = snowdepth, y = propavail, group = 1))+
+  labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
+  themepoints
+
+
+
+
 # save output data --------------------------------------------------------
 
 #save the daily measure of avail across all grids
@@ -128,3 +172,6 @@ saveRDS(availavg, "Output/Data/starting_willow_avail_bygrid.rds")
 
 #save the daily measures of avail by camera trap site
 saveRDS(heights, "Output/Data/starting_willow_avail_bysite.rds")
+
+ggsave("Output/Figures/stan_proportion_date.jpeg", prop_date, width = 6, height = 4, unit = "in")
+ggsave("Output/Figures/stan_proportion_snow.jpeg", prop_snow, width = 6, height = 4, unit = "in")
