@@ -41,6 +41,7 @@ names(allgrid) <- c("date", "snowdepth", "biomassavail", "DMDavail")
 
 allgrid2 <- allgrid[date > mindate & date < maxdate]
 
+stan_date <- 
   ggplot(allgrid)+
   geom_path(aes(x = date, y = biomassavail, group = 1))+
   labs(y = "Available biomass (g/m2)", x = "Date")+
@@ -54,7 +55,7 @@ allgrid2 <- allgrid[date > mindate & date < maxdate]
 stan_snow <- 
   ggplot(allgrid)+
   geom_point(aes(x = snowdepth, y = biomassavail, group = 1))+
-  labs(y = "Available biomass (g/m2)", x = "Snowdepth ")+
+  labs(y = "Available biomass (g/m2)", x = "Snow depth (cm)")+
   themepoints
 
 stan_snow_cropped <- 
@@ -148,5 +149,5 @@ ggsave("Output/Figures/Forage_biomass.jpeg", foragebiomass, width = 6, height = 
 
 
 #save stan's figure
-ggsave("Output/Figures/stan_snow.jpeg", stan_snow, width = 6, height = 4, units = "in")
-ggsave("Output/Figures/stan_snow_cropped.jpeg", stan_snow_cropped, width = 6, height = 4, units = "in")
+ggsave("Output/Figures/stan_biomass_snow.jpeg", stan_snow, width = 6, height = 4, units = "in")
+ggsave("Output/Figures/stan_biomass_date.jpeg", stan_date, width = 6, height = 4, units = "in")
