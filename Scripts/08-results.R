@@ -11,6 +11,8 @@ library(ggpubr)
 food <- readRDS("Output/Data/Total_daily_food_availability.rds")
 weights <- readRDS("Output/Data/weight_data.rds")
 dat <- readRDS("Output/Data/Full_data_behandfood.rds")
+will <- readRDS("Output/Data/starting_willow_avail_bysite.rds")
+
 
 #remove any days of not moving greater than 80,000 sec_axis
 dat <- dat[notmoving < 80000]
@@ -27,11 +29,48 @@ themepoints <- theme(axis.title = element_text(size=13),
                      panel.border = element_blank(),
                      panel.grid.major = element_line(size = 0.5, color = "grey90"))
 
+maxdate <- max(dat$date)
+mindate <- min(dat$date)
+
+
+
+# for stan ----------------------------------------------------------------
+
+allgrid <- food[, .(mean(snowdepth, na.rm = TRUE), mean(biomassavail, na.rm = TRUE), mean(DMDavail, na.rm = TRUE)), date]
+names(allgrid) <- c("date", "snowdepth", "biomassavail", "DMDavail")
+
+allgrid2 <- allgrid[date > mindate & date < maxdate]
+
+  ggplot(allgrid)+
+  geom_path(aes(x = date, y = biomassavail, group = 1))+
+  labs(y = "Available biomass (g/m2)", x = "Date")+
+  themepoints
+
+  ggplot(allgrid2)+
+  geom_path(aes(x = date, y = biomassavail, group = 1))+
+  labs(y = "Available biomass (g/m2)", x = "Date")+
+  themepoints
+
+stan_snow <- 
+  ggplot(allgrid)+
+  geom_point(aes(x = snowdepth, y = biomassavail, group = 1))+
+  labs(y = "Available biomass (g/m2)", x = "Snowdepth ")+
+  themepoints
+
+stan_snow_cropped <- 
+  ggplot(allgrid2)+
+  geom_point(aes(x = snowdepth, y = biomassavail, group = 1))+
+  labs(y = "Available biomass (g/m2)", x = "Snowdepth ")+
+  themepoints
+
+
+twig_all <- 
+
+
 
 # Make figure showing food trends over time -------------------------------
 
-maxdate <- max(dat$date)
-mindate <- min(dat$date)
+
 
 food2 <- food[date > mindate & date < maxdate]
 
@@ -106,3 +145,8 @@ ggsave("Output/Figures/Forage_over_winter.jpeg", foragetrend, width = 6, height 
 
 ggsave("Output/Figures/Forage_temperature.jpeg", foragetemp, width = 6, height = 4, units = "in")
 ggsave("Output/Figures/Forage_biomass.jpeg", foragebiomass, width = 6, height = 4, units = "in")
+
+
+#save stan's figure
+ggsave("Output/Figures/stan_snow.jpeg", stan_snow, width = 6, height = 4, units = "in")
+ggsave("Output/Figures/stan_snow_cropped.jpeg", stan_snow_cropped, width = 6, height = 4, units = "in")
