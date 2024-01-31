@@ -1,5 +1,6 @@
-library(ggplot2)
-library(data.table)
+
+#source the R folder to load any packages and functions
+lapply(dir('R', '*.R', full.names = TRUE), source)
 
 
 source("Scripts/01-allometric_eqn.R")

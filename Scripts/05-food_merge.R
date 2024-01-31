@@ -1,8 +1,6 @@
 
-library(data.table)
-library(lubridate)
-library(ggplot2)
-library(ggpubr)
+#source the R folder to load any packages and functions
+lapply(dir('R', '*.R', full.names = TRUE), source)
 
 
 # read in all cleaned and prepped data ------------------------------------

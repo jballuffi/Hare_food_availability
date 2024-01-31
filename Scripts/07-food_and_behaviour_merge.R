@@ -1,8 +1,7 @@
 
+#source the R folder to load any packages and functions
+lapply(dir('R', '*.R', full.names = TRUE), source)
 
-library(data.table)
-library(lubridate)
-library(ggplot2)
 
 #get mode function
 #this function is from the R folder in the footload project

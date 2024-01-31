@@ -1,9 +1,9 @@
 
 # script for translating biomass and nutritional compositions into total nutrients 
 
-library(data.table)
-library(ggplot2)
-library(ggeffects)
+#source the R folder to load any packages and functions
+lapply(dir('R', '*.R', full.names = TRUE), source)
+
 
 #these are the results for plant samples taken before winter 2022-2023
 nuts <- fread("Input/Plant_nutrition.csv")
@@ -11,19 +11,6 @@ nuts <- fread("Input/Plant_nutrition.csv")
 #results from feeding trials
 days <- readRDS("../NutritionalGeometryHares/Output/data/dailyresultscleaned.rds")
 trials <- readRDS("../NutritionalGeometryHares/Output/data/trialresultscleaned.rds")
-
-themepoints <- theme(axis.title = element_text(size=13),
-                     axis.text = element_text(size=10),
-                     legend.position = "top",
-                     legend.key = element_blank(),
-                     legend.title = element_blank(),
-                     panel.background = element_blank(),
-                     axis.line.x.top = element_blank(),
-                     axis.line.y.right = element_blank(),
-                     axis.line.x.bottom = element_line(linewidth = .5),
-                     axis.line.y.left = element_line(size=.5),
-                     panel.border = element_blank(),
-                     panel.grid.major = element_line(size = 0.5, color = "grey90"))
 
 
 # show trend for weight change an DMD -------------------------------------

@@ -1,6 +1,6 @@
-library(data.table)
-library(ggplot2)
-library(rsq)
+
+#source the R folder to load any packages and functions
+lapply(dir('R', '*.R', full.names = TRUE), source)
 
 
 #read in willow data

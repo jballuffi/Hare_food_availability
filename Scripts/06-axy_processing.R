@@ -5,13 +5,10 @@
 ### Edited by Juliana Balluffi-Fry (June 2023)
 ####################################-
 
-library(reshape)
-library(data.table)
-library(purrr)
-library(stringr)
-library(zoo)
-library(tidyverse)
-library(lubridate)
+
+#source the R folder to load any packages and functions
+lapply(dir('R', '*.R', full.names = TRUE), source)
+
 
 
 

@@ -1,8 +1,6 @@
 
-library(data.table)
-library(ggplot2)
-library(lme4)
-library(ggpubr)
+#source the R folder to load any packages and functions
+lapply(dir('R', '*.R', full.names = TRUE), source)
 
 
 
