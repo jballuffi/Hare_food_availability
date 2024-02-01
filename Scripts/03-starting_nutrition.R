@@ -13,35 +13,20 @@ days <- readRDS("../NutritionalGeometryHares/Output/data/dailyresultscleaned.rds
 trials <- readRDS("../NutritionalGeometryHares/Output/data/trialresultscleaned.rds")
 
 
-# show trend for weight change an DMD -------------------------------------
-
-#linear model for diet DMD predicting weight change
-weightmod <- lm(Weight_change ~ DMD, trials)
-summary(weightmod)
-wint <- coef(weightmod)["(Intercept)"]
-wsl <- coef(weightmod)["DMD"]
-
-#show relationship between DMD and weight change 
-weight_DMD <- 
-  ggplot(trials, aes(x = DMD, y = Weight_change))+
-  geom_abline(intercept = 0, slope = 0, linetype = 2, color = "grey65", size = 1)+
-  geom_point()+
-  geom_abline(intercept = wint, slope = wsl, color = "grey20", size = .75)+
-  labs(y = "Weight Change (%/day)", x = "Dry matter digestibility (%)")+
-  themepoints
-
-ggsave("Output/Figures/weightchange_DMD.jpeg", width = 6, height = 5, unit = "in")
-
-# Predict digestibility from food composition in feeding trials  ----------
+# show trend for digestibility  -------------------------------------
 
 #remove problematic response for now
-days <- days[! Sample == "E15_23-02-05"]
+#days <- days[! Sample == "E15_23-02-05"]
 
 #create CP:NDF ratio
-days[, CP_NDF := CP_diet/NDF_diet]
+days[, CP_NDF := CP_diet/ADL_diet]
 
 #cut to just diet A and B
 daysAB <- days[Diet == "A" | Diet == "B"]
+
+
+
+
 
 #linear regression between protein:ndf ratio for just diet A and B 
 digmodAB <- lm(DMD ~ NDF_diet, daysAB)
@@ -50,9 +35,9 @@ dint <- coef(digmodAB)["(Intercept)"]   # get intercept
 dsl <- coef(digmodAB)["NDF_diet"]         # get slope
 
 #relationship between CP:NDF and DMD for just A and B
-ggplot(daysAB, aes(x = NDF_diet, y = DMD))+
+ggplot(days, aes(x = CP_NDF, y = DMD))+
   geom_point()+
-  geom_abline(intercept = dint, slope = dsl)+
+  #geom_abline(intercept = dint, slope = dsl)+
   labs(x = "Proportion NDF", y = "Proportion DMD")+
   theme_minimal()
 
