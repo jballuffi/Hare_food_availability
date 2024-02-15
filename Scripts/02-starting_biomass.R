@@ -14,7 +14,7 @@ dat[, length(unique(Loc)), by = Grid]
 # convert to biomass ------------------------------------------------------
 
 #merge transect data with allometric equations
-biomass <- merge(dat, eqn, by = "Species", all.x = TRUE)
+biomass <- merge(dat, eqn, by.x = "Species", by.y = "species", all.x = TRUE)
 
 #calculate biomass from branch BD for each height class
 biomass[, Mass_low := (Slope*BD)*(Low/100)]
@@ -32,8 +32,11 @@ biomass[is.na(Mass_total), Mass_total := 0]
 
 #sum biomass per transect then divide by size of transect (15 m2)
 #final unit is g/m2
-sums <- biomass[, .(sum(Mass_low, na.rm = TRUE)/15, sum(Mass_med, na.rm = TRUE)/15, sum(Mass_high, na.rm = TRUE)/15, sum(Mass_total, na.rm = TRUE)/15), by = .(Species, Grid, Loc)]
-names(sums) <- c("Species", "Grid", "Loc", "low", "med", "high", "total")
+sums <- biomass[, .(low = sum(Mass_low, na.rm = TRUE)/15, 
+                    med = sum(Mass_med, na.rm = TRUE)/15, 
+                    high = sum(Mass_high, na.rm = TRUE)/15, 
+                    total = sum(Mass_total, na.rm = TRUE)/15), 
+                by = .(Species, Grid, Loc)]
 
 
 
@@ -41,12 +44,10 @@ names(sums) <- c("Species", "Grid", "Loc", "low", "med", "high", "total")
 
 
 #create empty sheet of transects and biomass for cases where there is zero biomass of a species
-emptyspruce <- biomass[, unique(Loc), by = Grid]
-setnames(emptyspruce, "V1", "Loc")
+emptyspruce <- biomass[, .(Loc = unique(Loc)), by = Grid]
 emptyspruce[, Species := "spruce"]
 
-emptywillow <- biomass[, unique(Loc), by = Grid]
-setnames(emptywillow, "V1", "Loc")
+emptywillow <- biomass[, .(Loc = unique(Loc)), by = Grid]
 emptywillow[, Species := "willow"]
 
 empty <- rbind(emptyspruce, emptywillow)
@@ -62,12 +63,17 @@ sums[is.na(low), low := 0][is.na(med), med := 0][is.na(high), high := 0][is.na(t
 # get average biomass by grid -------------------------
 
 #make data long form to work by height class
-heights <- melt(sums, measure.vars = c("low", "med", "high"), variable.name = "Height", value.name = "Biomass")
+heights <- melt.data.table(sums, measure.vars = c("low", "med", "high"),
+                variable.name = "Height",
+                value.name = "Biomass")
+
 heights[Height == "med", Height := "medium"]
 
 #take avgerage biomass by species, height, and grid
 # this will be exported to later be merged with nutrition and availability
-avg <- heights[, .(mean(Biomass), median(Biomass), sd(Biomass)), by = .(Species, Height, Grid)]
+avg <- heights[, .(biomass_mean = mean(Biomass),
+                   biomass_median = median(Biomass),
+                   biomass_sd = sd(Biomass)), by = .(Species, Height, Grid)]
 names(avg) <- c("species", "height", "grid", "biomass_mean", "biomass_median", "biomass_sd")
 
 
@@ -78,14 +84,14 @@ names(avg) <- c("species", "height", "grid", "biomass_mean", "biomass_median", "
 heights[, Height := factor(Height, levels = c("low", "medium", "high"))]
 
 #summary figure showing 
-summary <- ggplot(heights[Species == "willow"])+
+summary <- ggplot(heights)+
   geom_boxplot(aes(x = Height, y = Biomass))+
   labs(x = "Height class", y = "Available forage (dry g/m2)")+
-  #facet_wrap(~Species, scales = "free")+
+  facet_wrap(~Species, scales = "free")+
   themepoints
 
 
 # save outputs ------------------------------------------------------------
 
 saveRDS(avg, "Output/Data/starting_biomass.rds")
-ggsave("Output/Figures/sum_starting_biomass.jpeg", summary, width = 6, height = 5, unit = "in")
+ggsave("Output/Figures/sum_starting_biomass.jpeg", summary, width = 7, height = 5, unit = "in")
