@@ -10,20 +10,27 @@ nuts <- readRDS("Output/Data/cleaned_compositions.rds")
 days <- readRDS("../NutritionalGeometryHares/Output/data/dailyresultscleaned.rds")
 trials <- readRDS("../NutritionalGeometryHares/Output/data/trialresultscleaned.rds")
 
-
+  
 
 
 # find digestibility from feeding trial data ------------------------------
+#create CP:ADL ratio
+days[, CP_fibre := CP_diet/NDF_diet/ADL_diet]
 
-DNDF <- days[, mean(DNDF)*100]
-DADF <- days[, mean(DADF)*100]
-DADL <- days[DADL > -0.1, mean(DADL)*100]
+plot(days$DP ~ days$CP_fibre)
+
+test <- lm(DP ~ CP_fibre, days)
+summary(test)
+
+
+days[, mean(DNDF)*100]
+days[, mean(DADL)*100, Diet]
+days[, mean(DADL), Diet]
 
 
 #NDF * what can be digested... plus digestible protein?
 
-#create CP:ADL ratio
-days[, CP_ADL := CP_diet/ADL_diet]
+
 
 ggplot(days)+
   geom_point(aes(x = CP_ADL, y = DMD))
