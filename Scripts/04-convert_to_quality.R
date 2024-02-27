@@ -9,11 +9,24 @@ nuts <- readRDS("Output/Data/cleaned_compositions.rds")
 #results from feeding trials
 days <- readRDS("../NutritionalGeometryHares/Output/data/dailyresultscleaned.rds")
 trials <- readRDS("../NutritionalGeometryHares/Output/data/trialresultscleaned.rds")
-
+diets <- fread("../NutritionalGeometryHares/Input/Diet_compositions.csv")
   
 
 
 # find digestibility from feeding trial data ------------------------------
+
+
+days[, Carb_diet := 1 - (mean(CP_diet, na.rm = TRUE) + mean(NDF_diet, na.rm = TRUE)), Diet]
+days[, CP_Carb := CP_diet/Carb_diet]
+
+ggplot(days)+
+  geom_point(aes(x = CP_diet/Carb_diet, y = DMD))
+
+diets[, "CP_diet"]
+
+class(diets)
+
+
 #create CP:ADL ratio
 days[, CP_fibre := CP_diet/NDF_diet/ADL_diet]
 
