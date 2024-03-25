@@ -20,14 +20,14 @@ getmode <- function(v) {
 food <- readRDS("Output/Data/Total_daily_food_availability.rds")
 
 #list just the daily foraging files and fread in
-daily <- list.files("Output/Data/Axy_behaviours/", pattern = "daily", full.names = TRUE)
+daily <- list.files("../Process_axy_data/Output/Data/Axy_behaviours/", pattern = "daily", full.names = TRUE)
 axy <- lapply(daily, fread)
 
 #for now remove problematic file
-axy[[11]] <- NULL
+#axy[[11]] <- NULL
 
 #bind all files into one
-axy <- rbindlist(axy)
+axy <- rbindlist(axy, fill = TRUE)
 
 #read in trapping data
 trapping <- fread("Input/Trapping_data_all_records.csv")
