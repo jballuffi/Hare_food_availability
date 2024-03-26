@@ -3,54 +3,13 @@
 lapply(dir('R', '*.R', full.names = TRUE), source)
 
 
-# Read in data ------------------------------------------------------------
-
-#list all cam trap data
-camfiles <- list.files(path = "Input/Camera_traps/", full.names = TRUE)
-
-#read in files
-camdat <- lapply(camfiles, fread)
-
-#function to clean up data frames
-cleandat <- function(X){
-  colnames(X) <- as.character(X[2,])
-  x <- tail(X, -2)
-  return(x)
-}
-camdat <- lapply(camdat, cleandat)
-
-#rbind all dataframes
-cams <- rbindlist(camdat, use.names = FALSE)
-
-
-
-# clean data  -------------------------------------------------------------
-
-#take only timer photos
-cams <- cams[Trigger == "T"]
-
-#what are the locations
-cams[, unique(Location)]
-
-#fix issue with names of locations, replace space with underscores
-cams[, Location := gsub(" ", "_", Location)]
-
-#create dates
-cams[, Date := tstrsplit(`Image Name`, " ", keep = 1)]
-cams[, Date := ymd(Date)]
-
-#check dates
-cams[, min(Date), Location]
-
-#fix issue with date on one camera
-cams[Location == "KL_48", Date := Date + 365]
 
 #read in initial flag counts for cameras
 #this data is from the first count of all flags in the camera trap image
 #it is not from my field book where I logged how many twigs we flagged
 flags <- fread("Input/starting_flag_count.csv")
 
-
+cams <-
 
 # load function  ---------------------------------------------------------------
 
