@@ -23,11 +23,10 @@ food <- readRDS("Output/Data/Total_daily_food_availability.rds")
 daily <- list.files("../Process_axy_data/Output/Data/Axy_behaviours/", pattern = "daily", full.names = TRUE)
 axy <- lapply(daily, fread)
 
-#for now remove problematic file
-#axy[[11]] <- NULL
-
 #bind all files into one
 axy <- rbindlist(axy, fill = TRUE)
+#take only first 7 columns
+axy <- axy[, 1:7]
 
 #read in trapping data
 trapping <- fread("Input/Trapping_data_all_records.csv")
@@ -78,6 +77,9 @@ axy[, ID := as.character(ID)]
 
 #get date in lubridate format
 axy[, Date := ymd(Date) ]
+
+#remove NAs
+axy <- axy[!is.na(ID)]
 
 #merge grids into behaviour data set
 beh <- merge(axy, info, by = "ID", all.x = TRUE)
