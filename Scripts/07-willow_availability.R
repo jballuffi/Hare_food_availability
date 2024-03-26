@@ -9,7 +9,7 @@ lapply(dir('R', '*.R', full.names = TRUE), source)
 #it is not from my field book where I logged how many twigs we flagged
 flags <- fread("Input/starting_flag_count.csv")
 
-cams <-
+cams <- readRDS("Output/Data/camtraps.rds")
 
 # load function  ---------------------------------------------------------------
 
@@ -44,27 +44,22 @@ twigs[, medium := as.integer(`2_yellow`)/yellow]
 twigs[, high := as.integer(`3_pink`)/pink]
 
 #subset camera trap data to just proportions and info 
-twigs <- twigs[, .(Location, Date, snowdepth, Temp, moon, grid, loc, low, medium, high)]
+twigs <- twigs[, .(Location, Date, Snow, Temp, Moon, grid, loc, low, medium, high)]
 
 #melt twig availability by height class
-heights <- melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail")
+heights <- data.table::melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail")
+
 
 #convert farenheit to celcius
 heights[, Temp := as.integer(Temp)]
-heights[, temp := (Temp-32)/1.8][, Temp := NULL]
-
-#change some col names
-setnames(heights, c("Date", "Location"), c("date", "location"))
-
+heights[, temp := (Temp-32)/1.8]
 
 
 
 # collect all stats for twig availability ---------------------------------
 
 #collect avg willow twig availability by grid, date, and height, along with snow and temp data
-availavg <- heights[, .(mean(snowdepth), mean(temp), mean(moon), mean(propavail)), by = .(grid, date, height)]
-names(availavg) <- c("grid", "date", "height", "snowdepth", "temp", "moon", "propavail")
-
+availavg <- heights[, .(snow = mean(Snow), temp = mean(temp), moon = mean(Moon), propavail = mean(propavail)), by = .(grid, Date, height)]
 
 
 
@@ -88,10 +83,10 @@ twigstan[, avail := as.integer(`1_orange`) + as.integer(`2_yellow`) + as.integer
 twigstan[, total := orange + yellow + pink]
 twigstan[, prop_avail := avail/total]
 
-twigstan[, snowdepth := as.numeric(snowdepth)]
+twigstan[, snowdepth := as.numeric(snow)]
 
 stan <- twigstan[, .(mean(snowdepth, na.rm = TRUE), mean(prop_avail, na.rm = TRUE)), Date]
-names(stan) <- c("date", "snowdepth", "propavail")
+names(stan) <- c("date", "snow", "propavail")
 
 prop_date <- 
 ggplot(stan)+
