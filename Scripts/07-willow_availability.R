@@ -32,8 +32,7 @@ flags[, Location := paste0(grid, "_", loc)]
 
 #merge cam data with starting flag counts
 twigs <- merge(cams, flags, by = "Location", all.x = TRUE)
-setnames(twigs, "4_snow", "snowdepth")
-setnames(twigs, "Moon Phase", "moon")
+
 
 #copy twigs at this stage for stan's figures
 twigstan <- twigs
@@ -57,20 +56,6 @@ heights[, temp := (Temp-32)/1.8][, Temp := NULL]
 #change some col names
 setnames(heights, c("Date", "Location"), c("date", "location"))
 
-
-
-# convert moon phases to levels of illumination ---------------------------
-
-#convert to a proportion of illumination
-heights[grep("Quarter", moon), moon := .5]
-heights[grep("New", moon), moon := 0]
-heights[grep("Full", moon), moon := 1]
-heights[grep("Crescent", moon), moon := .25]
-heights[grep("Gibbous", moon), moon := .75]
-
-#set as numeric
-heights[, moon := as.numeric(moon)]
-heights[, snowdepth := as.integer(snowdepth)]
 
 
 
