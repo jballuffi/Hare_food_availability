@@ -3,22 +3,11 @@
 lapply(dir('R', '*.R', full.names = TRUE), source)
 
 
-
 #read in initial flag counts for cameras
 #this data is from the first count of all flags in the camera trap image
 #it is not from my field book where I logged how many twigs we flagged
 flags <- fread("Input/starting_flag_count.csv")
-
 cams <- readRDS("Output/Data/camtraps.rds")
-
-# load function  ---------------------------------------------------------------
-
-getmode <- function(v) {
-  uniqv <- data.table(unique(v))
-  uniqv <- uniqv[!is.na(V1)]
-  uniqv <- uniqv$V1
-  uniqv[which.max(tabulate(match(v, uniqv)))]
-}
 
 
 
