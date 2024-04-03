@@ -5,8 +5,7 @@ lapply(dir('R', '*.R', full.names = TRUE), source)
 
 #load data for starting biomass and camera traps
 biomass <- readRDS("Output/Data/starting_biomass.rds") #WHY IS MEDIAN ZERO
-cams <- readRDS("Output/Data/camtraps.rds")
-
+willow <- readRDS("Output/Data/willow_avail_bysite.rds")
 
 
 # subset data -------------------------------------------------------------
@@ -14,18 +13,12 @@ cams <- readRDS("Output/Data/camtraps.rds")
 #take only spruce from biomass data
 spruce <- biomass[species == "spruce"]
 
-#create grid column in cams 
-cams[, Grid := tstrsplit(Location, "_", keep = 1)]
-
-#take average snow depth by grid and date from camera trap data
-snow <- cams[, .(mean = mean(Snow, na.rm = TRUE), median = median(Snow, na.rm = TRUE), sd = sd(Snow, na.rm = TRUE)), by = .(Grid, Date)]
-
-#reorder snow data by date
-snow <- snow[order(Date)]
+#reorder willow data by date
+willow <- willow[order(Date)]
 
 #check snow depth data with a simple figure
-ggplot(snow)+
-    geom_path(aes(x = Date, y = median, color = Grid, group = Grid))
+ggplot(willow)+
+    geom_path(aes(x = Date, y = Snow, color = grid, group = grid))
 
 
 
