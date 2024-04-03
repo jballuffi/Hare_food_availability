@@ -8,17 +8,17 @@ biomass <- readRDS("Output/Data/starting_biomass.rds") #WHY IS MEDIAN ZERO
 willow <- readRDS("Output/Data/willow_avail_bysite.rds")
 
 
-# subset data -------------------------------------------------------------
+# clean/prep data -------------------------------------------------------------
 
 #take only spruce from biomass data
 spruce <- biomass[species == "spruce"]
 
 #reorder willow data by date
-willow <- willow[order(Date)]
+willow <- willow[order(Location, Date)]
 
-#check snow depth data with a simple figure
+#check snow depth data
 ggplot(willow)+
-    geom_path(aes(x = Date, y = Snow, color = grid, group = grid))
+    geom_path(aes(x = Date, y = Snow, color = grid, group = Location))
 
 
 
