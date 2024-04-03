@@ -94,6 +94,7 @@ spruce <- data.table::melt(reach2, measure.vars = c("low", "medium", "high"), va
 setnames(spruce, "snow", "Snow")
 avail <- merge(willow, spruce, by = c("height", "Snow"), all.x = TRUE)
 
+#reorder final data set
 avail <- avail[order(Location, Date)]
 
 
