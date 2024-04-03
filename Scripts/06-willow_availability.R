@@ -32,8 +32,7 @@ twigs[, high := as.integer(`3_pink`)/pink]
 twigs <- twigs[, .(Location, Date, Snow, Temp, Moon, grid, loc, low, medium, high)]
 
 #melt twig availability by height class
-heights <- data.table::melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail")
-
+heights <- data.table::melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_willow")
 
 #convert farenheit to celcius
 heights[, Temp := as.integer(Temp)]
@@ -41,19 +40,8 @@ heights[, temp := (Temp-32)/1.8]
 
 
 
-# collect all stats for twig availability ---------------------------------
-
-#collect avg willow twig availability by grid, date, and height, along with snow and temp data
-availavg <- heights[, .(snow = mean(Snow), temp = mean(temp), moon = mean(Moon), propavail = mean(propavail)), by = .(grid, Date, height)]
-
-
-
-
 # save output data --------------------------------------------------------
 
-#save the daily measure of avail across all grids
-saveRDS(availavg, "Output/Data/starting_willow_avail_bygrid.rds")
-
 #save the daily measures of avail by camera trap site
-saveRDS(heights, "Output/Data/starting_willow_avail_bysite.rds")
+saveRDS(heights, "Output/Data/willow_avail_bysite.rds")
 
