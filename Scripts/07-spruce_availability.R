@@ -23,7 +23,7 @@ snow <- cams[, .(mean = mean(Snow, na.rm = TRUE), median = median(Snow, na.rm = 
 #reorder snow data by date
 snow <- snow[order(Date)]
 
-#check snowdepth data with a simple figure
+#check snow depth data with a simple figure
 ggplot(snow)+
     geom_path(aes(x = Date, y = median, color = Grid, group = Grid))
 
