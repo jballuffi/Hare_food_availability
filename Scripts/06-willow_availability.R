@@ -40,6 +40,8 @@ willow[, temp := (Temp-32)/1.8]
 
 willow <- willow[order(Location, Date)]
 
+willow[propavail_willow > 1, propavail_willow := 1]
+
 # save output data --------------------------------------------------------
 
 #save the daily measures of avail by camera trap site
