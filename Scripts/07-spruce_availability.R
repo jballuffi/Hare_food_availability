@@ -8,6 +8,7 @@ biomass <- readRDS("Output/Data/starting_biomass.rds") #WHY IS MEDIAN ZERO
 willow <- readRDS("Output/Data/willow_avail_bysite.rds")
 
 
+
 # clean/prep data -------------------------------------------------------------
 
 #take only spruce from biomass data
@@ -42,7 +43,7 @@ lowmin <- 25 #realistically no growth below 25 cm
 lowmax <- 50
 
 #create snow depths from 0 cm to 100 cm
-reach <- data.table(snow = 0:150) 
+reach <- data.table(snow = 0:200) 
 
 #calculate how high a hare can reach based on snow depth
 reach[, reach := snow + hreach]
@@ -72,7 +73,7 @@ reach[reach >= highmin, high_reach := (reach - highmin)/(highmax - highmin)]
 #once snow reaches 100 cm it will cover branches 
 reach[snow >= highmin, high_covered := (snow - highmin)/(highmax - highmin)]
 #any NAs will be zeros
-reach[is.na(high_reach), high_reach := 0][is.na(high_covered), high_covered := 0]
+reach[is.na(high_reach), high_reach := 0][is.na(high_covered), high_covered := 0][high_reach > 1, high_reach := 1]
 
 
 #final step: calculate total proportion available for each height class
@@ -80,27 +81,29 @@ reach[, low := 1 - low_covered] #inverse of what low branches are covered
 reach[, medium := medium_reach - medium_covered] #what hares can reach minus what is covered
 reach[, high := high_reach - high_covered] #what hares can reach minus what is covered
 
-
-
-# subset and melt data to merge with willow -------------------------------
-
 #take just final estimates of availabilty for each height class
 reach2 <- reach[, .(snow, low, medium, high)]
 
 #melt twig availability by height class
 spruce <- data.table::melt(reach2, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_spruce")
-
-#merge with willow by snow depth and height class
 setnames(spruce, "snow", "Snow")
-avail <- merge(willow, spruce, by = c("height", "Snow"), all.x = TRUE)
-
-#reorder final data set
-avail <- avail[order(Location, Date)]
-
 
 ggplot(spruce)+
   geom_path(aes(x = Snow, y = propavail_spruce), linewidth = 2, alpha = 0.5)+
   labs(x = "Snow depth (cm)", y = "Proportion of spruce available")+
   theme_minimal()+
   facet_wrap(~height)
+
+
+
+# merge with willow -------------------------------
+
+
+#merge with willow by snow depth and height class
+avail <- merge(willow, spruce, by = c("height", "Snow"), all.x = TRUE)
+
+#reorder final data set
+avail <- avail[order(Location, Date)]
+
+
 
