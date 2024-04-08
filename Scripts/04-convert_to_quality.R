@@ -13,7 +13,27 @@ diets <- fread("../NutritionalGeometryHares/Input/Diet_compositions.csv")
 
 
 
-# find digestibility from feeding trial data ------------------------------
+# predict digestibility from feeding trial data ------------------------------
+
+DMD <- gam(DMD ~ s(DMI_CP, DMI_NDF, DMI_ADF), data = days)
+
+DMDpred <- data.table(
+  DMI_NDF = min(days$DMI_NDF):max(days$DMI_NDF),
+  DMI_CP = min(days$DMI_CP):max(days$DMI_CP),
+  DMI_ADF = min(days$DMI_ADF):max(days$DMI_ADF)
+)
+
+DMDpred$DMD <- predict.gam(DMD, DMDpred)
+
+ggplot(DMDpred)+
+  geom_point(aes(x = DMI_CP, y = DMD, color = DMI_NDF))
+
+ggplot(days)+
+  geom_point(aes(x = DMI_NDF, y = DMD))
+
+
+
+
 
 diets[, Carb_diet := 100 - (CP_diet + NDF_diet)]
 diets[, CP_Carb := CP_diet/Carb_diet]
