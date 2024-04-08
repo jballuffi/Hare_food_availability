@@ -80,12 +80,13 @@ reach[is.na(high_reach), high_reach := 0][is.na(high_covered), high_covered := 0
 reach[, low := 1 - low_covered] #inverse of what low branches are covered
 reach[, medium := medium_reach - medium_covered] #what hares can reach minus what is covered
 reach[, high := high_reach - high_covered] #what hares can reach minus what is covered
+reach[, allheights := (low + medium + high)/3] #average to get all heights
 
 #take just final estimates of availabilty for each height class
-reach2 <- reach[, .(snow, low, medium, high)]
+reach2 <- reach[, .(snow, low, medium, high, allheights)]
 
 #melt twig availability by height class
-spruce <- data.table::melt(reach2, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_spruce")
+spruce <- data.table::melt(reach2, measure.vars = c("low", "medium", "high", "allheights"), variable.name = "height", value.name = "propavail_spruce")
 setnames(spruce, "snow", "Snow")
 
 ggplot(spruce)+
@@ -105,5 +106,13 @@ avail <- merge(willow, spruce, by = c("height", "Snow"), all.x = TRUE)
 #reorder final data set
 avail <- avail[order(Location, Date)]
 
+ggplot(avail[height == "allheights"])+
+  geom_point(aes(y = propavail_willow, x = Snow))
 
+ggplot(avail[height == "allheights"])+
+  geom_point(aes(y = propavail_spruce, x = Snow))
+
+
+#save
+saveRDS(avail, "Output/Data/proportion_available.rds")
 
