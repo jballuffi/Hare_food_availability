@@ -22,17 +22,20 @@ flags[, Location := paste0(grid, "_", loc)]
 #merge cam data with starting flag counts
 twigs <- merge(cams, flags, by = "Location", all.x = TRUE)
 
+twigs[, orangeC := as.integer(`1_orange`)][, yellowC := as.integer(`2_yellow`)][, pinkC := as.integer(`3_pink`)]
+
 #calculate the proportion of twig colors available according to photos
 #height according to color
-twigs[, low := as.integer(`1_orange`)/orange]
-twigs[, medium := as.integer(`2_yellow`)/yellow]
-twigs[, high := as.integer(`3_pink`)/pink]
+twigs[, low := orangeC/orange]
+twigs[, medium := yellowC/yellow]
+twigs[, high := pinkC/pink]
+twigs[, allheights := (orangeC + yellowC + pinkC)/(orange + yellow + pink)]
 
 #subset camera trap data to just proportions and info 
-twigs <- twigs[, .(Location, Date, Snow, Temp, Moon, grid, loc, low, medium, high)]
+twigs <- twigs[, .(Location, Date, Snow, Temp, Moon, grid, loc, low, medium, high, allheights)]
 
 #melt twig availability by height class
-willow <- data.table::melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_willow")
+willow <- data.table::melt(twigs, measure.vars = c("low", "medium", "high", "allheights"), variable.name = "height", value.name = "propavail_willow")
 
 #convert farenheit to celcius
 willow[, Temp := as.integer(Temp)]
