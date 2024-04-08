@@ -10,7 +10,7 @@ nuts <- readRDS("Output/Data/cleaned_compositions.rds")
 days <- readRDS("../NutritionalGeometryHares/Output/data/dailyresultscleaned.rds")
 trials <- readRDS("../NutritionalGeometryHares/Output/data/trialresultscleaned.rds")
 diets <- fread("../NutritionalGeometryHares/Input/Diet_compositions.csv")
-  
+
 
 
 # find digestibility from feeding trial data ------------------------------
@@ -20,6 +20,12 @@ diets[, CP_Carb := CP_diet/Carb_diet]
 
 ggplot(diets)+
   geom_boxplot(aes(x = Sample, y = CP_Carb))
+
+ggplot(days)+
+  geom_point(aes(x = DP, y = CP))+
+  geom_smooth(aes(x = DMDI, y = Weight_change))
+
+
 
 
 days[, Carb_diet := 1 - (mean(CP_diet, na.rm = TRUE) + mean(NDF_diet, na.rm = TRUE)), Diet]
