@@ -29,29 +29,35 @@ days[, .(cp = mean(CP_diet), ndf = mean(NDF_diet), adf = mean(ADF_diet), adl = m
 
 
 
-
 # predict digestibility from feeding trial data ------------------------------
 
 
 
-ggplot(days)+
-  geom_point(aes(x = NDF_diet, y = DMD))
 
-DMD <- gam(DMD ~ s(CP_diet, Carb_diet), data = days)
+ggplot(days)+
+  geom_point(aes(x = Carb_diet, y = DMD))+
+  geom_smooth(aes(x = Carb_diet, y = DMD))
+
+ggplot(days)+
+  geom_point(aes(x = CP_diet, y = DMD))+
+  geom_smooth(aes(x = CP_diet, y = DMD))
+
+
+summary(lm(DMD ~ poly(Carb_diet*CP_diet), data = days))
+
+
+DMD <- gam(DMD ~ s(DMI_Carb, DMI_CP), data = days)
 
 DMDpred <- data.table(
-  DMI_NDF = min(days$DMI_NDF):max(days$DMI_NDF),
-  DMI_CP = min(days$DMI_CP):max(days$DMI_CP),
-  DMI_ADF = min(days$DMI_ADF):max(days$DMI_ADF)
+  DMI_Carb = min(days$DMI_Carb):max(days$DMI_Carb),
+  DMI_CP = min(days$DMI_CP):max(days$DMI_CP)
 )
 
 DMDpred$DMD <- predict.gam(DMD, DMDpred)
 
 ggplot(DMDpred)+
-  geom_point(aes(x = DMI_CP, y = DMD, color = DMI_NDF))
+  geom_point(aes(x = DMI_CP, y = DMD))
 
-ggplot(days)+
-  geom_point(aes(x = DMI_NDF, y = DMD))
 
 
 
