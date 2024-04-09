@@ -27,12 +27,13 @@ nuts <- nuts[!is.na(Species)]
 #subset to main variables
 justnuts <- nuts[, .(Species, Height, Grid, Loc, CP_F, NDF_F, ADF_F, ADL_F)]
 
-
+#What is not protein or fibre should just be carb
+justnuts[, Carb_F := 100 - (NDF_F + CP_F)]
 
 # make data long ----------------------------
 
 #create a melted version of nutrient data, melted by nutrient
-justnuts <- melt.data.table(justnuts, measure.vars = c("NDF_F", "ADF_F", "ADL_F", "CP_F"), variable.name = "Nutrient", value.name = "Composition")
+justnuts <- melt.data.table(justnuts, measure.vars = c("NDF_F", "ADF_F", "ADL_F", "CP_F", "Carb_F"), variable.name = "Nutrient", value.name = "Composition")
 
 #make height class a leveled factor
 justnuts[, Height := factor(Height, levels = c("low", "medium", "high"), ordered = TRUE)]
@@ -66,5 +67,5 @@ sig <- justnuts[, lm_out(lm(Composition ~ Height)), by = .(Species, Nutrient)]
 # save outputs ------------------------------------------------------------
 
 saveRDS(justnuts, "Output/Data/cleaned_compositions.rds")
-ggsave("Output/Figures/composition_by_height.jpeg", allnuts, width = 8, height = 6, unit = "in")
+ggsave("Output/Figures/composition_by_height.jpeg", allnuts, width = 10, height = 6, unit = "in")
 
