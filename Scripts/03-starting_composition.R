@@ -44,7 +44,8 @@ justnuts[, Nutrient := gsub("_F", "", Nutrient)]
 #remove NAs
 justnuts <- justnuts[!is.na(Composition)]
 
-
+#make proportion
+justnuts[, Composition := Composition/100]
 
 # look at basic composition trends by height ------------------------------
 
