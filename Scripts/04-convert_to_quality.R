@@ -5,17 +5,39 @@ lapply(dir('R', '*.R', full.names = TRUE), source)
 
 #read in cleaned twig composition
 nuts <- readRDS("Output/Data/cleaned_compositions.rds")
-
 #results from feeding trials
 days <- readRDS("../NutritionalGeometryHares/Output/data/dailyresultscleaned.rds")
-trials <- readRDS("../NutritionalGeometryHares/Output/data/trialresultscleaned.rds")
-diets <- fread("../NutritionalGeometryHares/Input/Diet_compositions.csv")
+
+
+
+# summarize nutrition compositions ----------------------------------------
+
+
+
+#summary figure of plant compositions
+ggplot(nuts)+
+  geom_boxplot(aes(y = Composition, x = Species, color = Height))+
+  facet_wrap(~ Nutrient, scales = "free")
+
+#calculate diet carb content and carb intake rate, but redo this in the geometry project!!!!!
+days[, Carb_diet := 1 - (CP_diet + NDF_diet)]
+days[, DMI_Carb := DMI*Carb_diet]
+
+#summary table of plant composition ranges and diets
+nuts[, .(min = min(Composition), max = max(Composition)), by = Nutrient]
+days[, .(cp = mean(CP_diet), ndf = mean(NDF_diet), adf = mean(ADF_diet), adl = mean(ADL_diet), carb = mean(Carb_diet)), Diet]
+
 
 
 
 # predict digestibility from feeding trial data ------------------------------
 
-DMD <- gam(DMD ~ s(DMI_CP, DMI_NDF, DMI_ADF), data = days)
+
+
+ggplot(days)+
+  geom_point(aes(x = NDF_diet, y = DMD))
+
+DMD <- gam(DMD ~ s(CP_diet, Carb_diet), data = days)
 
 DMDpred <- data.table(
   DMI_NDF = min(days$DMI_NDF):max(days$DMI_NDF),
