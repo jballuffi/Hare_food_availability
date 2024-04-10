@@ -12,8 +12,6 @@ days <- readRDS("../NutritionalGeometryHares/Output/data/dailyresultscleaned.rds
 
 # summarize nutrition compositions ----------------------------------------
 
-
-
 #summary figure of plant compositions
 ggplot(nuts)+
   geom_boxplot(aes(y = Composition, x = Species, color = Height))+
@@ -32,96 +30,29 @@ days[, .(cp = mean(CP_diet), ndf = mean(NDF_diet), adf = mean(ADF_diet), adl = m
 # predict digestibility from feeding trial data ------------------------------
 
 
+modcp <- lm(DMD ~ poly(CP_diet, 3), data = days)
+CP_dat <- data.frame(CP_diet = seq(min(days$CP_diet), max(days$CP_diet), length = 100))
+predictions <- predict(modcp, newdata = CP_dat)
+
+plot(days$CP_diet, days$DMD)
+lines(CP_dat$CP_diet, predictions, col = "red")
 
 
-ggplot(days)+
-  geom_point(aes(x = Carb_diet, y = DMD))+
-  geom_smooth(aes(x = Carb_diet, y = DMD))
+modcarb <- lm(DMD ~ poly(Carb_diet, 3), data = days)
+CP_dat <- data.frame(CP_diet = seq(min(days$CP_diet), max(days$CP_diet), length = 100))
+predictions <- predict(mod, newdata = CP_dat)
 
-ggplot(days)+
-  geom_point(aes(x = CP_diet, y = DMD))+
-  geom_smooth(aes(x = CP_diet, y = DMD))
-
-
-summary(lm(DMD ~ poly(Carb_diet*CP_diet), data = days))
+plot(days$CP_diet, days$DMD)
+lines(CP_dat$CP_diet, predictions, col = "red")
 
 
-DMD <- gam(DMD ~ s(DMI_Carb, DMI_CP), data = days)
+
 
 DMDpred <- data.table(
   DMI_Carb = min(days$DMI_Carb):max(days$DMI_Carb),
   DMI_CP = min(days$DMI_CP):max(days$DMI_CP)
 )
 
-DMDpred$DMD <- predict.gam(DMD, DMDpred)
-
-ggplot(DMDpred)+
-  geom_point(aes(x = DMI_CP, y = DMD))
-
-
-
-
-
-
-diets[, Carb_diet := 100 - (CP_diet + NDF_diet)]
-diets[, CP_Carb := CP_diet/Carb_diet]
-
-ggplot(diets)+
-  geom_boxplot(aes(x = Sample, y = CP_Carb))
-
-ggplot(days)+
-  geom_point(aes(x = DP, y = CP))+
-  geom_smooth(aes(x = DMDI, y = Weight_change))
-
-
-
-
-days[, Carb_diet := 1 - (mean(CP_diet, na.rm = TRUE) + mean(NDF_diet, na.rm = TRUE)), Diet]
-days[, CP_Carb := CP_diet/Carb_diet]
-
-ggplot(days)+
-  geom_point(aes(x = CP_diet/Carb_diet, y = DMD))
-
-diets[, "CP_diet"]
-
-class(diets)
-
-
-#create CP:ADL ratio
-days[, CP_fibre := CP_diet/NDF_diet/ADL_diet]
-
-plot(days$DP ~ days$CP_fibre)
-
-test <- lm(DP ~ CP_fibre, days)
-summary(test)
-
-
-days[, mean(DNDF)*100]
-days[, mean(DADL)*100, Diet]
-days[, mean(DADL), Diet]
-
-
-#NDF * what can be digested... plus digestible protein?
-
-
-
-ggplot(days)+
-  geom_point(aes(x = CP_ADL, y = DMD))
-
-
-
-#linear regression between protein:ndf ratio for just diet A and B 
-digmodAB <- lm(DMD ~ NDF_diet, daysAB)
-summary(digmodAB)
-dint <- coef(digmodAB)["(Intercept)"]   # get intercept
-dsl <- coef(digmodAB)["NDF_diet"]         # get slope
-
-#relationship between CP:NDF and DMD for just A and B
-ggplot(days, aes(x = CP_NDF, y = DMD))+
-  geom_point()+
-  #geom_abline(intercept = dint, slope = dsl)+
-  labs(x = "Proportion NDF", y = "Proportion DMD")+
-  theme_minimal()
 
 
 
@@ -140,14 +71,6 @@ ggplot(days, aes(x = CP_NDF, y = DMD))+
 
 
 
-
-# Using feeding trial digestibility regression, estimate DMD --------------
-
-#calculate CP:NDF ratios
-nuts[, CP_NDF := CP_F/NDF_F]
-
-#use CP:NDF ratio to predict DMD
-nuts[, DMD := dint + (dsl*NDF_F/100)]
 
 
 # create a summary datatable for export -----------------------------------
