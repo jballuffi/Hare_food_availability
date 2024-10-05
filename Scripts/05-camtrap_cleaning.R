@@ -7,10 +7,8 @@ lapply(dir('R', '*.R', full.names = TRUE), source)
 
 # Read in data ------------------------------------------------------------
 
-#list all cam trap data
-camfiles <- list.files(path = "Input/Camera_traps/", full.names = TRUE)
-
-#read in files
+#list and fread all cam trap data from 2022-2023
+camfiles <- dir("Input/Camera_traps/", recursive = TRUE, full.names = TRUE)
 camdat <- lapply(camfiles, fread)
 
 #function to clean up data frames
@@ -19,10 +17,15 @@ cleandat <- function(X){
   x <- tail(X, -2)
   return(x)
 }
-camdat <- lapply(camdat, cleandat)
 
-#rbind all dataframes
-cams <- rbindlist(camdat, use.names = FALSE)
+#clean and rbind data
+camdat <- lapply(camdat, cleandat)
+cams <- rbindlist(camdat, use.names = FALSE, idcol = "Winter")
+
+#re-assign the winter column based on directory name
+cams[, Winter := factor(Winter, labels = dirname(camfiles))]
+cams[, Winter := tstrsplit(Winter, "//", keep = 2)]
+
 
 
 # clean data  -------------------------------------------------------------
