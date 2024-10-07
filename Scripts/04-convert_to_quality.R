@@ -28,7 +28,7 @@ nuts[, .(min = min(Composition), max = max(Composition)), by = Nutrient]
 meannuts <- nuts[Nutrient == "CP", .(CP_mean = mean(Composition, na.rm = TRUE),
                      CP_median = median(Composition, na.rm = TRUE),
                      CP_sd = sd(Composition, na.rm = TRUE)), 
-                 by = .(Species, Height, Grid)]
+                 by = .(Species, Height)]
 
 
 
