@@ -20,11 +20,11 @@ cleandat <- function(X){
 
 #clean and rbind data
 camdat <- lapply(camdat, cleandat)
-cams <- rbindlist(camdat, use.names = FALSE, idcol = "Winter")
+cams <- rbindlist(camdat, use.names = FALSE, idcol = "winter")
 
 #re-assign the winter column based on directory name
-cams[, Winter := factor(Winter, labels = dirname(camfiles))]
-cams[, Winter := tstrsplit(Winter, "//", keep = 2)]
+cams[, winter := factor(winter, labels = dirname(camfiles))]
+cams[, winter := tstrsplit(winter, "//", keep = 2)]
 
 
 
@@ -44,10 +44,10 @@ cams[, Date := tstrsplit(`Image Name`, " ", keep = 1)]
 cams[, Date := ymd(Date)]
 
 #check dates
-cams[, min(Date), by = .(Location, Winter)]
+cams[, min(Date), by = .(Location, winter)]
 
 #fix issue with date on one camera
-cams[Location == "KL_48" & Winter == "2022-2023", Date := Date + 365]
+cams[Location == "KL_48" & winter == "2022-2023", Date := Date + 365]
 
 #rename cols
 setnames(cams, "Moon Phase", "Moon")
@@ -72,7 +72,7 @@ cams[, Moon := as.numeric(Moon)]
 
 # subset to key cols ------------------------------------------------------
 
-camtwigs <- cams[, .(Location, Winter, Date, Time, Moon, Temp, Snow, `1_orange`, `2_yellow`, `3_pink`)]
+camtwigs <- cams[, .(Location, winter, Date, Time, Moon, Temp, Snow, `1_orange`, `2_yellow`, `3_pink`)]
 
 
 
