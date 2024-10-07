@@ -3,52 +3,72 @@
 lapply(dir('R', '*.R', full.names = TRUE), source)
 
 
+
 # read in all cleaned and prepped data ------------------------------------
 
-biomass <- readRDS("Output/Data/starting_biomass.rds")
-nuts <- readRDS("Output/Data/starting_nutrition.rds")
-willowgrid <- readRDS("Output/Data/starting_willow_avail_bygrid.rds")
-willowsite <- readRDS("Output/Data/starting_willow_avail_bysite.rds")
+startingbiomass <- readRDS("Output/Data/starting_biomass.rds")
+startingnuts <- readRDS("Output/Data/starting_nutrition.rds")
+prop <- readRDS("Output/Data/proportion_available.rds")
 
 
 
-# For now we are just merging together willow -----------------------------
+# melt the proportion available by species --------------------------------
 
-biomass <- biomass[species == "willow"][, species := NULL]
-nuts <- nuts[species == "willow"][, species := NULL]
+#melt by species
+prop <- melt.data.table(prop, measure.vars = c("propavail_willow", "propavail_spruce"), 
+                        variable.name = "species", 
+                        value.name = "propavail")
 
-#### WHERE IS CAMERA LOCATION. PROBABLY NEED TO CALCULATE WITH THIS FIRST?
+#take only species name from species column
+prop[, species := tstrsplit(species, "_", keep = 2)]
 
-# get total available biomass by day and grid -------------------------------------
+
+
+# merge in biomass and quality --------------------------------------------------------
+
+#merge in biomass and proportion available
+#the median biomass is zero for spruce at lower height classes. Probably should use means
+biomass <- merge(prop, startingbiomass, by = c("grid", "species", "height"), all.x = TRUE)
+
+#change col names in starting nutrients
+setnames(startingnuts, c("Species", "Height"), c("species", "height"))
+
+#merge in quality to biomass and proportion available
+daily <- merge(biomass, startingnuts, by = c("species", "height"), all.x = TRUE)
+
+#reorder daily values
+daily <- daily[order(Location, Date, species)]
 
 #cases where proportion available was greater than one
-willowgrid[propavail > 1, propavail := 1]
+daily[propavail > 1, propavail := 1]
 
-#merge starting grid biomass data with twig count data
-willow <- merge(willowgrid, biomass, by = c("grid", "height"), all.x = TRUE)
+#remove the all heights row for now
+daily <- daily[!height == "allheights"]
 
-#calculate available willow biomass
-willow[, biomassavail := biomass_mean*propavail]
+
+
+# get total available biomass by day  -------------------------------------
+
+#calculate available biomass based on mean
+daily[, biomassavail := biomass_mean*propavail]
+daily[, biomassavail_sd := biomass_sd*propavail]
 
 
 
 # get avg composition of willow available ---------------------------
 
 #sum all biomass available across all three heights by day
-willow[, biomassavail_allheight := sum(biomassavail), by = .(grid, date)]
+daily[, biomassavail_all := sum(biomassavail), by = .(grid, loc, Date, species)]
 
 #use the total biomass available to calculate the proportion of biomass each height contributes any day
-willow[, biomassprop := biomassavail/biomassavail_allheight]
-
-#merge in nutrition data
-willow <- merge(willow, nuts, by = "height", all.x = TRUE)
+daily[, biomassprop := biomassavail/biomassavail_all]
 
 #multiply composition by proportion available
-willow[, DMDxbiomassprop := biomassprop*DMD_median]
+daily[, CPxbiomassprop := biomassprop*CP_mean]
 
 #sum biomass across all heights by day and calculate average compositions
-foodavail <- willow[, .(mean(temp), mean(snowdepth), mean(moon), sum(biomassavail), sum(DMDxbiomassprop)), by = .(grid, date)]
-names(foodavail) <- c("grid", "date", "temp", "snowdepth", "moon", "biomassavail", "DMDavail")
+foodavail <- daily[, .(mean(temp), mean(Snow), mean(Moon), sum(biomassavail), sum(CPxbiomassprop)), by = .(grid, species, Date)]
+names(foodavail) <- c("grid", "species", "date", "temp", "snowdepth", "moon", "biomassavail", "CPavail")
 
 
 
