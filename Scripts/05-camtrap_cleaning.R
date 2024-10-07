@@ -44,10 +44,10 @@ cams[, Date := tstrsplit(`Image Name`, " ", keep = 1)]
 cams[, Date := ymd(Date)]
 
 #check dates
-cams[, min(Date), Location]
+cams[, min(Date), by = .(Location, Winter)]
 
 #fix issue with date on one camera
-cams[Location == "KL_48", Date := Date + 365]
+cams[Location == "KL_48" & Winter == "2022-2023", Date := Date + 365]
 
 #rename cols
 setnames(cams, "Moon Phase", "Moon")
@@ -70,10 +70,9 @@ cams[, Moon := as.numeric(Moon)]
 
 
 
-
 # subset to key cols ------------------------------------------------------
 
-camtwigs <- cams[, .(Location, Date, Time, Moon, Temp, Snow, `1_orange`, `2_yellow`, `3_pink`)]
+camtwigs <- cams[, .(Location, Winter, Date, Time, Moon, Temp, Snow, `1_orange`, `2_yellow`, `3_pink`)]
 
 
 
