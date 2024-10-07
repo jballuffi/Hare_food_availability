@@ -20,7 +20,7 @@ flags[, loc := gsub("_", "", loc)]
 flags[, Location := paste0(grid, "_", loc)]
 
 #merge cam data with starting flag counts
-twigs <- merge(cams, flags, by = "Location", all.x = TRUE)
+twigs <- merge(cams, flags, by = c("Location", "winter"), all.x = TRUE)
 
 twigs[, orangeC := as.integer(`1_orange`)][, yellowC := as.integer(`2_yellow`)][, pinkC := as.integer(`3_pink`)]
 
@@ -32,7 +32,7 @@ twigs[, high := pinkC/pink]
 twigs[, allheights := (orangeC + yellowC + pinkC)/(orange + yellow + pink)]
 
 #subset camera trap data to just proportions and info 
-twigs <- twigs[, .(Location, Date, Snow, Temp, Moon, grid, loc, low, medium, high, allheights)]
+twigs <- twigs[, .(Location, winter, Date, Snow, Temp, Moon, grid, loc, low, medium, high, allheights)]
 
 #melt twig availability by height class
 willow <- data.table::melt(twigs, measure.vars = c("low", "medium", "high", "allheights"), variable.name = "height", value.name = "propavail_willow")
@@ -41,7 +41,7 @@ willow <- data.table::melt(twigs, measure.vars = c("low", "medium", "high", "all
 willow[, Temp := as.integer(Temp)]
 willow[, temp := (Temp-32)/1.8]
 
-willow <- willow[order(Location, Date)]
+willow <- willow[order(Location, winter, Date)]
 
 willow[propavail_willow > 1, propavail_willow := 1]
 
