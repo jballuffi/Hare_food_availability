@@ -51,7 +51,7 @@ daily <- daily[!height == "allheights"]
 setnames(daily, "biomass_mean", "biomassstart")
 
 # set your by's, what factors do you want to calculate by
-bys <- c("winter", "grid", "loc", "Date", "species") #right now I am separating by species, may remove later
+bys <- c("winter", "grid", "loc", "Date") #right now I am separating by species, may remove later
 
 
 
@@ -102,4 +102,17 @@ setnames(dt, "Date", "idate")
 
 saveRDS(dt, "Output/Data/Total_daily_food_availability.rds")
 
-#in future, add total proportion of twig available potentially
+#some sort of diversity index? At super high snow depth its no more willow
+
+
+ggplot(dt)+
+  geom_point(aes(x = snow, y = proportion))
+
+ggplot(dt)+
+  geom_point(aes(x = snow, y = biomass))
+
+ggplot(dt)+
+  geom_point(aes(x = snow, y = CP_comp))
+
+ggplot(dt)+
+  geom_point(aes(x = idate, y = proportion))
