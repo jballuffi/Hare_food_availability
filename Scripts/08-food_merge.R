@@ -47,32 +47,50 @@ daily[propavail > 1, propavail := 1]
 #remove the all heights row for now
 daily <- daily[!height == "allheights"]
 
+#change biomass col name
+setnames(daily, "biomass_mean", "biomass_start")
 
 
-# get total available biomass by day  -------------------------------------
+
+# get total available biomass  -------------------------------------
 
 #calculate available biomass based on mean
-daily[, biomassavail := biomass_mean*propavail]
+daily[, biomassavail := biomass_start*propavail]
 
 
 
-# get avg composition of willow available ---------------------------
+# get avg CP composition available  ---------------------------
 
-#sum all biomass available across all three heights by day
-daily[, biomassavail_all := sum(biomassavail), by = .(grid, loc, Date, species)]
+#first set your by's, what factors do you want to calculate by
+bys <- c("winter", "grid", "loc", "Date", "species") #right now I am separating by species, may remove later
 
-#calculate the proportion of biomass each height contributes each day
-daily[, biomassprop := biomassavail/biomassavail_all]
+#sum all biomass available across all three heights and both species by day and location
+daily[, biomassavail_total := sum(biomassavail), by = bys]
 
-#multiply composition by proportion available
-daily[, CPxbiomassprop := biomassprop*CP_mean]  # I think this is wrong
+#calculate the grams of CP in each height class (Biomass x avg CP composition)
+daily[, CPavail_grams := biomassavail*CP_mean]
+
+#sum all available CP across all heights and both species
+daily[, CPavail_grams_total := sum(CPavail_grams), by = bys]
+
+#calculate the avg CP composition taking into account all heights
+daily[, CPavail_comp_total := CPavail_grams_total/biomassavail_total]
 
 
 
+# trim down to main information -------------------------------------------
+
+#grab values by same factors as calculation. Repeated values per by, means will supply mode
+dt <- daily[, .(temp = mean(temp), 
+               snow = mean(Snow), 
+               biomass = mean(biomassavail_total), 
+               CP_grams = mean(CPavail_grams_total), 
+               CP_comp = mean(CPavail_comp_total)), 
+            by = bys]
+
+#change date name
+setnames(dt, "Date", "idate")
 
 # save  -------------------------------------------------------------------
 
-#why is there a grid that is NA
-#foodavail <- foodavail[!is.na(grid)]
-
-saveRDS(foodavail, "Output/Data/Total_daily_food_availability.rds")
+saveRDS(dt, "Output/Data/Total_daily_food_availability.rds")
