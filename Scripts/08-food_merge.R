@@ -48,24 +48,30 @@ daily[propavail > 1, propavail := 1]
 daily <- daily[!height == "allheights"]
 
 #change biomass col name
-setnames(daily, "biomass_mean", "biomass_start")
+setnames(daily, "biomass_mean", "biomassstart")
+
+# set your by's, what factors do you want to calculate by
+bys <- c("winter", "grid", "loc", "Date", "species") #right now I am separating by species, may remove later
 
 
 
 # get total available biomass  -------------------------------------
 
-#calculate available biomass based on mean
-daily[, biomassavail := biomass_start*propavail]
+#calculate total starting biomass
+daily[, biomassstart_total := sum(biomassstart), by = bys]
+
+#calculate available biomass based on starting biomass and proportion of twigs available
+daily[, biomassavail := biomassstart*propavail]
+
+#sum all biomass available across all three heights and both species by day and location
+daily[, biomassavail_total := sum(biomassavail), by = bys]
+
+#get total proportion of biomass available by day location and species
+daily[, propavail_total := biomassavail_total/biomassstart_total]
 
 
 
 # get avg CP composition available  ---------------------------
-
-#first set your by's, what factors do you want to calculate by
-bys <- c("winter", "grid", "loc", "Date", "species") #right now I am separating by species, may remove later
-
-#sum all biomass available across all three heights and both species by day and location
-daily[, biomassavail_total := sum(biomassavail), by = bys]
 
 #calculate the grams of CP in each height class (Biomass x avg CP composition)
 daily[, CPavail_grams := biomassavail*CP_mean]
@@ -82,7 +88,8 @@ daily[, CPavail_comp_total := CPavail_grams_total/biomassavail_total]
 
 #grab values by same factors as calculation. Repeated values per by, means will supply mode
 dt <- daily[, .(temp = mean(temp), 
-               snow = mean(Snow), 
+               snow = mean(Snow),
+               proportion = mean(propavail_total),
                biomass = mean(biomassavail_total), 
                CP_grams = mean(CPavail_grams_total), 
                CP_comp = mean(CPavail_comp_total)), 
@@ -94,3 +101,5 @@ setnames(dt, "Date", "idate")
 # save  -------------------------------------------------------------------
 
 saveRDS(dt, "Output/Data/Total_daily_food_availability.rds")
+
+#in future, add total proportion of twig available potentially
