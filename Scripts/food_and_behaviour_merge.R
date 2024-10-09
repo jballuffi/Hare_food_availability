@@ -88,7 +88,12 @@ setnames(beh, c("Date", "Forage", "Hopping", "Sprinting"), c("date", "foraging",
 # merge food data with axy data -------------------------------------------
 
 #make grids match
-beh[grid == "Jo", grid == "JO"][grid == "Sulphur", grid := "SU"][grid == "Kloo", grid := "KL"]
+beh[grid == "Jo", grid := "JO"][grid == "Sulphur", grid := "SU"][grid == "Kloo", grid := "KL"]
+
+setnames(food, "idate", "date")
+food <- food[, .(snow = mean(snow), temp = mean(temp), 
+                 biomass = mean(biomass), CP_comp = mean(CP_comp), proportion = mean(proportion)), 
+             by = .(grid, date)]
 
 #final merge, by date and grid
 #every day of animal behaviour should be paired to a snow depth, temp, biomass availability, and DMD availability 
@@ -96,8 +101,22 @@ fullaxy <- merge(beh, food, by = c("date", "grid"), all.x = TRUE)
 
 
 
+
+# figures and trends ------------------------------------------------------
+
+
+ggplot(fullaxy)+
+  geom_point(aes(x = biomass, y = foraging))
+
+ggplot(fullaxy)+
+  geom_point(aes(x = snow, y = foraging))
+
+
+
+
 # merge food data with weight data ----------------------------------------
 
+# THIS IS BROKEN
 
 #function to pull mean snow depth, temp, biomass, and DMD from the week around each weight data 
 weeklyfood <- function(weekdate, haregrid) {
@@ -114,10 +133,11 @@ weeklyfood <- function(weekdate, haregrid) {
   )
   
   #in the date list and snow grid of the "snow" data, average the snow depth
-  food[date %in% datelist & grid %in% haregrid, .(mean(snowdepth), mean(temp), mean(biomassavail), mean(DMDavail))]
+  food[date %in% datelist & grid %in% haregrid, .(mean(snow), mean(temp), mean(biomass), mean(CP_comp))]
 }
 
 weightavgfood <- weights[, weeklyfood(weekdate = .BY[[1]], haregrid = grid), by = .(date, ID)]
+
 names(weightavgfood) <- c("date", "ID", "snowdepth", "temp", "biomassavail", "DMDavail")
 weightavgfood <- weightavgfood[duplicated(weightavgfood) == FALSE]
 
