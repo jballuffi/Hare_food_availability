@@ -103,16 +103,3 @@ setnames(dt, "Date", "idate")
 saveRDS(dt, "Output/Data/Total_daily_food_availability.rds")
 
 #some sort of diversity index? At super high snow depth its no more willow
-
-
-ggplot(dt)+
-  geom_point(aes(x = snow, y = proportion))
-
-ggplot(dt)+
-  geom_point(aes(x = snow, y = biomass))
-
-ggplot(dt)+
-  geom_point(aes(x = snow, y = CP_comp))
-
-ggplot(dt)+
-  geom_point(aes(x = idate, y = proportion))
