@@ -30,7 +30,7 @@ allo[is.na(water), water := watermean]
 allo[, Dry_total := (1- water)*Wet_total]
 
 #run makemod function by species and rename table output
-eqn<- allo[, modout(yvar = Dry_total, xvar1 = BD), by = species]
+eqn<- allo[, modout_zero(yvar = Dry_total, xvar1 = BD), by = species]
 
 
 #test plot for relationship between BD and Dry biomass
