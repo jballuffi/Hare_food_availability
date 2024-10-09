@@ -3,17 +3,6 @@
 lapply(dir('R', '*.R', full.names = TRUE), source)
 
 
-#get mode function
-#this function is from the R folder in the footload project
-getmode <- function(v) {
-  uniqv <- data.table(unique(v))
-  uniqv <- uniqv[!is.na(V1)]
-  uniqv <- uniqv$V1
-  uniqv[which.max(tabulate(match(v, uniqv)))]
-}
-
-
-
 # read in files -----------------------------------------------------------
 
 #read in food availability final datasheet
@@ -99,7 +88,7 @@ setnames(beh, c("Date", "Forage", "Hopping", "Sprinting"), c("date", "foraging",
 # merge food data with axy data -------------------------------------------
 
 #make grids match
-food[grid == "JO", grid := "Jo"][grid == "SU", grid := "Sulphur"][grid == "KL", grid := "Kloo"]
+beh[grid == "Jo", grid == "JO"][grid == "Sulphur", grid := "SU"][grid == "Kloo", grid := "KL"]
 
 #final merge, by date and grid
 #every day of animal behaviour should be paired to a snow depth, temp, biomass availability, and DMD availability 
