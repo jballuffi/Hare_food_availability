@@ -20,13 +20,13 @@ dt[, gridloc := paste0(grid, "_", loc)]
 ggplot(dt)+
   geom_point(aes(x = snow, y = biomass, color = grid))
 
-# highbios <- dt[biomass > 40, unique(gridloc)]
-# 
-# highbiomass <- dt[gridloc %in% highbios]
-# highbiomass[, unique(gridloc), winter]
-# 
-# ggplot(highbiomass)+
-#   geom_point(aes(x = snow, y = biomass, color = gridloc))
+highbios <- dt[biomass > 40, unique(gridloc)]
+
+highbiomass <- dt[gridloc %in% highbios]
+highbiomass[, unique(gridloc), winter]
+
+ggplot(highbiomass)+
+  geom_point(aes(x = snow, y = biomass, color = gridloc))
 
 ggplot(dt)+
   geom_point(aes(x = snow, y = proportion, color = grid))
