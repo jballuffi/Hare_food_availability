@@ -34,10 +34,13 @@ eqn<- allo[, modout_zero(yvar = Dry_total, xvar1 = BD), by = species]
 
 
 #test plot for relationship between BD and Dry biomass
-ggplot(allo)+
+alloplot <- ggplot(allo)+
   geom_point(aes(x = BD, y = Dry_total, color = species))+
   xlim(0, 56)+
   geom_abline(aes(intercept = 0, slope = eqn[species == "willow", return(Slope)]), color = "blue3", alpha = 0.6)+
   geom_abline(aes(intercept = 0, slope = eqn[species == "spruce", return(Slope)]), color = "red3", alpha = 0.6)+
   labs(y = "Dry biomass (g)", x = "Basal diameter (mm)")+
   theme_minimal()
+
+
+ggsave("Output/Figures/allometric_equations.jpeg", alloplot, width = 5, height = 4, unit = "in")
