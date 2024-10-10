@@ -10,10 +10,6 @@ nuts <- readRDS("Output/Data/cleaned_compositions.rds")
 
 # summarize nutrition compositions ----------------------------------------
 
-#summary figure of plant compositions
-ggplot(nuts)+
-  geom_boxplot(aes(y = Composition, x = Species, color = Height))+
-  facet_wrap(~ Nutrient, scales = "free")
 
 #summary table of plant composition ranges and diets
 nuts[, .(min = min(Composition), max = max(Composition)), by = Nutrient]
