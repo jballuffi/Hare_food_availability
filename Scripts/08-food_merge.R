@@ -84,7 +84,8 @@ daily[, CPavail_comp_total := CPavail_grams_total/biomassavail_total]
 
 # trim down to main information -------------------------------------------
 
-#grab values by same factors as calculation. Repeated values per by, means will supply mode
+#grab values by same factors as calculation. Repeated values per by, 
+#means will supply mode
 dt <- daily[, .(temp = mean(temp), 
                snow = mean(Snow),
                proportion = mean(propavail_total),
