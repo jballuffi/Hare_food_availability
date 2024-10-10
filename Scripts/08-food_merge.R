@@ -25,6 +25,8 @@ prop <- melt.data.table(prop, measure.vars = c("propavail_willow", "propavail_sp
 #take only species name from species column
 prop[, species := tstrsplit(species, "_", keep = 2)]
 
+#remove all heights from prop avail
+prop <- prop[!height == "allheights"]
 
 
 # merge in biomass and quality --------------------------------------------------------
@@ -44,15 +46,11 @@ daily <- daily[order(Location, Date, species)]
 #cases where proportion available was greater than one
 daily[propavail > 1, propavail := 1]
 
-#remove the all heights row for now
-daily <- daily[!height == "allheights"]
-
 #change biomass col name
 setnames(daily, "biomass_mean", "biomassstart")
 
 # set your by's, what factors do you want to calculate by
-bys <- c("winter", "grid", "loc", "Date") #right now I am separating by species, may remove later
-
+bys <- c("winter", "grid", "loc", "Date", "species") 
 
 
 # get total available biomass  -------------------------------------
