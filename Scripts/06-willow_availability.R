@@ -41,12 +41,61 @@ willow <- data.table::melt(twigs, measure.vars = c("low", "medium", "high", "all
 willow[, Temp := as.integer(Temp)]
 willow[, temp := (Temp-32)/1.8]
 
-willow <- willow[order(Location, winter, Date)]
+willow <- willow[order(Date)]
 
 willow[propavail_willow > 1, propavail_willow := 1]
+
+
+
+# Trends -----------------------------------------------------------------
+
+heightcols <- c("low" = "red2", "medium" = "orange", "high" = "blue", "allheights" = "grey15")
+
+
+#proportion available over time for each location
+ggplot(willow[height == "allheights"])+
+  geom_path(aes(x = Date, y = propavail_willow, group = Location))+
+  labs(y = "Proportion of twigs available", x = "Date")+
+  facet_wrap(~winter, scales = "free")+
+  themepoints
+
+#get mean proportion available and snow depth by date and height class
+means <- willow[, .(prop = mean(propavail_willow, na.rm = TRUE), snow = mean(Snow, na.rm = TRUE)),
+                by = .(winter, Date, height)]
+
+#order by date for path plots
+means <- means[order(Date)]
+
+#proportion available for each height over time
+(proptrend <- 
+  ggplot(means)+
+  geom_path(aes(x = Date, y = prop, group = height, color = height), linewidth = 1)+
+  labs(y = "Proportion of twigs available", x = "Date")+
+  scale_color_manual(values = heightcols)+
+  facet_wrap(~winter, scales = "free")+
+  themepoints)
+
+#snow depth over time
+(snowtrend <- 
+  ggplot(means)+
+  geom_path(aes(x = Date, y = snow), linewidth = 1)+
+  labs(y = "Snow depth (cm)", x = "Date")+
+  facet_wrap(~winter, scales = "free")+
+  themepoints)
+
+#combine proportion available and snow depth into one figure
+timetrend <- ggarrange(proptrend, snowtrend, ncol = 1, nrow = 2)
+
+#trend of total proportion available in response to snow depth
+(propandsnow <-
+  ggplot(willow[height == "allheights"])+
+  geom_point(aes(x = Snow, y = propavail_willow))+
+  labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
+  themepoints)
 
 # save output data --------------------------------------------------------
 
 #save the daily measures of avail by camera trap site
 saveRDS(willow, "Output/Data/willow_avail_bysite.rds")
-
+ggsave("Output/Figures/Willowavail_snow_time.jpeg", timetrend, width = 8, height = 8, unit = "in" )
+ggsave("Output/Figures/Willowavail_over_snow.jpeg", propandsnow, width = 8, height = 6, unit = "in" )
