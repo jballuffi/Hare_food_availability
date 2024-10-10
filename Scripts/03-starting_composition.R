@@ -30,6 +30,8 @@ justnuts <- nuts[, .(Species, Height, Grid, Loc, CP_F, NDF_F, ADF_F, ADL_F)]
 #What is not protein or fibre should just be carb
 justnuts[, Carb_F := 100 - (NDF_F + CP_F)]
 
+
+
 # make data long ----------------------------
 
 #create a melted version of nutrient data, melted by nutrient
@@ -47,9 +49,11 @@ justnuts <- justnuts[!is.na(Composition)]
 #make proportion
 justnuts[, Composition := Composition/100]
 
-# look at basic composition trends by height ------------------------------
 
-#figure to look at difference between height classes if any, switched plot to just willow for preliminary stuff
+
+# Summarize data  ------------------------------
+
+#figure to look at difference between height classes
 (allnuts <- 
     ggplot(justnuts)+
     geom_boxplot(aes(x = Species, y = Composition, fill = Height), alpha = 0.4)+
@@ -57,16 +61,27 @@ justnuts[, Composition := Composition/100]
     theme_minimal()+
     facet_wrap(~ Nutrient, scales = "free"))
 
-#explore average compositions by species and height 
-avgnut <- justnuts[, .(Composition = mean(Composition)), by = .(Species, Height, Nutrient)]
 
 #look at significant differences between nutritional compositions of different heights
 sig <- justnuts[, lm_out(lm(Composition ~ Height)), by = .(Species, Nutrient)]
+
+#min and max of plant compositions
+justnuts[, .(min = min(Composition), max = max(Composition)), by = Nutrient]
+
+#look at compositions by species and height 
+avgnut <- justnuts[, .(Composition = mean(Composition)), by = .(Species, Height, Nutrient)]
+
+#create data table of means, medians, and standard deviations for %CP by species and height
+meanCP <- justnuts[Nutrient == "CP", .(CP_mean = mean(Composition, na.rm = TRUE),
+                                     CP_median = median(Composition, na.rm = TRUE),
+                                     CP_sd = sd(Composition, na.rm = TRUE)), 
+                 by = .(Species, Height)]
 
 
 
 # save outputs ------------------------------------------------------------
 
+saveRDS(meanCP, "Output/Data/starting_nutrition.rds")
 saveRDS(justnuts, "Output/Data/cleaned_compositions.rds")
 ggsave("Output/Figures/composition_by_height.jpeg", allnuts, width = 10, height = 6, unit = "in")
 
