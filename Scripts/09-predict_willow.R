@@ -14,31 +14,65 @@ dt[, gridloc := paste0(grid, "_", loc)]
 
 
 
+# manipulate data ---------------------------------------------------------
+
+means <- dt[, .(proportion = mean(proportion, na.rm = TRUE), biomass = mean(biomass, na.rm = TRUE), 
+                CP_grams = mean(CP_grams, na.rm = TRUE), CP_comp = mean(CP_comp, na.rm = TRUE),
+                snow = mean(snow, na.rm = TRUE), temp = mean(temp, na.rm = TRUE)),
+            by = .(winter, grid, species, idate)]
+
+means <- means[order(idate, grid)]
+
+
+#make just willow data
+willow <- dt[species == "willow"]
+willow <- willow[order(grid, loc, idate)]
+
+
 
 # explore final data ------------------------------------------------------
 
+#trend over time
+
+ggplot(means)+
+  geom_path(aes(x = idate, y = proportion, group = grid, color = grid))+
+  facet_wrap(~winter + species, scale = "free")
+
+ggplot(means)+
+  geom_path(aes(x = idate, y = biomass, group = grid, color = grid))+
+  facet_wrap(~winter + species, scale = "free")
+
+ggplot(means)+
+  geom_path(aes(x = idate, y = CP_comp, group = grid, color = grid))+
+  facet_wrap(~winter + species, scale = "free")
+
+
+#trend over snow depth
+
 ggplot(dt)+
-  geom_point(aes(x = snow, y = biomass, color = grid))
-
-highbios <- dt[biomass > 40, unique(gridloc)]
-
-highbiomass <- dt[gridloc %in% highbios]
-highbiomass[, unique(gridloc), winter]
-
-ggplot(highbiomass)+
-  geom_point(aes(x = snow, y = biomass, color = gridloc))
+  geom_point(aes(x = snow, y = proportion, color = grid))+
+  facet_wrap(~species)
 
 ggplot(dt)+
-  geom_point(aes(x = snow, y = proportion, color = grid))
+  geom_point(aes(x = snow, y = biomass, color = grid))+
+  facet_wrap(~species, scale = "free")
 
 ggplot(dt)+
-  geom_point(aes(x = snow, y = CP_comp))
+  geom_point(aes(x = snow, y = CP_comp, color = grid))+
+  facet_wrap(~species, scale = "free")
 
 
 
-# make models -------------------------------------------------------------
 
-bs <- lm(biomass ~ snow, dt)
+
+
+# predict willow availability -------------------------------------------------------------
+
+
+
+bs <- lm(biomass ~ snow, willow)
+bsg <- lm(biomass ~ snow + grid, willow)
+bsgt <- lm(biomass ~ snow + grid + temp, willow)
 
 
 bs <- dt[, modout(yvar = biomass, xvar1 = snow)]
