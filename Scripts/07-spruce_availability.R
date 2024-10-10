@@ -17,10 +17,6 @@ spruce <- biomass[species == "spruce"]
 #reorder willow data by date
 willow <- willow[order(Location, Date)]
 
-#check snow depth data
-ggplot(willow)+
-    geom_path(aes(x = Date, y = Snow, color = grid, group = Location))
-
 
 
 # starting guide for calculating available spruce based on snow depth -------------------------
@@ -52,7 +48,8 @@ reach[, reach := snow + hreach]
 
 # calculate spruce availability based on snow depth -----------------------
 
-#calculate what proportion low branches are covered by snow, there is no issue of reaching these branches
+#calculate what proportion low branches are covered by snow, 
+#there is no issue of reaching these branches
 reach[snow > lowmin, low_covered := (snow - lowmin)/(lowmax - lowmin)]
 #any value above 1 becomes 1, and any NA becomes a zero
 reach[low_covered > 1, low_covered := 1.00][is.na(low_covered), low_covered := 0]
@@ -80,20 +77,25 @@ reach[is.na(high_reach), high_reach := 0][is.na(high_covered), high_covered := 0
 reach[, low := 1 - low_covered] #inverse of what low branches are covered
 reach[, medium := medium_reach - medium_covered] #what hares can reach minus what is covered
 reach[, high := high_reach - high_covered] #what hares can reach minus what is covered
-reach[, allheights := (low + medium + high)/3] #average to get all heights
+#reach[, allheights := (low + medium + high)/3] #average to get all heights
 
 #take just final estimates of availabilty for each height class
-reach2 <- reach[, .(snow, low, medium, high, allheights)]
+reach2 <- reach[, .(snow, low, medium, high)]
 
 #melt twig availability by height class
-spruce <- data.table::melt(reach2, measure.vars = c("low", "medium", "high", "allheights"), variable.name = "height", value.name = "propavail_spruce")
+spruce <- data.table::melt(reach2, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_spruce")
 setnames(spruce, "snow", "Snow")
 
-ggplot(spruce)+
+
+
+# Figure to show calculation ----------------------------------------------
+
+(spruceavail <- 
+  ggplot(spruce)+
   geom_path(aes(x = Snow, y = propavail_spruce), linewidth = 2, alpha = 0.5)+
   labs(x = "Snow depth (cm)", y = "Proportion of spruce available")+
   theme_minimal()+
-  facet_wrap(~height)
+  facet_wrap(~height))
 
 
 
@@ -106,13 +108,8 @@ avail <- merge(willow, spruce, by = c("height", "Snow"), all.x = TRUE)
 #reorder final data set
 avail <- avail[order(Location, Date)]
 
-ggplot(avail[height == "allheights"])+
-  geom_point(aes(y = propavail_willow, x = Snow))
-
-ggplot(avail[height == "allheights"])+
-  geom_point(aes(y = propavail_spruce, x = Snow))
 
 
 #save
 saveRDS(avail, "Output/Data/proportion_available.rds")
-
+ggsave("Output/Figures/Spruce_avail_calc.jpeg", spruceavail, width = 9, height = 4, unit = "in")
