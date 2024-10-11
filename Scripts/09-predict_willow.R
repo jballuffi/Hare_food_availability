@@ -16,9 +16,11 @@ dt[, gridloc := paste0(grid, "_", loc)]
 
 # manipulate data ---------------------------------------------------------
 
-means <- dt[, .(proportion = mean(proportion, na.rm = TRUE), biomass = mean(biomass, na.rm = TRUE), 
-                CP_grams = mean(CP_grams, na.rm = TRUE), CP_comp = mean(CP_comp, na.rm = TRUE),
-                snow = mean(snow, na.rm = TRUE), temp = mean(temp, na.rm = TRUE)),
+means <- dt[, .(biomass = mean(biomass, na.rm = TRUE), 
+                CP_grams = mean(CP_grams, na.rm = TRUE), 
+                CP_comp = mean(CP_comp, na.rm = TRUE),
+                snow = mean(snow, na.rm = TRUE), 
+                temp = mean(temp, na.rm = TRUE)),
             by = .(winter, grid, species, idate)]
 
 means <- means[order(idate, grid)]
@@ -35,27 +37,22 @@ willow <- willow[order(grid, loc, idate)]
 #trend over time
 
 ggplot(means)+
-  geom_path(aes(x = idate, y = proportion, group = grid, color = grid))+
-  facet_wrap(~winter + species, scale = "free")
-
-ggplot(means)+
   geom_path(aes(x = idate, y = biomass, group = grid, color = grid))+
-  facet_wrap(~winter + species, scale = "free")
+  facet_wrap(~winter + species, scale = "free")+
+  theme_minimal()
 
 ggplot(means)+
   geom_path(aes(x = idate, y = CP_comp, group = grid, color = grid))+
-  facet_wrap(~winter + species, scale = "free")
+  facet_wrap(~winter + species, scale = "free")+
+  theme_minimal()
+
 
 
 #trend over snow depth
 
 ggplot(dt)+
-  geom_point(aes(x = snow, y = proportion, color = grid))+
-  facet_wrap(~species)
-
-ggplot(dt)+
   geom_point(aes(x = snow, y = biomass, color = grid))+
-  facet_wrap(~species, scale = "free")
+  facet_wrap(~winter + species, scale = "free")
 
 ggplot(dt)+
   geom_point(aes(x = snow, y = CP_comp, color = grid))+
