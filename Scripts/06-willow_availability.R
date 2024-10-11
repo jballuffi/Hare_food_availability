@@ -52,7 +52,10 @@ heightcols <- c("low" = "red2", "medium" = "orange", "high" = "blue")
 
 
 #get mean proportion available and snow depth by date and height class
-means <- willow[, .(prop = mean(propavail_willow, na.rm = TRUE), snow = mean(Snow, na.rm = TRUE)),
+means <- willow[, .(propmean = mean(propavail_willow, na.rm = TRUE),
+                    propsd = sd(propavail_willow, na.rm = TRUE),
+                    snowmean = mean(Snow, na.rm = TRUE),
+                    snowsd = sd(Snow, na.rm = TRUE)),
                 by = .(winter, Date, height)]
 
 #order by date for path plots
@@ -61,19 +64,23 @@ means <- means[order(Date)]
 #proportion available for each height over time
 (proptrend <- 
   ggplot(means)+
-  geom_path(aes(x = Date, y = prop, group = height, color = height), linewidth = 1)+
-  labs(y = "Proportion of twigs available", x = "Date")+
-  scale_color_manual(values = heightcols)+
-  facet_wrap(~winter, scales = "free")+
-  theme_minimal())
+    geom_ribbon(aes(x = Date, ymax = propmean + propsd, ymin = propmean - propsd, fill = height), alpha = 0.2)+
+    geom_path(aes(x = Date, y = propmean, group = height, color = height), linewidth = 1)+
+    labs(y = "Proportion of twigs available", x = "Date")+
+    scale_color_manual(values = heightcols)+
+    scale_fill_manual(values = heightcols)+
+    facet_wrap(~winter, scales = "free")+
+    theme_minimal())
 
 #snow depth over time
 (snowtrend <- 
   ggplot(means)+
-  geom_path(aes(x = Date, y = snow), linewidth = 1)+
+  geom_ribbon(aes(x = Date, ymin = snowmean - snowsd, ymax = snowmean + snowsd), alpha = 0.2)+
+  geom_path(aes(x = Date, y = snowmean), linewidth = 1)+
   labs(y = "Snow depth (cm)", x = "Date")+
   facet_wrap(~winter, scales = "free")+
   theme_minimal())
+
 
 #combine proportion available and snow depth into one figure
 timetrend <- ggarrange(proptrend, snowtrend, ncol = 1, nrow = 2)
@@ -84,6 +91,31 @@ timetrend <- ggarrange(proptrend, snowtrend, ncol = 1, nrow = 2)
   geom_point(aes(x = Snow, y = propavail_willow, color = height))+
   labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
   theme_minimal())
+
+ggplot(willow[height == "high"])+
+  geom_point(aes(x = Snow, y = propavail_willow))+
+  labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
+  theme_minimal()
+
+
+
+# model willow availability for each height -------------------------------
+
+
+
+summary(lm(propavail_willow ~ Snow, willow[height == "low"]))
+lowgam <- gam(propavail_willow ~ s(Snow), data = willow[height == "low"])
+
+
+summary(lm(propavail_willow ~ Snow*Temp + grid, willow[height == "medium"]))
+medgam <- gam(propavail_willow ~ s(Snow), data = willow[height == "medium"])
+
+summary(lm(propavail_willow ~ Snow, willow[height == "high"]))
+highgam <- gam(propavail_willow ~ s(Snow), data = willow[height == "high"])
+
+
+
+
 
 # save output data --------------------------------------------------------
 
