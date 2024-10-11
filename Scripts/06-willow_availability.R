@@ -30,20 +30,23 @@ twigs[, low := orangeC/orange]
 twigs[, medium := yellowC/yellow]
 twigs[, high := pinkC/pink]
 
+#convert farenheit to celcius
+twigs[, Temp := as.integer(Temp)]
+twigs[, temp := (Temp-32)/1.8]
+
 #subset camera trap data to just proportions and info 
-twigs <- twigs[, .(Location, winter, Date, Snow, Temp, Moon, grid, loc, low, medium, high)]
+twigs <- twigs[, .(Location, winter, Date, Snow, temp, Moon, grid, loc, low, medium, high)]
 
 #melt twig availability by height class
 willow <- data.table::melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_willow")
-
-#convert farenheit to celcius
-willow[, Temp := as.integer(Temp)]
-willow[, temp := (Temp-32)/1.8]
 
 willow <- willow[order(Date)]
 
 willow[propavail_willow > 1, propavail_willow := 1]
 willow[propavail_willow < 0, propavail_willow := 0]
+
+
+
 
 
 # Trends -----------------------------------------------------------------
@@ -93,9 +96,11 @@ timetrend <- ggarrange(proptrend, snowtrend, ncol = 1, nrow = 2)
   theme_minimal())
 
 ggplot(willow[height == "high"])+
-  geom_point(aes(x = Snow, y = propavail_willow))+
+  geom_point(aes(x = Snow, y = propavail_willow, color = temp))+
   labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
   theme_minimal()
+
+
 
 
 
@@ -107,7 +112,7 @@ summary(lm(propavail_willow ~ Snow, willow[height == "low"]))
 lowgam <- gam(propavail_willow ~ s(Snow), data = willow[height == "low"])
 
 
-summary(lm(propavail_willow ~ Snow*Temp + grid, willow[height == "medium"]))
+summary(lm(propavail_willow ~ Snow*temp + grid, willow[height == "medium"]))
 medgam <- gam(propavail_willow ~ s(Snow), data = willow[height == "medium"])
 
 summary(lm(propavail_willow ~ Snow, willow[height == "high"]))
