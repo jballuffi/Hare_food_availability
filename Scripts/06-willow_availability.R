@@ -43,7 +43,7 @@ willow[, temp := (Temp-32)/1.8]
 willow <- willow[order(Date)]
 
 willow[propavail_willow > 1, propavail_willow := 1]
-
+willow[propavail_willow < 0, propavail_willow := 0]
 
 
 # Trends -----------------------------------------------------------------
