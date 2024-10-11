@@ -84,8 +84,7 @@ means <- means[order(Date)]
   facet_wrap(~winter, scales = "free")+
   theme_minimal())
 
-
-#combine proportion available and snow depth into one figure
+#Combine proportion available and snow depth into one figure
 timetrend <- ggarrange(proptrend, snowtrend, ncol = 1, nrow = 2)
 
 #trend of total proportion available in response to snow depth
@@ -94,31 +93,6 @@ timetrend <- ggarrange(proptrend, snowtrend, ncol = 1, nrow = 2)
   geom_point(aes(x = Snow, y = propavail_willow, color = height))+
   labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
   theme_minimal())
-
-ggplot(willow[height == "high"])+
-  geom_point(aes(x = Snow, y = propavail_willow, color = temp))+
-  labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
-  theme_minimal()
-
-
-
-
-
-# model willow availability for each height -------------------------------
-
-
-
-summary(lm(propavail_willow ~ Snow, willow[height == "low"]))
-lowgam <- gam(propavail_willow ~ s(Snow), data = willow[height == "low"])
-
-
-summary(lm(propavail_willow ~ Snow*temp + grid, willow[height == "medium"]))
-medgam <- gam(propavail_willow ~ s(Snow), data = willow[height == "medium"])
-
-summary(lm(propavail_willow ~ Snow, willow[height == "high"]))
-highgam <- gam(propavail_willow ~ s(Snow), data = willow[height == "high"])
-
-
 
 
 
