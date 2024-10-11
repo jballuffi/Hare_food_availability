@@ -29,13 +29,12 @@ twigs[, orangeC := as.integer(`1_orange`)][, yellowC := as.integer(`2_yellow`)][
 twigs[, low := orangeC/orange]
 twigs[, medium := yellowC/yellow]
 twigs[, high := pinkC/pink]
-twigs[, allheights := (orangeC + yellowC + pinkC)/(orange + yellow + pink)]
 
 #subset camera trap data to just proportions and info 
-twigs <- twigs[, .(Location, winter, Date, Snow, Temp, Moon, grid, loc, low, medium, high, allheights)]
+twigs <- twigs[, .(Location, winter, Date, Snow, Temp, Moon, grid, loc, low, medium, high)]
 
 #melt twig availability by height class
-willow <- data.table::melt(twigs, measure.vars = c("low", "medium", "high", "allheights"), variable.name = "height", value.name = "propavail_willow")
+willow <- data.table::melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_willow")
 
 #convert farenheit to celcius
 willow[, Temp := as.integer(Temp)]
@@ -49,15 +48,8 @@ willow[propavail_willow > 1, propavail_willow := 1]
 
 # Trends -----------------------------------------------------------------
 
-heightcols <- c("low" = "red2", "medium" = "orange", "high" = "blue", "allheights" = "grey15")
+heightcols <- c("low" = "red2", "medium" = "orange", "high" = "blue")
 
-
-#proportion available over time for each location
-ggplot(willow[height == "allheights"])+
-  geom_path(aes(x = Date, y = propavail_willow, group = Location))+
-  labs(y = "Proportion of twigs available", x = "Date")+
-  facet_wrap(~winter, scales = "free")+
-  themepoints
 
 #get mean proportion available and snow depth by date and height class
 means <- willow[, .(prop = mean(propavail_willow, na.rm = TRUE), snow = mean(Snow, na.rm = TRUE)),
@@ -73,7 +65,7 @@ means <- means[order(Date)]
   labs(y = "Proportion of twigs available", x = "Date")+
   scale_color_manual(values = heightcols)+
   facet_wrap(~winter, scales = "free")+
-  themepoints)
+  theme_minimal())
 
 #snow depth over time
 (snowtrend <- 
@@ -81,17 +73,17 @@ means <- means[order(Date)]
   geom_path(aes(x = Date, y = snow), linewidth = 1)+
   labs(y = "Snow depth (cm)", x = "Date")+
   facet_wrap(~winter, scales = "free")+
-  themepoints)
+  theme_minimal())
 
 #combine proportion available and snow depth into one figure
 timetrend <- ggarrange(proptrend, snowtrend, ncol = 1, nrow = 2)
 
 #trend of total proportion available in response to snow depth
 (propandsnow <-
-  ggplot(willow[height == "allheights"])+
-  geom_point(aes(x = Snow, y = propavail_willow))+
+  ggplot(willow)+
+  geom_point(aes(x = Snow, y = propavail_willow, color = height))+
   labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
-  themepoints)
+  theme_minimal())
 
 # save output data --------------------------------------------------------
 
