@@ -35,10 +35,10 @@ twigs[, Temp := as.integer(Temp)]
 twigs[, temp := (Temp-32)/1.8]
 
 #subset camera trap data to just proportions and info 
-twigs <- twigs[, .(Location, winter, Date, Snow, temp, Moon, grid, loc, low, medium, high)]
+twigs2 <- twigs[, .(Location, winter, Date, Snow, temp, Moon, grid, loc, low, medium, high)]
 
 #melt twig availability by height class
-willow <- data.table::melt(twigs, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_willow")
+willow <- data.table::melt(twigs2, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_willow")
 
 willow <- willow[order(Date)]
 
@@ -85,7 +85,7 @@ means <- means[order(Date)]
   theme_minimal())
 
 #Combine proportion available and snow depth into one figure
-timetrend <- ggarrange(proptrend, snowtrend, ncol = 1, nrow = 2)
+timetrend <- ggarrange(snowtrend, proptrend, ncol = 1, nrow = 2)
 
 #trend of total proportion available in response to snow depth
 (propandsnow <-
@@ -94,6 +94,17 @@ timetrend <- ggarrange(proptrend, snowtrend, ncol = 1, nrow = 2)
   labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
   theme_minimal())
 
+#that figure is tough to follow, try using a boxplot
+#bin snow data
+willow[, snow_cat := cut(Snow, breaks = 6, include.lowest = TRUE)]
+willow[is.na(snow_cat)]
+
+#boxplot of proportion available in response to snow
+(propandsnowbox <- 
+  ggplot(willow)+
+  geom_boxplot(aes(x = snow_cat, y = propavail_willow, fill = height), color = "grey20", alpha = 0.7, outlier.shape = NA)+
+  labs(y = "Proportion of twigs available", x = "Snow depth bins (cm)")+
+  theme_minimal())
 
 
 # save output data --------------------------------------------------------
@@ -102,3 +113,4 @@ timetrend <- ggarrange(proptrend, snowtrend, ncol = 1, nrow = 2)
 saveRDS(willow, "Output/Data/willow_avail_bysite.rds")
 ggsave("Output/Figures/Willowavail_snow_time.jpeg", timetrend, width = 8, height = 8, unit = "in" )
 ggsave("Output/Figures/Willowavail_over_snow.jpeg", propandsnow, width = 8, height = 6, unit = "in" )
+ggsave("Output/Figures/Willowavail_over_snow_boxplot.jpeg", propandsnowbox, width = 8, height = 6, unit = "in" )
