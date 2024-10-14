@@ -101,7 +101,6 @@ setnames(spruce, "snow", "Snow")
 
 # merge with willow -------------------------------
 
-
 #merge with willow by snow depth and height class
 avail <- merge(willow, spruce, by = c("height", "Snow"), all.x = TRUE)
 
@@ -111,5 +110,6 @@ avail <- avail[order(Location, Date)]
 
 
 #save
+saveRDS(spruce, "Output/Data/spruce_avail_prediction.rds")
 saveRDS(avail, "Output/Data/proportion_available.rds")
 ggsave("Output/Figures/Spruce_avail_calc.jpeg", spruceavail, width = 9, height = 4, unit = "in")
