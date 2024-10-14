@@ -7,7 +7,7 @@ lapply(dir('R', '*.R', full.names = TRUE), source)
 # read in data ------------------------------------------------------------
 
 #data
-startingbiomass <- readRDS("Output/Data/starting_biomass.rds")
+startingbiomass <- readRDS("Output/Data/starting_biomass_nogrid.rds")
 startingnuts <- readRDS("Output/Data/starting_nutrition.rds")
 
 #change col names in starting nutrients
