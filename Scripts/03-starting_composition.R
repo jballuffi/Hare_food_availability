@@ -53,11 +53,14 @@ justnuts[, Composition := Composition/100]
 
 # Summarize data  ------------------------------
 
+heightcols <- c("low" = "red2", "medium" = "orange", "high" = "blue")
+
 #figure to look at difference between height classes
 (allnuts <- 
     ggplot(justnuts)+
     geom_boxplot(aes(x = Species, y = Composition, fill = Height), alpha = 0.4)+
     labs(y = "Composition (%)", x = "Browse height")+
+    scale_fill_manual(values = heightcols)+
     theme_minimal()+
     facet_wrap(~ Nutrient, scales = "free"))
 
