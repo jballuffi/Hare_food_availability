@@ -2,7 +2,7 @@
 #function to make gam and build predictions
 #But doesn't work right now
 
-getgam <- function(mod, x, xmax){
+getgam <- function(mod){
   
   #create new dataframe for prediction
   newdat <- data.table(Snow = seq(1, 150))
@@ -16,7 +16,9 @@ getgam <- function(mod, x, xmax){
   #add column in new data for lower and upper confidence band
   newdat$lower <- pred$fit - 1.96 * pred$se.fit
   newdat$upper <- pred$fit + 1.96 * pred$se.fit
-
+  
+  #newdat$height <- print(substitute(mod))
+  
   #return data
   return(newdat)
 }
