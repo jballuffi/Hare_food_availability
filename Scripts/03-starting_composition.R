@@ -53,8 +53,6 @@ justnuts[, Composition := Composition/100]
 
 # Summarize data  ------------------------------
 
-heightcols <- c("low" = "red2", "medium" = "orange", "high" = "blue")
-
 #figure to look at difference between height classes
 (allnuts <- 
     ggplot(justnuts)+

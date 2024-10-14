@@ -1,5 +1,9 @@
 library(ggplot2)
 
+
+heightcols <- c("low" = "red2", "medium" = "orange", "high" = "blue")
+
+
 themepoints <- theme(axis.title = element_text(size=13),
                      axis.text = element_text(size=10),
                      legend.position = "top",
