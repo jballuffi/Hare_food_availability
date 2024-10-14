@@ -37,7 +37,8 @@ modout[, height := factor(height, labels = modnames)]
 (willow_pred <-
   ggplot(modout)+
   geom_ribbon(aes(x = Snow, ymin = lower, ymax = upper), alpha = 0.5, fill = "grey70")+
-  geom_path(aes(x = Snow, y = pred), color = "blue4", linewidth = .75)+
+  geom_path(aes(x = Snow, y = pred, color = height), linewidth = .75)+
+  scale_color_manual(values = heightcols, guide = NULL)+
   labs(x = "Snow depth (cm)", y = "Predicted twig availablity")+
   facet_wrap(~height)+
   theme_minimal(base_size = 16))
@@ -47,7 +48,8 @@ modout[, height := factor(height, labels = modnames)]
 (willow_gam <- 
   ggplot(willow)+
   geom_point(aes(x = Snow, y = propavail_willow), alpha = 0.5, color = "grey50")+
-  geom_smooth(aes(x = Snow, y = propavail_willow), method = "gam")+
+  geom_smooth(aes(x = Snow, y = propavail_willow, color = height), method = "gam")+
+  scale_color_manual(values = heightcols, guide = NULL)+
   labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
   facet_wrap(~ height)+
   theme_minimal())
@@ -56,6 +58,6 @@ modout[, height := factor(height, labels = modnames)]
 
 # save predictions --------------------------------------------------------
 
-saveRDS(newdat, "Output/Data/willow_avail_prediction.rds")
+saveRDS(modout, "Output/Data/willow_avail_prediction.rds")
 ggsave("Output/Figures/Willow_avail_gam.jpeg", willow_gam, width = 9, height = 5, unit = "in")
 ggsave("Output/Figures/Willow_avail_pred.jpeg", willow_pred, width = 9, height = 4, unit = "in")
