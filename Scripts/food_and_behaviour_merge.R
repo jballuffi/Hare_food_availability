@@ -8,6 +8,10 @@ lapply(dir('R', '*.R', full.names = TRUE), source)
 #read in food availability final datasheet
 food <- readRDS("Output/Data/Total_daily_food_availability.rds")
 
+#read in trapping data
+trapping <- fread("Input/Trapping_data_all_records.csv")
+
+
 #list just the daily foraging files and fread in
 daily <- list.files("../Process_axy_data/Output/Data/Axy_behaviours/", pattern = "daily", full.names = TRUE)
 axy <- lapply(daily, fread)
@@ -17,8 +21,6 @@ axy <- rbindlist(axy, fill = TRUE)
 #take only first 7 columns
 axy <- axy[, 1:7]
 
-#read in trapping data
-trapping <- fread("Input/Trapping_data_all_records.csv")
 
 
 
