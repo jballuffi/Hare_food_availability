@@ -81,6 +81,6 @@ newdat[, height := factor(height, levels = c("low", "medium", "high"))]
 
 # save predictions --------------------------------------------------------
 
-saveRDS(newdat, "Output/Data/Willow_avail_prediction.rds")
+saveRDS(newdat, "Output/Data/willow_avail_prediction.rds")
 ggsave("Output/Figures/Willow_avail_gam.jpeg", willow_gam, width = 9, height = 5, unit = "in")
 ggsave("Output/Figures/Willow_avail_pred.jpeg", willow_pred, width = 9, height = 4, unit = "in")
