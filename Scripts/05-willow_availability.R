@@ -47,12 +47,7 @@ willow[propavail_willow < 0, propavail_willow := 0]
 
 
 
-
-
 # Trends -----------------------------------------------------------------
-
-heightcols <- c("low" = "red2", "medium" = "orange", "high" = "blue")
-
 
 #get mean proportion available and snow depth by date and height class
 means <- willow[, .(propmean = mean(propavail_willow, na.rm = TRUE),
@@ -90,7 +85,8 @@ timetrend <- ggarrange(snowtrend, proptrend, ncol = 1, nrow = 2)
 #trend of total proportion available in response to snow depth
 (propandsnow <-
   ggplot(willow)+
-  geom_point(aes(x = Snow, y = propavail_willow, color = height))+
+  geom_point(aes(x = Snow, y = propavail_willow, color = height), alpha = 0.4)+
+  scale_color_manual(values = heightcols)+
   labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
   theme_minimal())
 
@@ -102,7 +98,8 @@ willow[is.na(snow_cat)]
 #boxplot of proportion available in response to snow
 (propandsnowbox <- 
   ggplot(willow)+
-  geom_boxplot(aes(x = snow_cat, y = propavail_willow, fill = height), color = "grey20", alpha = 0.7, outlier.shape = NA)+
+  geom_boxplot(aes(x = snow_cat, y = propavail_willow, fill = height), color = "grey20", alpha = 0.5, outlier.shape = NA)+
+  scale_fill_manual(values = heightcols)+
   labs(y = "Proportion of twigs available", x = "Snow depth bins (cm)")+
   theme_minimal())
 
