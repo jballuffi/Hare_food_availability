@@ -11,10 +11,6 @@ startingbiomass <- readRDS("Output/Data/starting_biomass.rds")
 startingnuts <- readRDS("Output/Data/starting_nutrition.rds")
 prop <- readRDS("Output/Data/proportion_available.rds")
 
-#predictive data
-willow <- readRDS("Output/Data/willow_avail_prediction.rds")
-spruce <- readRDS("Output/Data/spruce_avail_prediction.rds")
-
 #change col names in starting nutrients
 setnames(startingnuts, c("Species", "Height"), c("species", "height"))
 
@@ -99,6 +95,8 @@ dt <- daily[, .(temp = mean(temp),
 
 #change date name
 setnames(dt, "Date", "idate")
+
+
 
 # save  -------------------------------------------------------------------
 
