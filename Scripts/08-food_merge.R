@@ -30,8 +30,7 @@ prop[, species := tstrsplit(species, "_", keep = 2)]
 
 # merge in biomass and quality --------------------------------------------------------
 
-#merge in biomass and proportion available
-#the median biomass is zero for spruce at lower height classes. Probably should use means
+#merge in biomass means and proportion available
 biomass <- merge(prop, startingbiomass[, .(species, height, grid, biomass_mean)], 
                  by = c("grid", "species", "height"), all.x = TRUE)
 
