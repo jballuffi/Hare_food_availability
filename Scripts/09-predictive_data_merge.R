@@ -71,7 +71,7 @@ pred[, CPavail_comp := CPavail_grams/biomassavail*100]
 #get total proportion of biomass available by day location and species
 pred[, propavail := biomassavail/biomassstart]
 
-
+pred <- pred[order(species, Snow)]
 
 (biomassplot <- 
   ggplot(pred)+
