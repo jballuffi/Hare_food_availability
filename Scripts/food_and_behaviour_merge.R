@@ -93,25 +93,54 @@ setnames(beh, c("Date", "Forage", "Hopping", "Sprinting"), c("date", "foraging",
 beh[grid == "Jo", grid := "JO"][grid == "Sulphur", grid := "SU"][grid == "Kloo", grid := "KL"]
 
 setnames(food, "idate", "date")
-food <- food[, .(snow = mean(snow), temp = mean(temp), 
-                 biomass = mean(biomass), CP_comp = mean(CP_comp), proportion = mean(proportion)), 
+
+willow <- food[species == "willow", .(snow = mean(snow, na.rm = TRUE), temp = mean(temp, na.rm = TRUE), 
+                 biomass = mean(biomass, na.rm = TRUE), CP_comp = mean(CP_comp, na.rm = TRUE)), 
              by = .(grid, date)]
+
+spruce <- food[species == "spruce", .(snow = mean(snow), temp = mean(temp), 
+                                             biomass = mean(biomass), CP_comp = mean(CP_comp)), 
+                      by = .(grid, date)]
+
+
 
 #final merge, by date and grid
 #every day of animal behaviour should be paired to a snow depth, temp, biomass availability, and DMD availability 
-fullaxy <- merge(beh, food, by = c("date", "grid"), all.x = TRUE)
+willowaxy <- merge(beh, willow, by = c("date", "grid"), all.x = TRUE)
 
+spruceaxy <- merge(beh, spruce, by = c("date", "grid"), all.x = TRUE)
 
 
 
 # figures and trends ------------------------------------------------------
 
 
-ggplot(fullaxy)+
-  geom_point(aes(x = biomass, y = foraging))
+ggplot(willowaxy)+
+  geom_point(aes(x = date, y = foraging/3600, color = snow))+
+  labs(x = "Date", y = "Daily foraging effort (hr)")+
+  theme_minimal()
 
-ggplot(fullaxy)+
-  geom_point(aes(x = snow, y = foraging))
+ggplot(willowaxy)+
+  geom_point(aes(x = snow, y = foraging/3600))+
+  geom_smooth(aes(x = snow, y = foraging/3600), method = "lm")+
+  labs(x = "Snow depth (cm)", y = "Daily foraging effort (hr)")+
+  theme_minimal()
+
+ggplot(willowaxy)+
+  geom_point(aes(x = biomass, y = foraging/3600, color = snow))+
+  geom_smooth(aes(x = biomass, y = foraging/3600), method = "lm")+
+  labs(x = "Available willow biomass (g/m2)", y = "Daily foraging effort (hr)")+
+  theme_minimal()
+
+ggplot(spruceaxy)+
+  geom_point(aes(x = biomass, y = foraging/3600, color = snow))+
+  geom_smooth(aes(x = biomass, y = foraging/3600), method = "lm")+
+  labs(x = "Available spruce biomass (g/m2)", y = "Daily foraging effort (hr)")+
+  theme_minimal()
+
+
+summary(lm(foraging/3600 ~ snow, willowaxy))
+summary(lm(foraging/3600 ~ biomass, willowaxy))
 
 
 
