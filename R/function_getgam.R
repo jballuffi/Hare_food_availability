@@ -5,7 +5,7 @@
 getgam <- function(mod){
   
   #create new dataframe for prediction
-  newdat <- data.table(Snow = seq(1, 150))
+  newdat <- data.table(Snow = seq(0, 150))
   
   #use predict function to create prediction for data based on gam
   pred <- predict(mod, newdat, type = 'response', se.fit = TRUE) 
