@@ -37,13 +37,36 @@ twigs[, temp := (Temp-32)/1.8]
 #subset camera trap data to just proportions and info 
 twigs2 <- twigs[, .(Location, winter, Date, Snow, temp, Moon, grid, loc, low, medium, high)]
 
+
+
+
+# prep data for time figures ----------------------------------------------
+
 #melt twig availability by height class
 willow <- data.table::melt(twigs2, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_willow")
 
-willow <- willow[order(Date)]
+#order by date
+willow <- willow[order(winter, Location, height, Date)]
 
+#any proportion greater than 1 gets a 1.
 willow[propavail_willow > 1, propavail_willow := 1]
-willow[propavail_willow < 0, propavail_willow := 0]
+
+
+
+# prep data for models ----------------------------------------------------
+
+#get rid of duplicated data for later GAMs
+twigs2 <- twigs2[order(winter, Location, Date)]
+
+twigs2[, dsnow := divDyn::seqduplicated(Snow), .(Location, winter)]
+twigs2[, dlow := divDyn::seqduplicated(low), .(Location, winter)]
+twigs2[, dmed := divDyn::seqduplicated(medium), .(Location, winter)]
+twigs2[, dhigh := divDyn::seqduplicated(high), .(Location, winter)]
+
+formod <- twigs2[dsnow == FALSE & dlow == FALSE & dmed == FALSE & dhigh == FALSE]
+
+#melt twig availability by height class
+formod <- data.table::melt(formod, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_willow")
 
 
 
@@ -107,6 +130,7 @@ willow[is.na(snow_cat)]
 # save output data --------------------------------------------------------
 
 #save the daily measures of avail by camera trap site
+saveRDS(formod, "Output/Data/willow_avail_noduplicates.rds")
 saveRDS(willow, "Output/Data/willow_avail_bysite.rds")
 ggsave("Output/Figures/Willowavail_snow_time.jpeg", timetrend, width = 8, height = 8, unit = "in" )
 ggsave("Output/Figures/Willowavail_over_snow.jpeg", propandsnow, width = 8, height = 6, unit = "in" )

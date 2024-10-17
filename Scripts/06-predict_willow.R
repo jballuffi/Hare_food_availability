@@ -7,7 +7,7 @@ lapply(dir('R', '*.R', full.names = TRUE), source)
 
 # read in data ------------------------------------------------------------
 
-willow <- readRDS("Output/Data/willow_avail_bysite.rds")
+willow <- readRDS("Output/Data/willow_avail_noduplicates.rds")
 
 
 
