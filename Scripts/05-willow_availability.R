@@ -37,16 +37,17 @@ twigs[, temp := (Temp-32)/1.8]
 #subset camera trap data to just proportions and info 
 twigs2 <- twigs[, .(Location, winter, Date, Snow, temp, Moon, grid, loc, low, medium, high)]
 
+#get rid of duplicated data for later GAMs
+twigs2 <- twigs2[order(winter, Location, Date)]
 
 
 
 # prep data for time figures ----------------------------------------------
 
+#this data includes all days
+
 #melt twig availability by height class
 willow <- data.table::melt(twigs2, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_willow")
-
-#order by date
-willow <- willow[order(winter, Location, height, Date)]
 
 #any proportion greater than 1 gets a 1.
 willow[propavail_willow > 1, propavail_willow := 1]
@@ -55,18 +56,30 @@ willow[propavail_willow > 1, propavail_willow := 1]
 
 # prep data for models ----------------------------------------------------
 
-#get rid of duplicated data for later GAMs
-twigs2 <- twigs2[order(winter, Location, Date)]
+#this data cuts out replicated sequential days
+#i.e., if the same snow height and twig availability occurs across multiple days
+#we only take the first day
 
-twigs2[, dsnow := divDyn::seqduplicated(Snow), .(Location, winter)]
-twigs2[, dlow := divDyn::seqduplicated(low), .(Location, winter)]
-twigs2[, dmed := divDyn::seqduplicated(medium), .(Location, winter)]
-twigs2[, dhigh := divDyn::seqduplicated(high), .(Location, winter)]
+#round proportion data
+twigs2[, c("low", "medium", "high") := .(round(low, 3), round(medium, 3), round(high, 3))]
 
-formod <- twigs2[dsnow == FALSE & dlow == FALSE & dmed == FALSE & dhigh == FALSE]
+#past snow and proportions into one data column
+twigs2[, testcol := paste0(Snow, "_", low, "_", medium, "_", high)]
+
+#use seqduplicate fundtion to determine which days are just duplicates of each other
+twigs2[, rep := divDyn::seqduplicated(testcol), .(Location, winter)]
+
+#take only non-replicated data
+formod <- twigs2[rep == FALSE]
+
+#remove rep and test col for final dataset
+formod[, rep := NULL][, testcol := NULL]
 
 #melt twig availability by height class
 formod <- data.table::melt(formod, measure.vars = c("low", "medium", "high"), variable.name = "height", value.name = "propavail_willow")
+
+#any proportion greater than 1 gets a 1.
+formod[propavail_willow > 1, propavail_willow := 1]
 
 
 
