@@ -48,8 +48,9 @@ modout[, height := factor(height, labels = modnames)]
 (willow_gam <- 
   ggplot(willow)+
   geom_point(aes(x = Snow, y = propavail_willow), alpha = 0.5, color = "grey50")+
-  geom_smooth(aes(x = Snow, y = propavail_willow, color = height), method = "gam")+
+  geom_smooth(aes(x = Snow, y = propavail_willow, color = height, fill = height), method = "gam")+
   scale_color_manual(values = heightcols, guide = NULL)+
+  scale_fill_manual(values = heightcols, guide = NULL)+
   labs(y = "Proportion of twigs available", x = "Snow depth (cm)")+
   facet_wrap(~ height)+
   theme_minimal())
