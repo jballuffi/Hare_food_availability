@@ -90,7 +90,15 @@ pred <- pred[order(species, Snow)]
 fullplot <- ggarrange(biomassplot, CPplot, ncol = 1, nrow = 2)
 
 
+(spruceplot <- 
+  ggplot(pred[species == "spruce"])+
+  geom_path(aes(x = Snow, y = biomassavail))+
+  labs(x = "Snow depth (cm)", y = "Available biomass (g/m2)")+
+  theme_minimal())
+
+
 # save  -------------------------------------------------------------------
 
 saveRDS(pred, "Output/Data/snowdepth_predictions.rds")
 ggsave("Output/Figures/total_snow_pred.jpeg", width = 8, height = 7, unit = "in")
+ggsave("Output/Figures/spruce_biomass_pred.jpeg", width  = 5, height = 5, unit = "in")
